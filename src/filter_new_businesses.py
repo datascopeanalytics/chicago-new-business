@@ -16,15 +16,8 @@ for row in reader:
         row.date_issued < new_locations[row.account_number].date_issued):
         new_locations[row.account_number] = row
 
-# print out the dates really quickly
-import collections
-freq = collections.Counter()
+
+writer = data.RawWriter(sys.stdout, fieldnames=reader.fieldnames)
+writer.writeheader()
 for row in new_locations.itervalues():
-    freq[row.date_issued.year] += 1
-
-for k, v in sorted(freq.iteritems()):
-    print k, v
-
-# writer = data.RawWriter(sys.stdout)
-# for row in new_locations.itervalues():
-#     print row
+    writer.writerow(row)

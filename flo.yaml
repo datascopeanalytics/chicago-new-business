@@ -5,9 +5,16 @@ command:
   - curl https://data.cityofchicago.org/api/views/r5kz-chrr/rows.csv?accessType=DOWNLOAD > {{creates}}
 
 ---
+creates: data/new_businesses.csv
 depends:
   - src/filter_new_businesses.py
   - data/raw.csv
   - src/data.py
-creates: data/new_businesses.csv
-command: python {{depends[0]}} < {{depends[1]}}
+command: python {{depends[0]}} < {{depends[1]}} > {{creates}}
+
+---
+creates: data/new_businesses_per_year.csv
+depends:
+  - src/new_businesses_per_year.py
+  - data/new_businesses.csv
+command: python {{depends[0]}} < {{depends[1]}} > {{creates}}

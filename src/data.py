@@ -29,3 +29,7 @@ class RawReader(csv.DictReader):
         while row:
             yield Row(row)
             row = self.next()
+
+
+class RawWriter(csv.DictWriter):
+    pass
