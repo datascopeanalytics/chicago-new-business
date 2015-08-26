@@ -1,5 +1,13 @@
 ---
-creates: "data/raw_data.csv"
+creates: data/raw.csv
 command:
   - mkdir -p $(dirname {{creates}})
   - curl https://data.cityofchicago.org/api/views/r5kz-chrr/rows.csv?accessType=DOWNLOAD > {{creates}}
+
+---
+depends:
+  - src/filter_new_businesses.py
+  - data/raw.csv
+  - src/data.py
+creates: data/new_businesses.csv
+command: python {{depends[0]}} < {{depends[1]}}
