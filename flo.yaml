@@ -1,0 +1,5 @@
+---
+creates: "data/raw_data.csv"
+command:
+  - mkdir -p $(dirname {{creates}})
+  - curl https://data.cityofchicago.org/api/views/r5kz-chrr/rows.csv?accessType=DOWNLOAD > {{creates}}

@@ -5,4 +5,20 @@ Visualize where new businesses are created in the city
 
 ## quickstart
 
-1. enjoy.
+1. Create a python virtualenv with virtualenvwrapper
+   ```sh
+   mkvirtualenv chicago-new-business
+   workon chicago-new-business
+   ```
+
+2. Install python dependencies
+   ```sh
+   pip install -r requirements/python
+   ```
+
+3. Run the data analysis pipeline using [flo]()
+   ```sh
+   flo run
+   ```
+
+4. Enjoy.
