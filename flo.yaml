@@ -39,7 +39,7 @@ depends:
   - data/old_businesses.csv
 command: python {{depends[0]}} < {{depends[1]}} > {{creates}}
 
-######################################################## OLD BUSINESSES
+######################################################## FIGURE BUSINESSES
 ---
 creates: data/chicago_business_creation.png
 depends:
@@ -47,3 +47,16 @@ depends:
   - data/new_businesses_per_year.csv
   - data/old_businesses_per_year.csv
 command: python {{depends|join(' ')}} {{creates}}
+
+######################################################## NEIGHBORHOODS
+---
+creates: data/boundaries.zip
+depends: data
+command: curl -L https://data.cityofchicago.org/download/9wp7-iasj/application/zip > {{creates}}
+
+---
+creates: data/boundaries/
+depends: data/boundaries.zip
+command:
+  - mkdir -p {{creates}}
+  - unzip {{depends}} -d {{creates}}
