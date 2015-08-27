@@ -1,3 +1,4 @@
+######################################################## GET DATA
 # viewable data here
 # https://data.cityofchicago.org/Community-Economic-Development/Business-Licenses/r5kz-chrr
 ---
@@ -37,3 +38,12 @@ depends:
   - src/old_businesses_per_year.py
   - data/old_businesses.csv
 command: python {{depends[0]}} < {{depends[1]}} > {{creates}}
+
+######################################################## OLD BUSINESSES
+---
+creates: data/chicago_business_creation.png
+depends:
+  - src/chicago_business_creation.py
+  - data/new_businesses_per_year.csv
+  - data/old_businesses_per_year.csv
+command: python {{depends|join(' ')}} {{creates}}
