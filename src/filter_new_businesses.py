@@ -1,14 +1,10 @@
 #!/usr/bin/env python
-"""
-Quick script to filter records to only those records that contain new
-businesses
-"""
-
 import sys
 
 import data
 
-# identify new businesses
+# identify new businesses based on the earliest time that account number has a
+# business license in the city
 reader = data.RawReader(sys.stdin)
 new_locations = {}
 for row in reader:
@@ -16,8 +12,7 @@ for row in reader:
         row.date_issued < new_locations[row.account_number].date_issued):
         new_locations[row.account_number] = row
 
-
+# write it
 writer = data.RawWriter(sys.stdout, fieldnames=reader.fieldnames)
 writer.writeheader()
-for row in new_locations.itervalues():
-    writer.writerow(row)
+writer.writerows(new_locations.itervalues())

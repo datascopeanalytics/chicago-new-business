@@ -1,9 +1,12 @@
+# viewable data here
+# https://data.cityofchicago.org/Community-Economic-Development/Business-Licenses/r5kz-chrr
 ---
 creates: data/raw.csv
 command:
   - mkdir -p $(dirname {{creates}})
   - curl https://data.cityofchicago.org/api/views/r5kz-chrr/rows.csv?accessType=DOWNLOAD > {{creates}}
 
+######################################################## NEW BUSINESSES
 ---
 creates: data/new_businesses.csv
 depends:
@@ -17,4 +20,20 @@ creates: data/new_businesses_per_year.csv
 depends:
   - src/new_businesses_per_year.py
   - data/new_businesses.csv
+command: python {{depends[0]}} < {{depends[1]}} > {{creates}}
+
+######################################################## OLD BUSINESSES
+---
+creates: data/old_businesses.csv
+depends:
+  - src/filter_old_businesses.py
+  - data/raw.csv
+  - src/data.py
+command: python {{depends[0]}} < {{depends[1]}} > {{creates}}
+
+---
+creates: data/old_businesses_per_year.csv
+depends:
+  - src/old_businesses_per_year.py
+  - data/old_businesses.csv
 command: python {{depends[0]}} < {{depends[1]}} > {{creates}}
