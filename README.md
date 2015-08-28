@@ -22,3 +22,6 @@ Visualize where new businesses are created in the city
    ```
 
 4. Enjoy.
+   ```sh
+   open data/*.png
+   ```
