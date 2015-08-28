@@ -1,3 +1,6 @@
 flo
 matplotlib
 seaborn
+Fiona
+Shapely
+pyproj

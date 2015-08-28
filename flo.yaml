@@ -60,3 +60,21 @@ depends: data/boundaries.zip
 command:
   - mkdir -p {{creates}}
   - unzip {{depends}} -d {{creates}}
+
+---
+creates: data/new_businesses_neighborhood.csv
+depends:
+  - src/add_neighborhood_column.py
+  - data/boundaries/
+  - data/new_businesses.csv
+command:
+  - python {{depends[0]}} {{depends[1]}}*.shp < {{depends[2]}} > {{creates}}
+
+---
+creates: data/old_businesses_neighborhood.csv
+depends:
+  - src/add_neighborhood_column.py
+  - data/boundaries/
+  - data/old_businesses.csv
+command:
+  - python {{depends[0]}} {{depends[1]}}*.shp < {{depends[2]}} > {{creates}}
