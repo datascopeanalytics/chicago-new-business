@@ -46,6 +46,7 @@ depends:
   - src/chicago_business_creation.py
   - data/new_businesses_per_year.csv
   - data/old_businesses_per_year.csv
+  - src/figs.py
 command: python {{depends|join(' ')}} {{creates}}
 
 ######################################################## NEIGHBORHOODS
