@@ -86,3 +86,11 @@ depends:
   - data/new_businesses_neighborhood.csv
   - data/old_businesses_neighborhood.csv
 command: python {{depends|join(' ')}} > {{creates}}
+
+---
+creates: data/neighborhood_businesses_per_year.csv
+depends:
+  - src/neighborhood_businesses_per_year.py
+  - data/new_businesses_neighborhood.csv
+  - data/old_businesses_neighborhood.csv
+command: python {{depends|join(' ')}} > {{creates}}
