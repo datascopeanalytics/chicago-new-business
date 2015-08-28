@@ -41,16 +41,16 @@ command: python {{depends[0]}} < {{depends[1]}} > {{creates}}
 
 ######################################################## FIGURE BUSINESSES
 ---
-creates: data/chicago_business_creation.png
+creates: data/chicago_flow.png
 depends:
-  - src/chicago_business_creation.py
+  - src/chicago_flow.py
   - data/new_businesses_per_year.csv
   - data/old_businesses_per_year.csv
   - src/figs.py
 command: python {{depends|join(' ')}} {{creates}}
 
 ---
-creates: data/neighborhoods/
+creates: data/neighborhood_flow/
 depends:
   - src/neighborhood_flow.py
   - data/neighborhood_businesses_per_year.csv
