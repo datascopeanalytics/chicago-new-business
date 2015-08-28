@@ -78,3 +78,11 @@ depends:
   - data/old_businesses.csv
 command:
   - python {{depends[0]}} {{depends[1]}}*.shp < {{depends[2]}} > {{creates}}
+
+---
+creates: data/neighborhood_coding_check.csv
+depends:
+  - src/neighborhood_coding_check.py
+  - data/new_businesses_neighborhood.csv
+  - data/old_businesses_neighborhood.csv
+command: python {{depends|join(' ')}} > {{creates}}
