@@ -36,14 +36,15 @@ axis.bar(bar_year_range, new_counts, width=bar_width, color=palette[1], edgecolo
 axis.bar(bar_year_range, old_counts, width=bar_width, color=palette[0], edgecolor=palette[0], label='expired')
 
 # add a line for the differences
-axis.plot(year_range, diff_counts, color='k', linewidth=2)
+axis.plot(year_range, diff_counts, color='black', linewidth=2, label='change')
 
 # specify the domain
 axis.axis([year_range[0]-1, year_range[-1]+1, -15000, 15000])
 axis.set_autoscale_on(False)
 
-# label axes
-axis.set_xlabel("year")
+# labels
+axis.legend()
+# axis.set_xlabel("year")
 axis.set_ylabel("business licenses")
 
 # remove crud on axes
