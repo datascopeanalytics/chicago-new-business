@@ -49,6 +49,15 @@ depends:
   - src/figs.py
 command: python {{depends|join(' ')}} {{creates}}
 
+---
+creates: data/neighborhoods/
+depends:
+  - src/neighborhood_flow.py
+  - data/neighborhood_businesses_per_year.csv
+command:
+  - mkdir -p {{creates}}
+  - python {{depends|join(' ')}} {{creates}}
+
 ######################################################## NEIGHBORHOODS
 ---
 creates: data/boundaries.zip

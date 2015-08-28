@@ -23,7 +23,10 @@ class FlowOverTime(object):
         axis.plot(year_range, diff_counts, color='black', linewidth=2, label='change')
 
         # specify the domain
-        axis.axis([year_range[0]-1, year_range[-1]+1, -15000, 15000])
+        axis.set_xlim(year_range[0]-1, year_range[-1]+1)
+        ylim = axis.get_ylim()
+        yabs = max(map(abs, ylim))
+        axis.set_ylim(-yabs, yabs)
         axis.set_autoscale_on(False)
 
         # labels
@@ -36,3 +39,6 @@ class FlowOverTime(object):
 
     def save(self, filename):
         plt.savefig(filename)
+
+    def close(self):
+        plt.close()
