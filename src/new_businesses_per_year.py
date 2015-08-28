@@ -13,7 +13,7 @@ import data
 reader = data.RawReader(sys.stdin)
 frequency = collections.Counter()
 for row in reader:
-    frequency[row.date_issued.year] += 1
+    frequency[row.start_date.year] += 1
 
 # print out the result
 writer = csv.writer(sys.stdout)

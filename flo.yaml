@@ -54,6 +54,7 @@ creates: data/neighborhood_flow/
 depends:
   - src/neighborhood_flow.py
   - data/neighborhood_businesses_per_year.csv
+  - src/figs.py
 command:
   - mkdir -p {{creates}}
   - python {{depends|join(' ')}} {{creates}}

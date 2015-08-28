@@ -9,7 +9,7 @@ reader = data.RawReader(sys.stdin)
 new_locations = {}
 for row in reader:
     if (row.account_number not in new_locations or
-        row.date_issued < new_locations[row.account_number].date_issued):
+        row.start_date < new_locations[row.account_number].start_date):
         new_locations[row.account_number] = row
 
 # write it

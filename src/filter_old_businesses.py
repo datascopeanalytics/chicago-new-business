@@ -8,9 +8,9 @@ import data
 reader = data.RawReader(sys.stdin)
 old_locations = {}
 for row in reader:
-    if row.expiration_date:
+    if row.end_date:
         if (row.account_number not in old_locations or
-            row.expiration_date > old_locations[row.account_number].expiration_date):
+            row.end_date > old_locations[row.account_number].end_date):
             old_locations[row.account_number] = row
 
 # write it

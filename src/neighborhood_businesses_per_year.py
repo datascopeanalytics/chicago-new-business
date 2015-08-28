@@ -14,8 +14,8 @@ def aggregate_neighborhood_by_year(filename, date_attr):
     return counter
 
 
-new_businesses = aggregate_neighborhood_by_year(sys.argv[1], 'date_issued')
-old_businesses = aggregate_neighborhood_by_year(sys.argv[2], 'expiration_date')
+new_businesses = aggregate_neighborhood_by_year(sys.argv[1], 'start_date')
+old_businesses = aggregate_neighborhood_by_year(sys.argv[2], 'end_date')
 
 writer = csv.writer(sys.stdout)
 writer.writerow(['neighborhood', 'year', 'new', 'old'])

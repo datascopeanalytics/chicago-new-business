@@ -6,8 +6,8 @@ class Row(dict):
 
     def __init__(self, *args, **kwargs):
         super(Row, self).__init__(*args, **kwargs)
-        self._date_issued = None
-        self._expiration_date = None
+        self._start_date = None
+        self._end_date = None
 
     def _cast_date(self, s):
         if not s:
@@ -20,17 +20,17 @@ class Row(dict):
         return getattr(self, attr)
 
     @property
-    def date_issued(self):
+    def start_date(self):
         return self._get_date_or_cast(
             self['DATE ISSUED'],
-            '_date_issued',
+            '_start_date',
         )
 
     @property
-    def expiration_date(self):
+    def end_date(self):
         return self._get_date_or_cast(
             self['LICENSE TERM EXPIRATION DATE'],
-            '_expiration_date',
+            '_end_date',
         )
 
     @property
