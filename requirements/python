@@ -4,3 +4,5 @@ seaborn
 Fiona
 Shapely
 pyproj
+scipy
+pandas
