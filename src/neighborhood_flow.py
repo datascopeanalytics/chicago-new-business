@@ -7,7 +7,7 @@ import data
 import figs
 
 class Counter(collections.Counter):
-    year_range = range(2004, 2015)
+    year_range = range(2004, 2016)
 
     def restrict_to_year_range(self, multiplier=1):
         output = []

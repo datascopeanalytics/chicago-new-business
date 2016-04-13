@@ -18,7 +18,7 @@ def load_counts(filename):
 # read in the data
 new_counts = load_counts(sys.argv[1])
 old_counts = load_counts(sys.argv[2])
-year_range = range(2004, 2015)
+year_range = range(2004, 2016)
 new_counts = [new_counts[year] for year in year_range]
 old_counts = [-old_counts[year] for year in year_range]
 
