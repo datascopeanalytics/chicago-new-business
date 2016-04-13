@@ -1,31 +1,443 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <style>
+    svg{
+        border: 5px solid red;
+        /*height: 100%;*/
+        width: 100%;
+    }
+    #area1 {
+      width: 40%;
+      float: left;
+    }
+    #area2 {
+      width: 60%;
+      float: right;
+    }
 
 
+    div.bar {
+        display: inline-block;
+        width: 20px;
+        height: 75px;	/* Gets overriden by D3-assigned height below */
+        margin-right: 2px;
+        background-color: teal;
+    }
+    path{ fill: #ccc; }
+
+    text{
+        font-size: 20px;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        /*text-transform: lowercase;*/
+    }
+
+    .line {
+      fill: none;
+      stroke: black;
+      stroke-width: 1.5px;
+    }
+
+    .active {
+        stroke: black;
+        stroke-width: 4px;
+    }
+
+    .neighborhood-boundary{
+        fill: none;
+        stroke: #120f0f;
+        stroke-dasharray: 2,2;
+        stroke-linejoin: round;
+    }
 
 </style>
 <body>
+    <form id="years" onchange="redraw()">
+        Min Year<input id="minDate" type="number" name="minDate" value="2007" min="2004" max="2015"></input>
+        Max Year<input id="maxDate" type="number" name="maxDate" value="2015" min="2004" max="2015"></input>
+    </form>
+    <div id="area1">
+    </div>
+    <div id="area2">
+    </div>
 </body>
 <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script src="//d3js.org/d3-queue.v1.min.js"></script>
 <script src="//d3js.org/topojson.v1.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script>
 
-var width = 960,
-    height = 1160;
+var width = 280,
+    height = 680;
+// scale for line chart
+var parseDate = d3.time.format("%Y").parse;
 
-var svg = d3.select("body").append("svg")
-    .attr("width", width)
-    .attr("height", height);
+var x = d3.time.scale()
+    .range([0, width]);
 
-d3.json("us.json", function(error, us) {
-  if (error) return console.error(error);
-  console.log(us);
+var y = d3.scale.linear()
+    .range([height*.75, height*.25]);
 
-  svg.append("path")
-      .datum(topojson.feature(us, us.objects.subunits))
-      .attr("d", d3.geo.path().projection(d3.geo.mercator()));
-});
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom");
 
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left");
+
+var line = d3.svg.line()
+    // .interpolate("basis")
+    .x(function(d) {
+        console.log('key',parseDate(d.key))
+        return x(parseDate(d.key)); })
+    .y(function(d) {
+        console.log("value",d.values)
+        return y(d.values.total_new - d.values.total_old); });
+
+// colorScale for map and bar chart
+var colorScale = d3.scale.linear()
+    // .domain([-100, 0, 100]) // adjust based on range in data...
+    .domain([-1000, 0, 1000]) // adjust based on range in data...
+    .range(['red', '#ddd', 'blue']);
+
+// Persistent array of selected neighborhoods across redraws
+// var activeList = ['AUSTIN', 'HUMBOLDT_PARK'];
+// DEFUALT: all of Chicago
+var activeList = [];
+
+function drawChart(svg, dataset) {
+    //Width and height
+    var w = 280;
+    var h = 680;
+    var barPadding = 1;
+    //Create SVG element
+    var svg = svg ? svg:
+                d3.select("#area1")
+                    .append("svg")
+                    .attr("width", w)
+                    .attr("height", h);;
+
+    // Aggregate by YEAR
+    var aggByYear = d3.nest()
+        .key(function(d) { return +d.year; })
+        .rollup(function(leaves) {
+            return {"neighborhoods": +leaves.length
+                , "total_new": d3.sum(leaves, function(d) {return +d.new;})
+                , "total_old": d3.sum(leaves, function(d) {return +d.old;})
+        }})
+        .entries(dataset);
+
+    // aggByYear.forEach( function(d) {
+    //     // console.log('each d', d)
+    //     d.total_old = d.total_old ? d.total_old: 0;
+    //     d.total_new = d.total_new ? d.total_new: 0;
+    //     d.change = d.total_new - d.total_old;
+    // })
+
+    console.log('dataset', aggByYear)
+    x.domain(d3.extent(aggByYear, function(d) { return parseDate(d.key); }));
+    y.domain(d3.extent(aggByYear, function(d) {
+        return d.values.total_new - d.values.total_old
+     }));
+
+    svg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis);
+
+    svg.append("g")
+        .attr("class", "y axis")
+        .call(yAxis)
+      .append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 6)
+        // .attr("dy", ".71em")
+        // .style("text-anchor", "end")
+        // .text("Price ($)");
+
+    var newArray = aggByYear.map(function(a) {return a.values.total_new;});
+    var oldArray = aggByYear.map(function(a) {return a.values.total_old;});
+
+    // Rect above the axis : New Biz
+    svg.selectAll(".newrect")
+       .data(newArray)
+       .enter()
+       .append("rect")
+       .attr("x", function(d, i) {
+            return i * (w / newArray.length);
+        })
+       .attr("y", function(d) {
+            return h/2 - d;  //Height minus data value
+        })
+       .attr("width", w / newArray.length - barPadding)
+       .attr("height", function(d) {
+            return d;
+        })
+        .attr("class", "newrect")
+        .attr("fill", function(d) {
+            return colorScale(d);
+        });
+
+    // Rect below the axis : Old Biz
+    svg.selectAll(".oldrect")
+       .data(oldArray)
+       .enter()
+       .append("rect")
+       .attr("x", function(d, i) {
+            return i * (w / oldArray.length);
+        })
+       .attr("y", function(d) {
+            return h/2;  //Height
+        })
+       .attr("width", w / oldArray.length - barPadding)
+       .attr("height", function(d) {
+            return d;
+        })
+        .attr("class", "oldrect")
+        .attr("fill", function(d) {
+            return colorScale(-d);
+        });
+
+    // Add labels to bar chart
+    svg.selectAll("newtext")
+        .data(newArray)
+        .enter()
+        .append("text")
+        .text(function(d) {
+            return d;
+        })
+        .attr("x", function(d, i) {
+            return i * (w / newArray.length)
+                + (w / newArray.length - barPadding) / 2;
+        })
+        .attr("y", function(d) {
+            return h/2 - d + 14;
+        })
+        .attr("class", "newtext")
+        .style("font-size", "12px")
+        .style("fill", "white")
+        .attr("text-anchor", "middle");
+
+    // labels on for Old Biz
+    svg.selectAll("oldtext")
+        .data(oldArray)
+        .enter()
+        .append("text")
+        .text(function(d) {
+           return d;
+        })
+        .attr("x", function(d, i) {
+           return i * (w / oldArray.length)
+               + (w / oldArray.length - barPadding) / 2;
+        })
+        .attr("y", function(d) {
+           return h/2 + d - 8;
+        })
+        .attr("class", "oldtext")
+        .style("font-size", "12px")
+        .style("fill", "white")
+        .attr("text-anchor", "middle");
+
+    //  Line on barchart
+    svg.append("path")
+        .datum(aggByYear)
+        .attr("class", "line")
+        .attr("d", line);
+}
+
+function redraw() {
+    // Asynchronously Load Data Before Drawing Map
+    queue()
+      .defer(d3.json, "neighborhoods.topojson")
+      .defer(d3.csv, "neighborhood_businesses_per_year.csv")
+      .await(drawMap);
+
+    function drawMap(error, json, csv) {
+        if (error) return console.error(error);
+
+        var minDate = document.getElementById('minDate').value?
+                      document.getElementById('minDate').value: 2004;
+        var maxDate = document.getElementById('maxDate').value?
+                      document.getElementById('maxDate').value: 2015;
+
+        // Remove SVG if it exists
+        if ($("svg").length > 0) {
+            // lookup = {};
+            $("svg").remove()
+        }
+
+        var chartSvg = d3.select("#area1").append("svg")
+            .attr("width", width)
+            .attr("height", height);
+
+        var map = d3.select("#area2").append("svg")
+            .attr("width", width)
+            .attr("height", height);
+
+        var g = map.append( "g" );
+
+        // Filter by Date Range selected
+        function isInDateRange(value) {
+          return value >= minDate && value <= maxDate;
+        }
+
+        // Filter if in list
+        function isInArray(value, array) {
+            return array.indexOf(value) > -1;
+        }
+
+        // filter by date for coloring all neighborhoods on map
+        filteredStats = csv.filter(function(d) {return isInDateRange(d.year);});
+        // FOR LINE BAR CHART: filter by class for selected neighborhoods
+        activeStats = filteredStats.filter(function (d) {
+            var name = d.neighborhood.replace("&", "AND")
+                        .split(",").join(" ").replace(/ /g, "_")
+            return isInArray(name, activeList);
+        });
+        // if no neighborhoods selected, then barchart is for all of Chicago
+        activeStats = activeStats.length > 0 ? activeStats : filteredStats;
+        drawChart(chartSvg, activeStats);
+
+        // Aggregate by Neighborhood
+        var result = d3.nest()
+            .key(function(d) { return d.neighborhood; })
+            .rollup(function(leaves) {
+                return {"years": +leaves.length
+                    , "total_new": d3.sum(leaves, function(d) {return +d.new;})
+                    , "total_old": d3.sum(leaves, function(d) {return +d.old;})
+            }})
+            .entries(filteredStats);
+
+        // Create Lookup for Neighborhood Stats
+        var lookup = {};
+        for (var i = 0, len = result.length; i < len; i++) {
+            lookup[result[i].key] = result[i];
+        }
+
+        var neighborhoods = topojson.feature(json,
+            json.objects.neighborhoods).features;
+
+        // Add stats to neighborhoods
+        neighborhoods.forEach( function(d) {
+            var stats = lookup[d.id].values;
+            d.id = d.id.replace("&", "AND").split(",").join(" ").replace(/ /g, "_");
+            d.total_old = stats.total_old ? stats.total_old: 0;
+            d.total_new = stats.total_new ? stats.total_new: 0;
+            d.change = d.total_new - d.total_old;
+        })
+
+        // longitude and latitude of Chicago-ish [-87.915044,41.8333925]
+        var projection = d3.geo.mercator()
+            .scale( 70000 ) // trial and error
+            .rotate( [87.915044,0] )
+            .center( [0, 41.8333925] )
+            .translate( [width/2,height/2] );
+
+        var path = d3.geo.path()
+            .projection(projection);
+
+        function inactiveHoverStyle(d,mode) {
+            var mode = mode ? mode : "over";
+            if (mode == "over") {
+                d3.selectAll(".neighborhood" + d.id)
+                    .style("fill", "yellow");
+                d3.selectAll(".neighborhood" + d.id)
+                    .style("opacity", ".3");
+            }
+            else {
+                d3.selectAll(".neighborhood" + d.id)
+                    .style("fill", colorScale(d.change));
+                d3.selectAll(".neighborhood" + d.id)
+                    .style("opacity", "1");
+            }
+        }
+
+        function addActiveClass(d){
+            d3.selectAll(".neighborhood" + d.id).classed("active", true);
+            activeList.push(d.id);
+        }
+
+        function removeActiveClass(d){
+            d3.selectAll(".neighborhood" + d.id).classed("active", false);
+            // Find and remove item from an array
+            var i = activeList.indexOf(d.id);
+            if(i != -1) { activeList.splice(i, 1); }
+        }
+
+        g.selectAll( "path" )
+            .data( neighborhoods )
+          .enter()
+            .append( "path" )
+            .attr("class", function(d) {
+                return isInArray(d.id, activeList) ?
+                    "neighborhood" + d.id + " active":
+                    "neighborhood" + d.id; })
+            .attr("d", path)
+            .style("fill", function(d) { return colorScale(d.change); })
+            .on("mouseover", function(d) {
+                // if not active, activate hover logic
+                !d3.selectAll(".neighborhood" + d.id).classed("active") ?
+                    inactiveHoverStyle(d,"over"):null;
+                // show labels on mouseover
+                d3.select(".neighborhood-label-backer" + d.id)
+                    .style("display","block");
+                d3.select(".neighborhood-label" + d.id)
+                    .style("display","block");
+            })
+            .on("mouseout", function(d) {
+                // if not active, activate hover logic
+                !d3.selectAll(".neighborhood" + d.id).classed("active") ?
+                    inactiveHoverStyle(d,"out"):null;
+                // show labels on mouseout
+                d3.select(".neighborhood-label-backer" + d.id)
+                    .style("display","none");
+                d3.select(".neighborhood-label" + d.id)
+                    .style("display", "none");
+            })
+            .on("click", function(d) {
+                // Add | Remove active class on click
+                d3.selectAll(".neighborhood" + d.id).classed("active") ?
+                    removeActiveClass(d):
+                    addActiveClass(d);
+                redraw();
+            });
+
+        // Neighborhood Boundaries ONLY between Secondary Neighborhoods
+        g.append("path")
+            .datum(topojson.mesh(json,json.objects.neighborhoods,
+                function(a, b) { return a.id !== b.id; }))
+            .attr("d", path)
+            .attr("class", "neighborhood-boundary");
+
+        // neighborhood-labels: hidden by default
+        g.selectAll(".neighborhood-label-backer")
+            .data( neighborhoods )
+          .enter().append("text")
+            .attr("class", function(d) { return "neighborhood-label-backer" + d.id; })
+            .attr("transform", function(d) {
+                return "translate(" + path.centroid(d) + ")"; })
+            .text(function(d) { return d.id.replace(/_/g, " "); })
+            .style("display", "none")
+            .style("stroke-width", "3px")
+            .style("stroke", "white");
+
+        g.selectAll(".neighborhood-label")
+            .data( neighborhoods )
+          .enter().append("text")
+            .attr("class", function(d) { return "neighborhood-label" + d.id; })
+            .attr("transform", function(d) {
+                return "translate(" + path.centroid(d) + ")"; })
+            // .attr("dy", ".35em")
+            // .attr("dy", "50")
+            // .attr("dx", "50")
+            .text(function(d) { return d.id.replace(/_/g, " "); })
+            .style("display", "none");
+            // ADJUST DISPLAY OF LABEL FOR NEIGHBORHOODS
+
+    };
+
+};
+
+redraw();
 
 </script>
