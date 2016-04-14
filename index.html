@@ -165,12 +165,11 @@ function drawChart(svg, dataset) {
             return i * (w / newArray.length);
         })
        .attr("y", function(d) {
-           console.log('y for d', h/2 + y(d), d)
-            return h/2 - y(d);  //Height minus data value
+            return y(d);  //Height minus data value
         })
        .attr("width", w / newArray.length - barPadding)
        .attr("height", function(d) {
-            return y(d);
+            return h/2 - y(d);
         })
         .attr("class", "newrect")
         .attr("fill", function(d) {
@@ -191,7 +190,7 @@ function drawChart(svg, dataset) {
         })
        .attr("width", w / oldArray.length - barPadding)
        .attr("height", function(d) {
-            return y(d);
+            return h/2 - y(d);
         })
         .attr("class", "oldrect")
         .attr("fill", function(d) {
@@ -211,7 +210,7 @@ function drawChart(svg, dataset) {
                 + (w / newArray.length - barPadding) / 2;
         })
         .attr("y", function(d) {
-            return h/2 - y(d) + 14;
+            return  y(d) + 14;
         })
         .attr("class", "newtext")
         .style("font-size", "12px")
@@ -231,7 +230,7 @@ function drawChart(svg, dataset) {
                + (w / oldArray.length - barPadding) / 2;
         })
         .attr("y", function(d) {
-           return h/2 + y(d) - 8;
+           return h - y(d) -8;
         })
         .attr("class", "oldtext")
         .style("font-size", "12px")
