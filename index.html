@@ -88,10 +88,10 @@ var yAxis = d3.svg.axis()
 var line = d3.svg.line()
     // .interpolate("basis")
     .x(function(d) {
-        console.log('key',parseDate(d.key))
+        // console.log('key',parseDate(d.key))
         return x(parseDate(d.key)); })
     .y(function(d) {
-        console.log("value",d.values)
+        // console.log("value",d.values)
         return y(d.values.total_new - d.values.total_old); });
 
 // colorScale for map and bar chart
@@ -134,7 +134,7 @@ function drawChart(svg, dataset) {
     //     d.change = d.total_new - d.total_old;
     // })
 
-    console.log('dataset', aggByYear)
+    // console.log('dataset', aggByYear)
     x.domain(d3.extent(aggByYear, function(d) { return parseDate(d.key); }));
     y.domain(d3.extent(aggByYear, function(d) {
         return d.values.total_new - d.values.total_old
@@ -248,7 +248,7 @@ function drawChart(svg, dataset) {
 function redraw() {
     // Asynchronously Load Data Before Drawing Map
     queue()
-      .defer(d3.json, "neighborhoods.topojson")
+      .defer(d3.json, "merged_neighborhoods.topojson")
       .defer(d3.csv, "neighborhood_businesses_per_year.csv")
       .await(drawMap);
 
@@ -315,7 +315,7 @@ function redraw() {
         }
 
         var neighborhoods = topojson.feature(json,
-            json.objects.neighborhoods).features;
+            json.objects.merged_neighborhoods).features;
 
         // Add stats to neighborhoods
         neighborhoods.forEach( function(d) {
