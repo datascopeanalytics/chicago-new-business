@@ -21,7 +21,13 @@ Visualize where new businesses are created in the city
    flo run
    ```
 
-4. Enjoy.
+4. Enjoy the static figures.
    ```sh
    open data/*.png
+   ```
+
+5. View the site.
+   ```sh
+   cd web && python -m SimpleHTTPServer
+   # open http://localhost:8000 in your browser
    ```
