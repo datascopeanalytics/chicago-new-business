@@ -2,19 +2,22 @@
 <meta charset="utf-8">
 <style>
     svg{
-        border: 5px solid red;
+        /*border: 5px solid red;*/
         /*height: 100%;*/
         width: 100%;
     }
     #area1 {
       width: 40%;
-      float: left;
+      float: right;
     }
     #area2 {
       width: 60%;
-      float: right;
+      float: left;
     }
 
+    .x.axis path {
+	   display: none;
+	}
 
     div.bar {
         display: inline-block;
@@ -53,9 +56,11 @@
         Min Year<input id="minDate" type="number" name="minDate" value="2007" min="2004" max="2015"></input>
         Max Year<input id="maxDate" type="number" name="maxDate" value="2015" min="2004" max="2015"></input>
     </form>
-    <div id="area1">
-    </div>
-    <div id="area2">
+    <div id="container" style="dispay:inline">
+        <div id="area2">
+        </div>
+        <div id="area1">
+        </div>
     </div>
 </body>
 <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
@@ -67,31 +72,23 @@
 var margin = {top: 40, right: 40, bottom: 40, left: 60};
 
 var width = 280,
-    height = 680;
+    height = 800;
 
 // scale for line chart
 var parseDate = d3.time.format("%Y").parse;
 
-var x = d3.time.scale()
-    .range([0, width - margin.left - margin.right]);
-
-var y = d3.scale.linear()
-    .range([height*.75, height*.25]);
-
-var line = d3.svg.line()
-    // .interpolate("basis")
-    .x(function(d) {
-        console.log('key',parseDate(d.key))
-        return x(parseDate(d.key)); })
-    .y(function(d) {
-        // console.log("value",d.values)
-        return y(d.values.total_new - d.values.total_old); });
-
 // colorScale for map and bar chart
 var colorScale = d3.scale.linear()
-    .domain([-100, 0, 100]) // adjust based on range in data...
-    // .domain([-1000, 0, 1000]) // adjust based on range in data...
-    .range(['red', '#ddd', 'blue']);
+    .domain([-700,
+             -500,
+             0,
+             500,
+             700]) // adjust based on range in data...
+    .range(['#FF0000',
+            '#fc7a7a',
+            '#ddd',
+            '#8585fc',
+            '#0000FF']);
 
 // Persistent array of selected neighborhoods across redraws
 // var activeList = ['AUSTIN', 'HUMBOLDT_PARK'];
@@ -101,24 +98,32 @@ var activeList = [];
 function drawChart(svg, dataset) {
 
     //Width and height
-    var w = 280;
-    var h = 680;
+    var w = 400;
+    var h = 900;
 
-    var barPadding = 1;
+    var barPadding = 4;
 
     var x = d3.time.scale()
-        .range([0, w]);
+        .range([0, w ]);
 
     var y = d3.scale.linear()
         .range([h*.75, h*.25]);
 
     var xAxis = d3.svg.axis()
         .scale(x)
-        .orient("bottom");
+        .orient("bottom")
+        .ticks(5);
 
     var yAxis = d3.svg.axis()
         .scale(y)
         .orient("left");
+
+    var line = d3.svg.line()
+        .x(function(d) {
+            return x(parseDate(d.key)); })
+        .y(function(d) {
+            return y(d.values.total_new - d.values.total_old);
+        });
 
     //Create SVG element
     var svg = svg;
@@ -144,48 +149,37 @@ function drawChart(svg, dataset) {
 
     svg.append("g")
         .attr("class", "x axis")
-        .attr("transform", "translate(0," + h + ")")
+        .attr("transform", "translate(0," + h*.75 + ")")
         .call(xAxis);
 
     svg.append("g")
         .attr("class", "y axis")
-        .call(yAxis)
-      .append("text")
-        .attr("transform", "rotate(-90)")
-        .transition()
-        .duration(750)
-        // .attr("y", 6)
-        // .attr("dy", ".71em")
-        // .style("text-anchor", "end")
-        // .text("Price ($)");
+        .call(yAxis);
 
     var newArray = aggByYear.map(function(a) {return a.values.total_new;});
     var oldArray = aggByYear.map(function(a) {return a.values.total_old;});
 
     // Rect above the axis : New Biz
     svg.selectAll(".newrect")
-       .data(newArray)
-       .enter()
-       .append("rect")
-       .attr("x", function(d, i) {
+        .data(newArray)
+        .enter()
+        .append("rect")
+        .attr("x", function(d, i) {
+            console.log(i,w,w / newArray.length, i * (w / newArray.length))
             return i * (w / newArray.length);
         })
-       .attr("y", function(d) {
-            return y(d);  //Height minus data value
+        .attr("y", function(d) {
+            return y(d);
         })
-       .attr("width", w / newArray.length - barPadding)
-       .attr("height", function(d) {
-            return h/2 - y(d);
-        })
-        .attr("transform", function(d, i) {
-            return "translate(" + i * newArray.length + ",0)";
+        .attr("width", w / newArray.length - barPadding)
+        .attr("height", function(d) {
+           return h/2 - y(d);
         })
         .attr("class", "newrect")
         .attr("fill", function(d) {
             return colorScale(d);
         })
-        .transition()
-        .duration(750);
+        ;
 
     // Rect below the axis : Old Biz
     svg.selectAll(".oldrect")
@@ -196,15 +190,11 @@ function drawChart(svg, dataset) {
             return i * (w / oldArray.length);
         })
        .attr("y", function(d) {
-        //    console.log('testing',h/2-d)
             return h/2;  //Height
         })
        .attr("width", w / oldArray.length - barPadding)
        .attr("height", function(d) {
             return h/2 - y(d);
-        })
-        .attr("transform", function(d, i) {
-            return "translate(" + i * oldArray.length + ",0)";
         })
         .attr("class", "oldrect")
         .attr("fill", function(d) {
@@ -226,9 +216,6 @@ function drawChart(svg, dataset) {
         .attr("y", function(d) {
             return  y(d) + 14;
         })
-        .attr("transform", function(d, i) {
-            return "translate(" + i * newArray.length + ",0)";
-        })
         .attr("class", "newtext")
         .style("font-size", "12px")
         .style("fill", "white")
@@ -249,19 +236,16 @@ function drawChart(svg, dataset) {
         .attr("y", function(d) {
            return h - y(d) -8;
         })
-        .attr("transform", function(d, i) {
-            return "translate(" + i * oldArray.length + ",0)";
-        })
         .attr("class", "oldtext")
         .style("font-size", "12px")
         .style("fill", "white")
         .attr("text-anchor", "middle");
 
-    // //  Line on barchart
-    // svg.append("path")
-    //     .datum(aggByYear)
-    //     .attr("class", "line")
-    //     .attr("d", line);
+    //  Line on barchart
+    svg.append("path")
+        .datum(aggByYear)
+        .attr("class", "line")
+        .attr("d", line);
 }
 
 function redraw() {
@@ -349,7 +333,7 @@ function redraw() {
 
         // longitude and latitude of Chicago-ish [-87.915044,41.8333925]
         var projection = d3.geo.mercator()
-            .scale( 70000 ) // trial and error
+            .scale( 80000 ) // trial and error
             .rotate( [87.915044,0] )
             .center( [0, 41.8333925] )
             .translate( [width/2,height/2] );
