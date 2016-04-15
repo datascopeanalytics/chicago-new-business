@@ -26,9 +26,7 @@
     path{ fill: #ccc; }
 
     text{
-        font-size: 20px;
         font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-        /*text-transform: lowercase;*/
     }
 
     .line {
@@ -66,29 +64,24 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script>
 
+var margin = {top: 40, right: 40, bottom: 40, left: 60};
+
 var width = 280,
     height = 680;
+
 // scale for line chart
 var parseDate = d3.time.format("%Y").parse;
 
 var x = d3.time.scale()
-    .range([0, width]);
+    .range([0, width - margin.left - margin.right]);
 
 var y = d3.scale.linear()
     .range([height*.75, height*.25]);
 
-var xAxis = d3.svg.axis()
-    .scale(x)
-    .orient("bottom");
-
-var yAxis = d3.svg.axis()
-    .scale(y)
-    .orient("left");
-
 var line = d3.svg.line()
     // .interpolate("basis")
     .x(function(d) {
-        // console.log('key',parseDate(d.key))
+        console.log('key',parseDate(d.key))
         return x(parseDate(d.key)); })
     .y(function(d) {
         // console.log("value",d.values)
@@ -106,16 +99,29 @@ var colorScale = d3.scale.linear()
 var activeList = [];
 
 function drawChart(svg, dataset) {
+
     //Width and height
     var w = 280;
     var h = 680;
+
     var barPadding = 1;
+
+    var x = d3.time.scale()
+        .range([0, w]);
+
+    var y = d3.scale.linear()
+        .range([h*.75, h*.25]);
+
+    var xAxis = d3.svg.axis()
+        .scale(x)
+        .orient("bottom");
+
+    var yAxis = d3.svg.axis()
+        .scale(y)
+        .orient("left");
+
     //Create SVG element
-    var svg = svg ? svg:
-                d3.select("#area1")
-                    .append("svg")
-                    .attr("width", w)
-                    .attr("height", h);;
+    var svg = svg;
 
     // Aggregate by YEAR
     var aggByYear = d3.nest()
@@ -127,20 +133,18 @@ function drawChart(svg, dataset) {
         }})
         .entries(dataset);
 
-    var y = d3.scale.linear()
-        .range([height*.75, height*.25]);
-
+    // Scale values based on data subset
     x.domain(d3.extent(aggByYear, function(d) { return parseDate(d.key); }));
-    // y.domain(d3.extent(aggByYear, function(d) {
-    //     return (d.values.total_new - d.values.total_old)
-    // }));
+
     var maxNew = d3.max(aggByYear, function(d) { return d.values.total_new });
     var maxOld = d3.max(aggByYear, function(d) { return d.values.total_old });
-    y.domain([-maxOld, maxNew])
+    // Use value that is greater as the max & min values to fix axis position
+    var maxVal = maxOld > maxNew ? maxOld : maxNew;
+    y.domain([-maxVal, maxVal])
 
     svg.append("g")
         .attr("class", "x axis")
-        .attr("transform", "translate(0," + height + ")")
+        .attr("transform", "translate(0," + h + ")")
         .call(xAxis);
 
     svg.append("g")
@@ -148,7 +152,9 @@ function drawChart(svg, dataset) {
         .call(yAxis)
       .append("text")
         .attr("transform", "rotate(-90)")
-        .attr("y", 6)
+        .transition()
+        .duration(750)
+        // .attr("y", 6)
         // .attr("dy", ".71em")
         // .style("text-anchor", "end")
         // .text("Price ($)");
@@ -171,10 +177,15 @@ function drawChart(svg, dataset) {
        .attr("height", function(d) {
             return h/2 - y(d);
         })
+        .attr("transform", function(d, i) {
+            return "translate(" + i * newArray.length + ",0)";
+        })
         .attr("class", "newrect")
         .attr("fill", function(d) {
             return colorScale(d);
-        });
+        })
+        .transition()
+        .duration(750);
 
     // Rect below the axis : Old Biz
     svg.selectAll(".oldrect")
@@ -191,6 +202,9 @@ function drawChart(svg, dataset) {
        .attr("width", w / oldArray.length - barPadding)
        .attr("height", function(d) {
             return h/2 - y(d);
+        })
+        .attr("transform", function(d, i) {
+            return "translate(" + i * oldArray.length + ",0)";
         })
         .attr("class", "oldrect")
         .attr("fill", function(d) {
@@ -212,6 +226,9 @@ function drawChart(svg, dataset) {
         .attr("y", function(d) {
             return  y(d) + 14;
         })
+        .attr("transform", function(d, i) {
+            return "translate(" + i * newArray.length + ",0)";
+        })
         .attr("class", "newtext")
         .style("font-size", "12px")
         .style("fill", "white")
@@ -231,6 +248,9 @@ function drawChart(svg, dataset) {
         })
         .attr("y", function(d) {
            return h - y(d) -8;
+        })
+        .attr("transform", function(d, i) {
+            return "translate(" + i * oldArray.length + ",0)";
         })
         .attr("class", "oldtext")
         .style("font-size", "12px")
@@ -266,8 +286,10 @@ function redraw() {
         }
 
         var chartSvg = d3.select("#area1").append("svg")
-            .attr("width", width)
-            .attr("height", height);
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height)
+          .append("g")
+            .attr("transform", "translate(" + margin.left + ", 0)");;
 
         var map = d3.select("#area2").append("svg")
             .attr("width", width)
@@ -401,7 +423,7 @@ function redraw() {
                 redraw();
             });
 
-        // Neighborhood Boundaries ONLY between Secondary Neighborhoods
+        // Neighborhood Boundaries ONLY between Neighborhoods
         g.append("path")
             .datum(topojson.mesh(json,json.objects.neighborhoods,
                 function(a, b) { return a.id !== b.id; }))
@@ -426,13 +448,8 @@ function redraw() {
             .attr("class", function(d) { return "neighborhood-label" + d.id; })
             .attr("transform", function(d) {
                 return "translate(" + path.centroid(d) + ")"; })
-            // .attr("dy", ".35em")
-            // .attr("dy", "50")
-            // .attr("dx", "50")
             .text(function(d) { return d.id.replace(/_/g, " "); })
             .style("display", "none");
-            // ADJUST DISPLAY OF LABEL FOR NEIGHBORHOODS
-
     };
 
 };
