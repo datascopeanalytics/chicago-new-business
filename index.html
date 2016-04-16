@@ -90,6 +90,20 @@ var colorScale = d3.scale.linear()
             '#8585fc',
             '#0000FF']);
 
+
+                    var margin = {top: 10, left: 10, bottom: 10, right: 10}
+                      , width = parseInt(d3.select('#area2').style('width'))
+                      , width = width - margin.left - margin.right
+                      , mapRatio = 1
+                      , height = width * mapRatio;
+            var projection = d3.geo.mercator()
+                .scale( 80000 ) // trial and error
+                .rotate( [87.915044,0] )
+                .center( [0, 41.8333925] )
+                .translate( [width*.2,height/2] );
+
+            var path = d3.geo.path()
+                .projection(projection);
 // Persistent array of selected neighborhoods across redraws
 // var activeList = ['AUSTIN', 'HUMBOLDT_PARK'];
 // DEFUALT: all of Chicago
@@ -258,6 +272,12 @@ function redraw() {
     function drawMap(error, json, csv) {
         if (error) return console.error(error);
 
+        var margin = {top: 10, left: 10, bottom: 10, right: 10}
+          , width = parseInt(d3.select('#area2').style('width'))
+          , width = width - margin.left - margin.right
+          , mapRatio = 1
+          , height = width * mapRatio;
+
         var minDate = document.getElementById('minDate').value?
                       document.getElementById('minDate').value: 2004;
         var maxDate = document.getElementById('maxDate').value?
@@ -333,10 +353,11 @@ function redraw() {
 
         // longitude and latitude of Chicago-ish [-87.915044,41.8333925]
         var projection = d3.geo.mercator()
-            .scale( 80000 ) // trial and error
+            // .scale( 80000 ) // trial and error
+            .scale( width * 100 ) // trial and error
             .rotate( [87.915044,0] )
             .center( [0, 41.8333925] )
-            .translate( [width/2,height/2] );
+            .translate( [width*.2,height/2] );
 
         var path = d3.geo.path()
             .projection(projection);
@@ -375,8 +396,8 @@ function redraw() {
             .append( "path" )
             .attr("class", function(d) {
                 return isInArray(d.id, activeList) ?
-                    "neighborhood" + d.id + " active":
-                    "neighborhood" + d.id; })
+                    "neighborhood" + d.id + " active" + " neighborhood":
+                    "neighborhood" + d.id  + " neighborhood"; })
             .attr("d", path)
             .style("fill", function(d) { return colorScale(d.change); })
             .on("mouseover", function(d) {
@@ -418,7 +439,9 @@ function redraw() {
         g.selectAll(".neighborhood-label-backer")
             .data( neighborhoods )
           .enter().append("text")
-            .attr("class", function(d) { return "neighborhood-label-backer" + d.id; })
+            .attr("class", function(d) {
+                return "neighborhood-label-backer" + d.id
+                + " neighborhood-label-backer"; })
             .attr("transform", function(d) {
                 return "translate(" + path.centroid(d) + ")"; })
             .text(function(d) { return d.id.replace(/_/g, " "); })
@@ -429,7 +452,9 @@ function redraw() {
         g.selectAll(".neighborhood-label")
             .data( neighborhoods )
           .enter().append("text")
-            .attr("class", function(d) { return "neighborhood-label" + d.id; })
+            .attr("class", function(d) {
+                return "neighborhood-label" + d.id
+                + " neighborhood-label"; })
             .attr("transform", function(d) {
                 return "translate(" + path.centroid(d) + ")"; })
             .text(function(d) { return d.id.replace(/_/g, " "); })
@@ -439,5 +464,48 @@ function redraw() {
 };
 
 redraw();
+
+d3.select(window).on('resize', resize);
+
+function resizeMap() {
+    // adjust things when the window size changes
+    width = parseInt(d3.select('#area2').style('width'));
+    console.log('original width', width)
+    width = width - margin.left - margin.right;
+    mapRatio = 1;
+    height = width * mapRatio;
+
+    // update projection
+    projection
+        .translate([width *.2, height / 2])
+        .scale(width*100);
+
+        // d3.geo.mercator()
+        //     .scale( 80000 ) // trial and error
+        //     .rotate( [87.915044,0] )
+        //     .center( [0, 41.8333925] )
+        //     .translate( [width*.2,height/2] );
+
+    map = d3.select("#area2").select("svg");
+    // resize the map container
+    map
+        .style('width', width + 'px')
+        .style('height', height + 'px');
+
+    // resize the map
+    map.selectAll('.neighborhood').attr('d', path);
+    map.selectAll('.neighborhood-boundary').attr('d', path);
+    map.selectAll('.neighborhood-label').attr('d', path)
+        .attr("transform", function(d) {
+            return "translate(" + path.centroid(d) + ")"; });
+    map.selectAll('.neighborhood-label-backer').attr('d', path)
+        .attr("transform", function(d) {
+            return "translate(" + path.centroid(d) + ")"; });
+    // map.selectAll('.state').attr('d', path);
+}
+
+function resize() {
+    resizeMap();
+}
 
 </script>
