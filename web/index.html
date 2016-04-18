@@ -532,8 +532,8 @@ function resizeChart() {
 
     var minDate = $( "#dateSlider" ).slider( "values", 0 );
     var maxDate = $( "#dateSlider" ).slider( "values", 1 );
-    
-    x.domain([minDate, maxDate]);
+
+    x.domain([parseDate(String(minDate)), parseDate(String(maxDate))]);
 
     var barWidth = width / newArray.length;
     var barPadding = 4;
@@ -585,7 +585,8 @@ function resizeChart() {
         .scale(y)
         .orient("left");
 
-    chart.select('.y.axis').call(yAxis);
+    chart.select('.y.axis')
+        .call(yAxis);
 
     var xAxis = d3.svg.axis()
         .scale(x)
