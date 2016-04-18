@@ -80,7 +80,7 @@
     <div id="container" style="dispay:inline">
         <div id="area1">
             <p>
-              <label for="Years">Years:</label>
+              <!-- <label for="Years">Years:</label> -->
               <input type="text" id="years" readonly>
             </p>
             <div id="dateSlider">
@@ -530,15 +530,10 @@ function resizeChart() {
     var maxVal = maxOld > maxNew ? maxOld : maxNew;
     y.domain([-maxVal, maxVal])
 
-    // var minDate = document.getElementById('minDate').value?
-    //               document.getElementById('minDate').value: 2004;
-    // var maxDate = document.getElementById('maxDate').value?
-    //               document.getElementById('maxDate').value: 2015;
-
     var minDate = $( "#dateSlider" ).slider( "values", 0 );
     var maxDate = $( "#dateSlider" ).slider( "values", 1 );
-
-    x.domain([parseDate(minDate), parseDate(maxDate)]);
+    
+    x.domain([minDate, maxDate]);
 
     var barWidth = width / newArray.length;
     var barPadding = 4;
