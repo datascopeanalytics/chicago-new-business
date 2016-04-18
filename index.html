@@ -2,17 +2,17 @@
 <meta charset="utf-8">
 <style>
     svg{
-        /*border: 5px solid red;*/
+        border: 5px solid red;
         /*height: 100%;*/
         width: 100%;
     }
     #area1 {
       width: 40%;
-      float: right;
+      float: left;
     }
     #area2 {
       width: 60%;
-      float: left;
+      float: right;
     }
 
     .x.axis path {
@@ -57,9 +57,9 @@
         Max Year<input id="maxDate" type="number" name="maxDate" value="2015" min="2004" max="2015"></input>
     </form>
     <div id="container" style="dispay:inline">
-        <div id="area2">
-        </div>
         <div id="area1">
+        </div>
+        <div id="area2">
         </div>
     </div>
 </body>
@@ -69,10 +69,22 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script>
 
-var margin = {top: 40, right: 40, bottom: 40, left: 60};
+var margin = {top: 10, left: 10, bottom: 10, right: 10}
+  , width = parseInt(d3.select('#area2').style('width'))
+  , width = width - margin.left - margin.right
+  , mapRatio = 1
+  , height = width * mapRatio;
 
-var width = 280,
-    height = 800;
+// longitude and latitude of Chicago-ish [-87.915044,41.8333925]
+var projection = d3.geo.mercator()
+    // .scale( 80000 ) // trial and error
+    .scale( width * 100 ) // trial and error
+    .rotate( [87.915044,0] )
+    .center( [0, 41.8333925] )
+    .translate( [width*.2,height/2] );
+
+var path = d3.geo.path()
+    .projection(projection);
 
 // scale for line chart
 var parseDate = d3.time.format("%Y").parse;
@@ -91,19 +103,6 @@ var colorScale = d3.scale.linear()
             '#0000FF']);
 
 
-                    var margin = {top: 10, left: 10, bottom: 10, right: 10}
-                      , width = parseInt(d3.select('#area2').style('width'))
-                      , width = width - margin.left - margin.right
-                      , mapRatio = 1
-                      , height = width * mapRatio;
-            var projection = d3.geo.mercator()
-                .scale( 80000 ) // trial and error
-                .rotate( [87.915044,0] )
-                .center( [0, 41.8333925] )
-                .translate( [width*.2,height/2] );
-
-            var path = d3.geo.path()
-                .projection(projection);
 // Persistent array of selected neighborhoods across redraws
 // var activeList = ['AUSTIN', 'HUMBOLDT_PARK'];
 // DEFUALT: all of Chicago
@@ -112,13 +111,13 @@ var activeList = [];
 function drawChart(svg, dataset) {
 
     //Width and height
-    var w = 400;
-    var h = 900;
+    var w = (parseInt(d3.select('#container').select("svg").style('width')) - 80)*.9;
+    var h = height;
 
     var barPadding = 4;
 
     var x = d3.time.scale()
-        .range([0, w ]);
+        .range([0, w]);
 
     var y = d3.scale.linear()
         .range([h*.75, h*.25]);
@@ -155,6 +154,7 @@ function drawChart(svg, dataset) {
     // Scale values based on data subset
     x.domain(d3.extent(aggByYear, function(d) { return parseDate(d.key); }));
 
+    // Determine height of bars based on filtered data
     var maxNew = d3.max(aggByYear, function(d) { return d.values.total_new });
     var maxOld = d3.max(aggByYear, function(d) { return d.values.total_old });
     // Use value that is greater as the max & min values to fix axis position
@@ -173,27 +173,29 @@ function drawChart(svg, dataset) {
     var newArray = aggByYear.map(function(a) {return a.values.total_new;});
     var oldArray = aggByYear.map(function(a) {return a.values.total_old;});
 
+    var barWidth = w / newArray.length;
+
+    console.log('drawing chart: ' , barWidth)
+
     // Rect above the axis : New Biz
     svg.selectAll(".newrect")
         .data(newArray)
         .enter()
         .append("rect")
         .attr("x", function(d, i) {
-            console.log(i,w,w / newArray.length, i * (w / newArray.length))
-            return i * (w / newArray.length);
+            return i * barWidth;
         })
         .attr("y", function(d) {
             return y(d);
         })
-        .attr("width", w / newArray.length - barPadding)
+        .attr("width", barWidth - barPadding)
         .attr("height", function(d) {
            return h/2 - y(d);
         })
         .attr("class", "newrect")
         .attr("fill", function(d) {
             return colorScale(d);
-        })
-        ;
+        });
 
     // Rect below the axis : Old Biz
     svg.selectAll(".oldrect")
@@ -201,12 +203,12 @@ function drawChart(svg, dataset) {
        .enter()
        .append("rect")
        .attr("x", function(d, i) {
-            return i * (w / oldArray.length);
+            return i * barWidth;
         })
        .attr("y", function(d) {
             return h/2;  //Height
         })
-       .attr("width", w / oldArray.length - barPadding)
+       .attr("width", barWidth - barPadding)
        .attr("height", function(d) {
             return h/2 - y(d);
         })
@@ -224,8 +226,8 @@ function drawChart(svg, dataset) {
             return d;
         })
         .attr("x", function(d, i) {
-            return i * (w / newArray.length)
-                + (w / newArray.length - barPadding) / 2;
+            return i * barWidth
+                + (barWidth - barPadding) / 2;
         })
         .attr("y", function(d) {
             return  y(d) + 14;
@@ -244,8 +246,8 @@ function drawChart(svg, dataset) {
            return d;
         })
         .attr("x", function(d, i) {
-           return i * (w / oldArray.length)
-               + (w / oldArray.length - barPadding) / 2;
+           return i * barWidth
+               + (barWidth - barPadding) / 2;
         })
         .attr("y", function(d) {
            return h - y(d) -8;
@@ -261,6 +263,9 @@ function drawChart(svg, dataset) {
         .attr("class", "line")
         .attr("d", line);
 }
+chart = d3.select("#area1").select("svg");
+
+console.log('first draw',chart.select("line"))
 
 function redraw() {
     // Asynchronously Load Data Before Drawing Map
@@ -271,12 +276,6 @@ function redraw() {
 
     function drawMap(error, json, csv) {
         if (error) return console.error(error);
-
-        var margin = {top: 10, left: 10, bottom: 10, right: 10}
-          , width = parseInt(d3.select('#area2').style('width'))
-          , width = width - margin.left - margin.right
-          , mapRatio = 1
-          , height = width * mapRatio;
 
         var minDate = document.getElementById('minDate').value?
                       document.getElementById('minDate').value: 2004;
@@ -289,11 +288,12 @@ function redraw() {
             $("svg").remove()
         }
 
+        // var chartW = parseInt(d3.select('#container').style('width'))*.2
         var chartSvg = d3.select("#area1").append("svg")
-            .attr("width", width + margin.left + margin.right)
+            .attr("width", width )
             .attr("height", height)
           .append("g")
-            .attr("transform", "translate(" + margin.left + ", 0)");;
+            .attr("transform", "translate(" + 80 + ", 0)");
 
         var map = d3.select("#area2").append("svg")
             .attr("width", width)
@@ -350,17 +350,6 @@ function redraw() {
             d.total_new = stats.total_new ? stats.total_new: 0;
             d.change = d.total_new - d.total_old;
         })
-
-        // longitude and latitude of Chicago-ish [-87.915044,41.8333925]
-        var projection = d3.geo.mercator()
-            // .scale( 80000 ) // trial and error
-            .scale( width * 100 ) // trial and error
-            .rotate( [87.915044,0] )
-            .center( [0, 41.8333925] )
-            .translate( [width*.2,height/2] );
-
-        var path = d3.geo.path()
-            .projection(projection);
 
         function inactiveHoverStyle(d,mode) {
             var mode = mode ? mode : "over";
@@ -467,11 +456,120 @@ redraw();
 
 d3.select(window).on('resize', resize);
 
+function resizeChart() {
+    // adjust things when the window size changes
+    width = (parseInt(d3.select('#container').select("svg").style('width')) - 80) *.9;
+    // Same height as MAP svg
+    height = parseInt(d3.select('#area2').select("svg").style('height'));
+
+    chart = d3.select("#area1").select("svg");
+    // resize the chart container
+    chart
+        .style('height', height + 'px');
+
+    // resize the chart
+    var x = d3.time.scale()
+        .range([0, width]);
+
+    var y = d3.scale.linear()
+        .range([height*.75, height*.25]);
+
+    // Determine height of bars based on filtered data
+    newArray = chart.selectAll('.newrect').data()
+    oldArray = chart.selectAll('.oldrect').data()
+
+    var maxNew = d3.max(newArray);
+    var maxOld = d3.max(oldArray);
+    // Use value that is greater as the max & min values to fix axis position
+    var maxVal = maxOld > maxNew ? maxOld : maxNew;
+    y.domain([-maxVal, maxVal])
+
+    var minDate = document.getElementById('minDate').value?
+                  document.getElementById('minDate').value: 2004;
+    var maxDate = document.getElementById('maxDate').value?
+                  document.getElementById('maxDate').value: 2015;
+
+    x.domain([parseDate(minDate), parseDate(maxDate)]);
+
+    var barWidth = width / newArray.length;
+    var barPadding = 4;
+
+    chart.selectAll('.newrect')
+        .attr("x", function(d, i) {
+            return i * barWidth;
+        })
+        .attr("y", function(d) {
+            return y(d);
+        })
+        .attr('width', barWidth - barPadding)
+        .attr("height", function(d) {
+            return height/2 - y(d);
+       });
+
+    chart.selectAll('.oldrect')
+        .attr("x", function(d, i) {
+            return i * barWidth;
+        })
+        .attr("y", function(d) {
+            return height/2;
+        })
+        .attr('width', barWidth - barPadding)
+        .attr("height", function(d) {
+            return height/2 - y(d);
+        });
+
+    chart.selectAll('.newtext')
+        .attr("x", function(d, i) {
+            return i * barWidth
+                + (barWidth - barPadding) / 2;
+        })
+        .attr("y", function(d) {
+            return y(d) + 14;
+        });
+
+    chart.selectAll('.oldtext')
+        .attr("x", function(d, i) {
+           return i * barWidth
+               + (barWidth - barPadding) / 2;
+        })
+        .attr("y", function(d) {
+           return height - y(d) -8;
+        })
+
+    // update axes
+    var yAxis = d3.svg.axis()
+        .scale(y)
+        .orient("left");
+
+    chart.select('.y.axis').call(yAxis);
+
+    var xAxis = d3.svg.axis()
+        .scale(x)
+        .orient("bottom")
+        .ticks(5);
+
+    chart.select('.x.axis')
+        .attr("transform", "translate(0," + height*.75 + ")")
+        .call(xAxis);
+
+    // update line
+    var line = d3.svg.line()
+        .x(function(d) {
+            return x(parseDate(d.key)); })
+        .y(function(d) {
+            return y(d.values.total_new - d.values.total_old);
+        });
+
+    chart.selectAll('.line')
+      .attr("d", function(d) { return line(d); });
+
+}
+
 function resizeMap() {
     // adjust things when the window size changes
     width = parseInt(d3.select('#area2').style('width'));
-    console.log('original width', width)
-    width = width - margin.left - margin.right;
+    width = width
+    // - margin.left - margin.right;
     mapRatio = 1;
     height = width * mapRatio;
 
@@ -479,12 +577,6 @@ function resizeMap() {
     projection
         .translate([width *.2, height / 2])
         .scale(width*100);
-
-        // d3.geo.mercator()
-        //     .scale( 80000 ) // trial and error
-        //     .rotate( [87.915044,0] )
-        //     .center( [0, 41.8333925] )
-        //     .translate( [width*.2,height/2] );
 
     map = d3.select("#area2").select("svg");
     // resize the map container
@@ -501,11 +593,11 @@ function resizeMap() {
     map.selectAll('.neighborhood-label-backer').attr('d', path)
         .attr("transform", function(d) {
             return "translate(" + path.centroid(d) + ")"; });
-    // map.selectAll('.state').attr('d', path);
 }
 
 function resize() {
     resizeMap();
+    resizeChart();
 }
 
 </script>
