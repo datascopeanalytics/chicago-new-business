@@ -2,7 +2,7 @@
 <meta charset="utf-8">
 <style>
     svg{
-        border: 5px solid red;
+        /*border: 5px solid red;*/
         /*height: 100%;*/
         width: 100%;
     }
@@ -50,6 +50,22 @@
         stroke-linejoin: round;
     }
 
+    #legend {
+        padding: 1.5em 0 0 1.5em;
+    }
+
+    ul {
+        display: -webkit-box;
+    }
+
+    li.key {
+        border-top-width: 10px;
+        border-top-style: solid;
+        font-size: .75em;
+        width: 17%;
+        padding-left: 0;
+        padding-right: 0;
+    }
 </style>
 <body>
     <form id="years" onchange="redraw()">
@@ -60,6 +76,10 @@
         <div id="area1">
         </div>
         <div id="area2">
+            <div id="legend">
+                <ul>
+                </ul>
+            </div>
         </div>
     </div>
 </body>
@@ -175,8 +195,6 @@ function drawChart(svg, dataset) {
 
     var barWidth = w / newArray.length;
 
-    console.log('drawing chart: ' , barWidth)
-
     // Rect above the axis : New Biz
     svg.selectAll(".newrect")
         .data(newArray)
@@ -264,8 +282,6 @@ function drawChart(svg, dataset) {
         .attr("d", line);
 }
 chart = d3.select("#area1").select("svg");
-
-console.log('first draw',chart.select("line"))
 
 function redraw() {
     // Asynchronously Load Data Before Drawing Map
@@ -449,6 +465,20 @@ function redraw() {
             .text(function(d) { return d.id.replace(/_/g, " "); })
             .style("display", "none");
     };
+
+    var legend = d3.select("#legend").select("ul");
+    var colors = colorScale.range().reverse();
+    var keys = legend.selectAll('li.key')
+        .data(colors);
+
+    keys.enter().append('li')
+        .attr('class', 'key')
+        .style('border-top-color', String)
+        .style('display','block')
+        .text(function(d,i) {
+            return -colorScale.domain()[i];
+        })
+        .attr('x', -10);
 
 };
 
