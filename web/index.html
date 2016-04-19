@@ -40,6 +40,12 @@
       stroke-width: 1.5px;
     }
 
+    .line-backer {
+      fill: none;
+      stroke: white;
+      stroke-width: 3px;
+    }
+
     .active {
         stroke: black;
         stroke-width: 4px;
@@ -285,6 +291,11 @@ function drawChart(svg, dataset) {
         .attr("text-anchor", "middle");
 
     //  Line on barchart
+    svg.append("path")
+        .datum(aggByYear)
+        .attr("class", "line-backer")
+        .attr("d", line);
+
     svg.append("path")
         .datum(aggByYear)
         .attr("class", "line")
