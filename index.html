@@ -147,6 +147,12 @@ var colorScale = d3.scale.linear()
 // DEFUALT: all of Chicago
 var activeList = [];
 
+// Subtract & Add 6 months to XAxis
+function addMonths(date, months) {
+  date.setMonth(date.getMonth() + months);
+  return date;
+}
+
 function drawChart(svg, dataset) {
 
     //Width and height
@@ -191,7 +197,13 @@ function drawChart(svg, dataset) {
         .entries(dataset);
 
     // Scale values based on data subset
-    x.domain(d3.extent(aggByYear, function(d) { return parseDate(d.key); }));
+
+    // Subtract | Add 6 Months so that line aligns with middle of bars
+    var dateExtent = d3.extent(aggByYear,function(d){return parseDate(d.key);});
+    var axisMin = addMonths(dateExtent[0], -6);
+    var axisMax = addMonths(dateExtent[1], 6);
+    // x.domain(d3.extent(aggByYear, function(d) { return parseDate(d.key); }));
+    x.domain([axisMin, axisMax]);
 
     // Determine height of bars based on filtered data
     var maxNew = d3.max(aggByYear, function(d) { return d.values.total_new });
@@ -540,7 +552,11 @@ function resizeChart() {
     var minDate = $( "#dateSlider" ).slider( "values", 0 );
     var maxDate = $( "#dateSlider" ).slider( "values", 1 );
 
-    x.domain([parseDate(String(minDate)), parseDate(String(maxDate))]);
+    // Subtract | Add 6 Months so that line aligns with middle of bars
+    var dateExtent = [parseDate(String(minDate)), parseDate(String(maxDate))];
+    var axisMin = addMonths(dateExtent[0], -6);
+    var axisMax = addMonths(dateExtent[1], 6);
+    x.domain([axisMin, axisMax]);
 
     var barWidth = width / newArray.length;
     var barPadding = 4;
@@ -614,6 +630,9 @@ function resizeChart() {
 
     chart.selectAll('.line')
       .attr("d", function(d) { return line(d); });
+
+    chart.selectAll('.line-backer')
+        .attr("d", function(d) { return line(d); });
 
 }
 
