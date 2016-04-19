@@ -224,9 +224,7 @@ function drawChart(svg, dataset) {
            return h/2 - y(d);
         })
         .attr("class", "newrect")
-        .attr("fill", function(d) {
-            return colorScale(d);
-        });
+        .attr("fill", "blue");
 
     // Rect below the axis : Old Biz
     svg.selectAll(".oldrect")
@@ -244,9 +242,7 @@ function drawChart(svg, dataset) {
             return h/2 - y(d);
         })
         .attr("class", "oldrect")
-        .attr("fill", function(d) {
-            return colorScale(-d);
-        });
+        .attr("fill", "red");
 
     // Add labels to bar chart
     svg.selectAll("newtext")
