@@ -483,7 +483,8 @@ function redraw() {
                 return "neighborhood-label-backer" + d.id
                 + " neighborhood-label-backer"; })
             .attr("transform", function(d) {
-                return "translate(" + path.centroid(d) + ")"; })
+                // bounds: [[left, top], [right, bottom]]
+                return "translate(" + path.bounds(d)[0] + ")"; })
             .text(function(d) { return d.id.replace(/_/g, " "); })
             .style("display", "none")
             .style("stroke-width", "3px")
@@ -496,7 +497,8 @@ function redraw() {
                 return "neighborhood-label" + d.id
                 + " neighborhood-label"; })
             .attr("transform", function(d) {
-                return "translate(" + path.centroid(d) + ")"; })
+                // bounds: [[left, top], [right, bottom]]
+                return "translate(" + path.bounds(d)[0] + ")"; })
             .text(function(d) { return d.id.replace(/_/g, " "); })
             .style("display", "none");
     };
@@ -660,10 +662,12 @@ function resizeMap() {
     map.selectAll('.neighborhood-boundary').attr('d', path);
     map.selectAll('.neighborhood-label').attr('d', path)
         .attr("transform", function(d) {
-            return "translate(" + path.centroid(d) + ")"; });
+            // bounds: [[left, top], [right, bottom]]
+            return "translate(" + path.bounds(d)[0] + ")"; })
     map.selectAll('.neighborhood-label-backer').attr('d', path)
         .attr("transform", function(d) {
-            return "translate(" + path.centroid(d) + ")"; });
+            // bounds: [[left, top], [right, bottom]]
+            return "translate(" + path.bounds(d)[0] + ")"; })
 }
 
 function resize() {
