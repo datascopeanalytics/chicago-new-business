@@ -34,13 +34,17 @@ Visualize where new businesses are created in the city
    
 ## appendix
 
-1. To convert shapefiles into topojsons used in viz, run following commands in /data/boundaries.
+###### To convert shapefiles into TopoJSONs used in viz:
+
+1. [Install topojson](https://github.com/mbostock/topojson/wiki/Installation) command-line application.
+
+2. Run following commands in /data/boundaries directory.
 
    ```sh
    # The -t_srs crs:84 specifies a projection to use. If you leave this part off, you won't be dealing with degrees in your output document.
    ogr2ogr -f "GeoJSON" -t_srs crs:84 neighborhoods.json Neighborhoods_2012b.shp
    # Convert to TOPOJSON; specify ID and retain property with -p
-   topojson -o neighborhoods.topojson --id-property SEC_NEIGH -p PRI_NEIGH  --neighborhoods.json
+   topojson -o neighborhoods.topojson --id-property SEC_NEIGH -p PRI_NEIGH  -- neighborhoods.json
    # Merge polygons for neighborhoods in the same SEC_NEIGH
    topojson-merge -o merged_neighborhoods.topojson --in-object=neighborhoods --out-object=merged_neighborhoods  -- 'neighborhoods.topojson'
    ```
