@@ -125,7 +125,7 @@ for addr in clean_addr:
     if r.json()['status'] == 'OVER_QUERY_LIMIT':
         print 'Congrats! You and your team have exceeded the daily request'\
               'quota for Google\'s API. Try again tomorrow '\
-              '\xc2\xaf\\_(\xe3\x83\x84)_/\xc2\xaf'
+              '\xc2\xaf\\_(\xe3\x83\x84)_/\xc2\xaf' #shrug ¯\_(ツ)_/¯
         break
     else:
         lat, lng = extract_lat_lng(r)
