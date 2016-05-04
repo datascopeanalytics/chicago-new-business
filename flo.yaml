@@ -7,45 +7,23 @@ command:
   - mkdir -p $(dirname {{creates}})
   - curl https://data.cityofchicago.org/api/views/r5kz-chrr/rows.csv?accessType=DOWNLOAD > {{creates}}
 
+######################################################## ONLY CHICAGO, IL
+---
+creates: data/chicago.csv
+depends:
+  - src/filter_chicago_locations.py
+  - data/raw.csv
+  # - data/with_lat_lng.csv
+command: python {{depends[0]}} < {{depends[1]}} > {{creates}}
+
 ######################################################## MISSING LAT | LNG
 ---
 creates: data/with_lat_lng.csv
 depends:
   - src/add_missing_latlng.py
-  - data/raw.csv
+  - data/chicago.csv
+  # - data/raw.csv
   - src/google_api.py
-command: python {{depends[0]}} < {{depends[1]}} > {{creates}}
-
-######################################################## NEW BUSINESSES
----
-creates: data/new_businesses.csv
-depends:
-  - src/filter_new_businesses.py
-  - data/with_lat_lng.csv
-  - src/data.py
-command: python {{depends[0]}} < {{depends[1]}} > {{creates}}
-
----
-creates: data/new_businesses_per_year.csv
-depends:
-  - src/new_businesses_per_year.py
-  - data/new_businesses.csv
-command: python {{depends[0]}} < {{depends[1]}} > {{creates}}
-
-######################################################## OLD BUSINESSES
----
-creates: data/old_businesses.csv
-depends:
-  - src/filter_old_businesses.py
-  - data/with_lat_lng.csv
-  - src/data.py
-command: python {{depends[0]}} < {{depends[1]}} > {{creates}}
-
----
-creates: data/old_businesses_per_year.csv
-depends:
-  - src/old_businesses_per_year.py
-  - data/old_businesses.csv
 command: python {{depends[0]}} < {{depends[1]}} > {{creates}}
 
 ######################################################## NEIGHBORHOODS
@@ -62,20 +40,11 @@ command:
   - unzip {{depends}} -d {{creates}}
 
 ---
-creates: data/new_businesses_neighborhood.csv
+creates: data/businesses_with_neighborhood.csv
 depends:
   - src/add_neighborhood_column.py
   - data/boundaries/
-  - data/new_businesses.csv
-command:
-  - python {{depends[0]}} {{depends[1]}}*.shp < {{depends[2]}} > {{creates}}
-
----
-creates: data/old_businesses_neighborhood.csv
-depends:
-  - src/add_neighborhood_column.py
-  - data/boundaries/
-  - data/old_businesses.csv
+  - data/with_lat_lng.csv
 command:
   - python {{depends[0]}} {{depends[1]}}*.shp < {{depends[2]}} > {{creates}}
 
@@ -83,9 +52,40 @@ command:
 creates: data/neighborhood_coding_check.csv
 depends:
   - src/neighborhood_coding_check.py
-  - data/new_businesses_neighborhood.csv
-  - data/old_businesses_neighborhood.csv
+  - data/businesses_with_neighborhood.csv
 command: python {{depends|join(' ')}} > {{creates}}
+
+######################################################## NEW BUSINESSES
+---
+creates: data/new_businesses.csv
+depends:
+  - src/filter_new_businesses.py
+  - data/businesses_with_neighborhood.csv
+  - src/data.py
+command: python {{depends[0]}} < {{depends[1]}} > {{creates}}
+
+---
+creates: data/new_businesses_per_year.csv
+depends:
+  - src/new_businesses_per_year.py
+  - data/new_businesses.csv
+command: python {{depends[0]}} < {{depends[1]}} > {{creates}}
+
+######################################################## OLD BUSINESSES
+---
+creates: data/old_businesses.csv
+depends:
+  - src/filter_old_businesses.py
+  - data/businesses_with_neighborhood.csv
+  - src/data.py
+command: python {{depends[0]}} < {{depends[1]}} > {{creates}}
+
+---
+creates: data/old_businesses_per_year.csv
+depends:
+  - src/old_businesses_per_year.py
+  - data/old_businesses.csv
+command: python {{depends[0]}} < {{depends[1]}} > {{creates}}
 
 ######################################################## FIGURE BUSINESSES
 ---
@@ -101,8 +101,8 @@ command: python {{depends|join(' ')}} {{creates}}
 creates: data/neighborhood_businesses_per_year.csv
 depends:
   - src/neighborhood_businesses_per_year.py
-  - data/new_businesses_neighborhood.csv
-  - data/old_businesses_neighborhood.csv
+  - data/new_businesses.csv
+  - data/old_businesses.csv
 command: python {{depends|join(' ')}} > {{creates}}
 
 ---
