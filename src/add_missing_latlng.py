@@ -1,8 +1,7 @@
 """
 Use Google Maps Geocoding API.
 
-Assign missing Lat|Lng to business addresses in Chicago, IL.
-Excludes PO Box Addresses.
+Assign missing Lat|Lng to business addresses.
 """
 # !/usr/bin/env python
 # -*- coding: utf8 -*-
@@ -14,19 +13,16 @@ import requests
 import google_api
 
 
-def drop_PO_box(df, check='BOX '):
-    """Filter PO Box addresses."""
-    return df[~df['ADDRESS'].str.contains(check)]
+class APIError(Exception):
+    """Generic error from Google API."""
+
+    pass
 
 
-def drop_outside_IL(df, check='IL'):
-    """Filter addresses outside IL."""
-    return df[df['STATE'].str.contains(check)]
+class OverQueryLimit(APIError):
+    """You are over your API query limit."""
 
-
-def drop_outside_Chicago(df, check='CHICAGO'):
-    """Filter addresses outside Chicago."""
-    return df[df['CITY'] == check]
+    pass
 
 
 def strip_end_noise(str):
@@ -98,11 +94,7 @@ def make_address_request(street, city, state, key):
 key = google_api.google_api_key
 # load in raw business
 df = pd.read_csv(sys.stdin, low_memory=False)
-# Filter addresses for only street address in Chicago, IL
 latlng_df = df[pd.isnull(df['LOCATION'])].copy()
-latlng_df = drop_PO_box(latlng_df)
-latlng_df = drop_outside_IL(latlng_df)
-latlng_df = drop_outside_Chicago(latlng_df)
 # Remove trialing noise from addresses (i.e., apparment numbers, letters, etc)
 latlng_df = add_clean_street_address(latlng_df)
 
@@ -123,10 +115,13 @@ for addr in clean_addr:
     r = make_address_request(street, city, state, key)
     # Check if over API limit
     if r.json()['status'] == 'OVER_QUERY_LIMIT':
-        print 'Congrats! You and your team have exceeded the daily request'\
+        # SAVE Original INPUT as OUTPUT
+        df.to_csv(sys.stdout, index=False)
+        msg = 'Congrats! You and your team have exceeded the daily request '\
               'quota for Google\'s API. Try again tomorrow '\
               '\xc2\xaf\\_(\xe3\x83\x84)_/\xc2\xaf'  # shrug
-        break
+        raise OverQueryLimit(msg)
+        # break
     else:
         lat, lng = extract_lat_lng(r)
         addr_to_coordinate_dict[addr] = [lat, lng]
@@ -136,9 +131,9 @@ for k, v in addr_to_coordinate_dict.iteritems():
     latlng_df.loc[latlng_df['CLEAN_ADDRESS'] == k, 'LATITUDE'] = v[0]
     latlng_df.loc[latlng_df['CLEAN_ADDRESS'] == k, 'LONGITUDE'] = v[1]
 
-# Merge only certain columns with original df
+# Assign Lat| Lng from new df to original df where address columns match
 df.loc[df.ADDRESS.isin(latlng_df.ADDRESS),
        ['LATITUDE', 'LONGITUDE']] = latlng_df[['LATITUDE', 'LONGITUDE']]
 
 # SAVE OUTPUT
-df.to_csv(sys.stdout)
+df.to_csv(sys.stdout, index=False)
