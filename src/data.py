@@ -37,6 +37,10 @@ class Row(dict):
     def account_number(self):
         return self['ACCOUNT NUMBER']
 
+    @property
+    def neighborhood(self):
+        return self['NEIGHBORHOOD']
+
 
 class RawReader(csv.DictReader):
 
