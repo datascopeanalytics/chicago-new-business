@@ -4,14 +4,15 @@ import sys
 
 import data
 
-# identify the last time these businesses renewed their licenses
+# identify the last time these businesses renewed licenses by nieghborhood
 reader = data.RawReader(sys.stdin)
 old_locations = {}
 for row in reader:
     if row.end_date:
-        if (row.account_number not in old_locations or
-            row.end_date > old_locations[row.account_number].end_date):
-            old_locations[row.account_number] = row
+        biz_key = (row.account_number, row.neighborhood)
+        if (biz_key not in old_locations or
+            row.end_date > old_locations[biz_key].end_date):
+            old_locations[biz_key] = row
 
 # write it
 writer = data.RawWriter(sys.stdout, fieldnames=reader.fieldnames)
