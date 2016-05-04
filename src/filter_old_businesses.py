@@ -4,7 +4,7 @@ import sys
 
 import data
 
-# identify the last time these businesses renewed licenses by nieghborhood
+# identify the last time these businesses renewed licenses by neighborhood
 reader = data.RawReader(sys.stdin)
 old_locations = {}
 for row in reader:

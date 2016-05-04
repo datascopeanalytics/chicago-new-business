@@ -26,9 +26,6 @@ def drop_outside_Chicago(df, check='CHICAGO'):
 # load in business data
 df = pd.read_csv(sys.stdin, low_memory=False)
 # Filter addresses for only street address in Chicago, IL
-# with Lat | Lng
-# latlng_df = df[pd.notnull(df['LATITUDE'])].copy()
-# latlng_df = drop_PO_box(latlng_df)
 chicago_df = drop_PO_box(df)
 chicago_df = drop_outside_IL(chicago_df)
 chicago_df = drop_outside_Chicago(chicago_df)
