@@ -145,9 +145,20 @@ d3.scale.linear()
             '#0000FF']
         );
 
+var pctColorScale =
+    d3.scale.quantize()
+    .domain([-100,100]) // adjust based on range in data...
+    // .range(colorbrewer.RdBu[11]
+    .range(['#FF0000',
+            '#fc7a7a',
+            '#ddd',
+            '#8585fc',
+            '#0000FF']
+        );
+
 // Persistent array of selected neighborhoods across redraws
 // var activeList = ['AUSTIN', 'HUMBOLDT_PARK'];
-// DEFUALT: all of Chicago
+// DEFAULT: all of Chicago
 var activeList = [];
 
 // Subtract & Add 6 months to XAxis
@@ -382,8 +393,14 @@ function redraw() {
             .key(function(d) { return d.neighborhood; })
             .rollup(function(leaves) {
                 return {"years": +leaves.length
+                    // totals for absolute values (line - barchart)
                     , "total_new": d3.sum(leaves, function(d) {return +d.new;})
                     , "total_old": d3.sum(leaves, function(d) {return +d.old;})
+                    // below variables for % change over time period (map)
+                    , "prev_yr_new": +leaves[0].new
+                    , "prev_yr_old": +leaves[0].old
+                    , "latest_new": +leaves[leaves.length - 1].new
+                    , "latest_old": +leaves[leaves.length - 1].old
             }})
             .entries(filteredStats);
 
@@ -400,9 +417,20 @@ function redraw() {
         neighborhoods.forEach( function(d) {
             var stats = lookup[d.id] ? lookup[d.id].values: {};
             d.id = d.id.replace("&", "AND").split(",").join(" ").replace(/ /g, "_");
+            // totals for abolute values (line - barchart)
             d.total_old = stats.total_old ? stats.total_old: 0;
             d.total_new = stats.total_new ? stats.total_new: 0;
             d.change = d.total_new - d.total_old;
+            // below variables for % change over time period (map)
+            d.prev_yr_new = stats.prev_yr_new ? stats.prev_yr_new: 0;
+            d.prev_yr_old = stats.prev_yr_old ? stats.prev_yr_old: 0;
+            d.prev_yr_change = d.prev_yr_new - d.prev_yr_old;
+            d.latest_new = stats.latest_new ? stats.latest_new: 0;
+            d.latest_old = stats.latest_old ? stats.latest_old: 0;
+            d.latest_change = d.latest_new - d.latest_old;
+            // percent change formula: ((y2 - y1) / y1)*100
+            d.pct_change = ((d.latest_change - d.prev_yr_change)
+                             / d.prev_yr_change) * 100;
         })
 
         function inactiveHoverStyle(d,mode) {
@@ -415,7 +443,8 @@ function redraw() {
             }
             else {
                 d3.selectAll(".neighborhood" + d.id)
-                    .style("fill", colorScale(d.change));
+                    // .style("fill", colorScale(d.change));
+                    .style("fill", pctColorScale(d.pct_change));
                 d3.selectAll(".neighborhood" + d.id)
                     .style("opacity", "1");
             }
@@ -442,7 +471,8 @@ function redraw() {
                     "neighborhood" + d.id + " active" + " neighborhood":
                     "neighborhood" + d.id  + " neighborhood"; })
             .attr("d", path)
-            .style("fill", function(d) { return colorScale(d.change); })
+            // .style("fill", function(d) { return colorScale(d.change); })
+            .style("fill", function(d) { return pctColorScale(d.pct_change); })
             .on("mouseover", function(d) {
                 // if not active, activate hover logic
                 !d3.selectAll(".neighborhood" + d.id).classed("active") ?
