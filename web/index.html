@@ -429,8 +429,9 @@ function redraw() {
             d.latest_old = stats.latest_old ? stats.latest_old: 0;
             d.latest_change = d.latest_new - d.latest_old;
             // percent change formula: ((y2 - y1) / y1)*100
-            d.pct_change = ((d.latest_change - d.prev_yr_change)
-                             / d.prev_yr_change) * 100;
+            d.pct_change = d.prev_yr_change == 0 ? 100:
+                           ((d.latest_change - d.prev_yr_change)
+                           / d.prev_yr_change) * 100;
         })
 
         function inactiveHoverStyle(d,mode) {
