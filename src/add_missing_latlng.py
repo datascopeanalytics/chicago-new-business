@@ -123,6 +123,8 @@ for addr in clean_addr:
         raise OverQueryLimit(msg)
         # break
     else:
+        if r.json()['status'] != 'OK':
+            print >> sys.stderr,  r.json()['status']
         lat, lng = extract_lat_lng(r)
         addr_to_coordinate_dict[addr] = [lat, lng]
 
