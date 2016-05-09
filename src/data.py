@@ -34,8 +34,16 @@ class Row(dict):
         )
 
     @property
+    def application_type(self):
+        return self['APPLICATION TYPE']
+
+    @property
     def account_number(self):
         return self['ACCOUNT NUMBER']
+
+    @property
+    def site_number(self):
+        return self['SITE NUMBER']
 
     @property
     def neighborhood(self):
