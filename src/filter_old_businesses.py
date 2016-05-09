@@ -9,7 +9,8 @@ reader = data.RawReader(sys.stdin)
 old_locations = {}
 for row in reader:
     if row.end_date:
-        biz_key = (row.account_number, row.neighborhood)
+        # Single account can have multiple sites b/c multi location or move
+        biz_key = (row.account_number, row.site_number, row.neighborhood)
         if (biz_key not in old_locations or
             row.end_date > old_locations[biz_key].end_date):
             old_locations[biz_key] = row
