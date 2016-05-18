@@ -105,7 +105,6 @@
 <script src="//d3js.org/topojson.v1.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-<script src="colorbrewer.min.js"></script>
 <script>
 
 var margin = {top: 10, left: 10, bottom: 10, right: 10}
@@ -128,38 +127,40 @@ var path = d3.geo.path()
 // scale for line chart
 var parseDate = d3.time.format("%Y").parse;
 
+var colors =['#FF0000',
+             '#fc7a7a',
+             '#ddd',
+             '#8585fc',
+             '#0000FF']
+
 // colorScale for map and bar chart
 var colorScale =
-d3.scale.linear()
-    // d3.scale.quantize()
-    .domain([-500,
-             -250,
-             0,
-             250,
-             500]) // adjust based on range in data...
-    // .range(colorbrewer.RdBu[11]
-    .range(['#FF0000',
-            '#fc7a7a',
-            '#ddd',
-            '#8585fc',
-            '#0000FF']
-        );
-
-var pctColorScale =
     d3.scale.quantize()
     .domain([-100,100]) // adjust based on range in data...
-    // .range(colorbrewer.RdBu[11]
-    .range(['#FF0000',
-            '#fc7a7a',
-            '#ddd',
-            '#8585fc',
-            '#0000FF']
-        );
+    .range(colors);
+
+// make legend
+var legend = d3.select("#legend").select("ul");
+var keys = legend.selectAll('li.key')
+                 .data(colors);
+var legendText = [-100,-50,0,50,100]
+
+keys.enter().append('li')
+    .attr('class', 'key')
+    .style('border-top-color', String)
+    .style('display','block')
+    .text( function(d,i) { return legendText[i]; })
+    .attr('x', -10);
+
 
 // Persistent array of selected neighborhoods across redraws
 // var activeList = ['AUSTIN', 'HUMBOLDT_PARK'];
 // DEFAULT: all of Chicago
 var activeList = [];
+
+function removeOldSVG() {
+    if ($("svg").length > 0) { $("svg").remove() }
+}
 
 // Subtract & Add 6 months to XAxis
 function addMonths(date, months) {
@@ -167,8 +168,39 @@ function addMonths(date, months) {
   return date;
 }
 
-function drawChart(svg, dataset) {
+// Validate
+function makeExist(value, defaultVal) {
+    return value ? value : defaultVal;
+}
 
+function makeExistIf(condition, value, defaultVal) {
+    return condition ? value : defaultVal;
+}
+
+// Clean up neighborhood for id
+function cleanID(id) {
+    return id.replace("&", "AND")
+                .split(",").join(" ").replace(/ /g, "_").replace("'","")
+}
+function displayId(d) {
+    return d.id.replace(/_/g, " ");
+}
+
+// Filter by Date Range selected
+function isInDateRange(value) {
+    var prevYear = $( "#dateSlider" ).slider( "values", 0 ) - 1;
+    var currYear = $( "#dateSlider" ).slider( "values", 1 );
+    return value >= prevYear && value <= currYear;
+}
+function getNew(d) { return +d.new; }
+function getOld(d) { return +d.old; }
+function getContinued(d) { return +d.continued; }
+function getTotalNew(d) { return +d.values.total_new; }
+function getTotalOld(d) { return +d.values.total_old; }
+function getTotalContinued(d) { return +d.values.continued; }
+
+function drawChart(svg, dataset) {
+    console.log("CHART!!!!", activeList)
     //Width and height
     var w = (parseInt(d3.select('#container').select("svg").style('width')) - 80)*.9;
     var h = height;
@@ -190,12 +222,17 @@ function drawChart(svg, dataset) {
         .scale(y)
         .orient("left");
 
+    function xLine(d) {
+        return x(parseDate(d.key));
+    }
+
+    function yLine(d) {
+        return y(d.values.total_new - d.values.total_old);
+    }
+
     var line = d3.svg.line()
-        .x(function(d) {
-            return x(parseDate(d.key)); })
-        .y(function(d) {
-            return y(d.values.total_new - d.values.total_old);
-        });
+        .x(xLine)
+        .y(yLine);
 
     //Create SVG element
     var svg = svg;
@@ -203,25 +240,25 @@ function drawChart(svg, dataset) {
     // Aggregate by YEAR
     var aggByYear = d3.nest()
         .key(function(d) { return +d.year; })
-        .rollup(function(leaves) {
-            return {"neighborhoods": +leaves.length
-                , "total_new": d3.sum(leaves, function(d) {return +d.new;})
-                , "total_old": d3.sum(leaves, function(d) {return +d.old;})
+        .rollup(function(neighborhoods) {
+            return {
+                "neighborhoods": +neighborhoods.length
+                , "total_new": d3.sum(neighborhoods, getNew)
+                , "total_old": d3.sum(neighborhoods, getOld)
+                , "total_continued": d3.sum(neighborhoods, getContinued)
         }})
         .entries(dataset);
-
-    // Scale values based on data subset
 
     // Subtract | Add 6 Months so that line aligns with middle of bars
     var dateExtent = d3.extent(aggByYear,function(d){return parseDate(d.key);});
     var axisMin = addMonths(dateExtent[0], -6);
     var axisMax = addMonths(dateExtent[1], 6);
-    // x.domain(d3.extent(aggByYear, function(d) { return parseDate(d.key); }));
     x.domain([axisMin, axisMax]);
 
     // Determine height of bars based on filtered data
-    var maxNew = d3.max(aggByYear, function(d) { return d.values.total_new });
-    var maxOld = d3.max(aggByYear, function(d) { return d.values.total_old });
+    var maxNew = d3.max(aggByYear, getTotalNew);
+    var maxOld = d3.max(aggByYear, getTotalOld);
+    var maxContinued = d3.max(aggByYear, getTotalContinued);
     // Use value that is greater as the max & min values to fix axis position
     var maxVal = maxOld > maxNew ? maxOld : maxNew;
     y.domain([-maxVal, maxVal])
@@ -235,8 +272,8 @@ function drawChart(svg, dataset) {
         .attr("class", "y axis")
         .call(yAxis);
 
-    var newArray = aggByYear.map(function(a) {return a.values.total_new;});
-    var oldArray = aggByYear.map(function(a) {return a.values.total_old;});
+    var newArray = aggByYear.map(getTotalNew);
+    var oldArray = aggByYear.map(getTotalOld);
 
     var barWidth = w / newArray.length;
 
@@ -330,23 +367,18 @@ function drawChart(svg, dataset) {
 chart = d3.select("#area1").select("svg");
 
 function redraw() {
+    console.log("REDRAW!!!")
     // Asynchronously Load Data Before Drawing Map
     queue()
-      .defer(d3.json, "merged_neighborhoods.topojson")
-      .defer(d3.csv, "neighborhood_businesses_per_year.csv")
+      .defer(d3.json, "neighborhoods.topojson") // using PRI_NEIGH
+      .defer(d3.csv, "neighborhood_businesses_per_year.csv") // using PRI_NEIGH
       .await(drawMap);
 
+    // function drawMap(error, json, csv, dots) { // for mapping dots
     function drawMap(error, json, csv) {
         if (error) return console.error(error);
 
-        var minDate = $( "#dateSlider" ).slider( "values", 0 );
-        var maxDate = $( "#dateSlider" ).slider( "values", 1 );
-
-        // Remove SVG if it exists
-        if ($("svg").length > 0) {
-            // lookup = {};
-            $("svg").remove()
-        }
+        removeOldSVG();
 
         // var chartW = parseInt(d3.select('#container').style('width'))*.2
         var chartSvg = d3.select("#area1").append("svg")
@@ -361,46 +393,33 @@ function redraw() {
 
         var g = map.append( "g" );
 
-        // Filter by Date Range selected
-        function isInDateRange(value) {
-            if (minDate == maxDate) {
-                return value == minDate;
-            }
-            else {
-                return value >= minDate && value <= maxDate;
-            }
-        }
-
-        // Filter if in list
-        function isInArray(value, array) {
-            return array.indexOf(value) > -1;
-        }
 
         // filter by date for coloring all neighborhoods on map
         filteredStats = csv.filter(function(d) {return isInDateRange(d.year);});
         // FOR LINE BAR CHART: filter by class for selected neighborhoods
         activeStats = filteredStats.filter(function (d) {
-            var name = d.neighborhood.replace("&", "AND")
-                        .split(",").join(" ").replace(/ /g, "_")
-            return isInArray(name, activeList);
+            var name = cleanID(d.neighborhood)
+            return activeList.includes(name);
         });
         // if no neighborhoods selected, then barchart is for all of Chicago
-        activeStats = activeStats.length > 0 ? activeStats : filteredStats;
+        activeStats = makeExistIf(activeStats.length > 0,
+                                  activeStats,
+                                  filteredStats)
         drawChart(chartSvg, activeStats);
 
         // Aggregate by Neighborhood
         var result = d3.nest()
             .key(function(d) { return d.neighborhood; })
-            .rollup(function(leaves) {
-                return {"years": +leaves.length
-                    // totals for absolute values (line - barchart)
-                    , "total_new": d3.sum(leaves, function(d) {return +d.new;})
-                    , "total_old": d3.sum(leaves, function(d) {return +d.old;})
-                    // below variables for % change over time period (map)
-                    , "prev_yr_new": +leaves[0].new
-                    , "prev_yr_old": +leaves[0].old
-                    , "latest_new": +leaves[leaves.length - 1].new
-                    , "latest_old": +leaves[leaves.length - 1].old
+            .rollup(function(years) {
+                return {
+                    // Previous Year
+                    "py_new": +years[0].new
+                    , "py_old": +years[0].old
+                    , "py_continued": +years[0].continued
+                    // Selected Year
+                    , "new": +years[years.length - 1].new
+                    , "old": +years[years.length - 1].old
+                    , "continued": +years[years.length - 1].continued
             }})
             .entries(filteredStats);
 
@@ -411,31 +430,34 @@ function redraw() {
         }
 
         var neighborhoods = topojson.feature(json,
-            json.objects.merged_neighborhoods).features;
+            json.objects.neighborhoods).features;
 
         // Add stats to neighborhoods
         neighborhoods.forEach( function(d) {
-            var stats = lookup[d.id] ? lookup[d.id].values: {};
-            d.id = d.id.replace("&", "AND").split(",").join(" ").replace(/ /g, "_");
-            // totals for abolute values (line - barchart)
-            d.total_old = stats.total_old ? stats.total_old: 0;
-            d.total_new = stats.total_new ? stats.total_new: 0;
-            d.change = d.total_new - d.total_old;
-            // below variables for % change over time period (map)
-            d.prev_yr_new = stats.prev_yr_new ? stats.prev_yr_new: 0;
-            d.prev_yr_old = stats.prev_yr_old ? stats.prev_yr_old: 0;
-            d.prev_yr_change = d.prev_yr_new - d.prev_yr_old;
-            d.latest_new = stats.latest_new ? stats.latest_new: 0;
-            d.latest_old = stats.latest_old ? stats.latest_old: 0;
-            d.latest_change = d.latest_new - d.latest_old;
+            var stats = makeExistIf(lookup[d.id],
+                                    lookup[d.id].values,
+                                    {})
+            // var stats = lookup[d.id] ? lookup[d.id].values: {};
+            d.id = cleanID(d.id)
+            // Previous Year Numbers
+            d.py_new = makeExist(stats.py_new, 0);
+            d.py_old = makeExist(stats.py_old, 0);
+            d.py_continued = makeExist(stats.py_continued, 0);
+            d.py_change = d.py_continued + d.py_new - d.py_old;
+            // Selected Year Numbers
+            d.new = makeExist(stats.new, 0);
+            d.old = makeExist(stats.old, 0);
+            d.continued = makeExist(stats.continued, 0);
+            d.change = d.continued + d.new - d.old;
             // percent change formula: ((y2 - y1) / y1)*100
-            d.pct_change = d.prev_yr_change == 0 ? 100:
-                           ((d.latest_change - d.prev_yr_change)
-                           / d.prev_yr_change) * 100;
+            d.pct_change = d.py_change == d.change ? 0  :
+                                  d.py_change == 0 ? 100:
+                                                     ((d.change - d.py_change)
+                                                     / d.py_change) * 100;
         })
 
         function inactiveHoverStyle(d,mode) {
-            var mode = mode ? mode : "over";
+            var mode = makeExist(mode, 'over');
             if (mode == "over") {
                 d3.selectAll(".neighborhood" + d.id)
                     .style("fill", "yellow");
@@ -444,11 +466,14 @@ function redraw() {
             }
             else {
                 d3.selectAll(".neighborhood" + d.id)
-                    // .style("fill", colorScale(d.change));
-                    .style("fill", pctColorScale(d.pct_change));
+                    .style("fill", getColors);
                 d3.selectAll(".neighborhood" + d.id)
                     .style("opacity", "1");
             }
+        }
+        function removeFromArray(d, arrayName) {
+            var i = arrayName.indexOf(d.id);
+            if(i != -1) { arrayName.splice(i, 1); }
         }
 
         function addActiveClass(d){
@@ -458,22 +483,28 @@ function redraw() {
 
         function removeActiveClass(d){
             d3.selectAll(".neighborhood" + d.id).classed("active", false);
-            // Find and remove item from an array
-            var i = activeList.indexOf(d.id);
-            if(i != -1) { activeList.splice(i, 1); }
+            removeFromArray(d, activeList)
+        }
+
+        function whichClass(d) {
+            var activeClasses = "neighborhood" + d.id + " active" + " neighborhood"
+            var inactiveClasses = "neighborhood" + d.id + " neighborhood"
+            return makeExistIf(activeList.includes(d.id),
+                                activeClasses,
+                                inactiveClasses)
+        }
+
+        function getColors(d) {
+            return colorScale(d.pct_change);
         }
 
         g.selectAll( "path" )
             .data( neighborhoods )
           .enter()
             .append( "path" )
-            .attr("class", function(d) {
-                return isInArray(d.id, activeList) ?
-                    "neighborhood" + d.id + " active" + " neighborhood":
-                    "neighborhood" + d.id  + " neighborhood"; })
+            .attr("class", whichClass)
             .attr("d", path)
-            // .style("fill", function(d) { return colorScale(d.change); })
-            .style("fill", function(d) { return pctColorScale(d.pct_change); })
+            .style("fill", getColors)
             .on("mouseover", function(d) {
                 // if not active, activate hover logic
                 !d3.selectAll(".neighborhood" + d.id).classed("active") ?
@@ -519,7 +550,7 @@ function redraw() {
             .attr("transform", function(d) {
                 // bounds: [[left, top], [right, bottom]]
                 return "translate(" + path.bounds(d)[0] + ")"; })
-            .text(function(d) { return d.id.replace(/_/g, " "); })
+            .text(displayId)
             .style("display", "none")
             .style("stroke-width", "3px")
             .style("stroke", "white");
@@ -533,24 +564,9 @@ function redraw() {
             .attr("transform", function(d) {
                 // bounds: [[left, top], [right, bottom]]
                 return "translate(" + path.bounds(d)[0] + ")"; })
-            .text(function(d) { return d.id.replace(/_/g, " "); })
+            .text(displayId)
             .style("display", "none");
     };
-
-    var legend = d3.select("#legend").select("ul");
-    var colors = colorScale.range().reverse();
-    var keys = legend.selectAll('li.key')
-        .data(colors);
-
-    keys.enter().append('li')
-        .attr('class', 'key')
-        .style('border-top-color', String)
-        .style('display','block')
-        .text(function(d,i) {
-            return -colorScale.domain()[i];
-        })
-        .attr('x', -10);
-
 };
 
 redraw();
@@ -565,8 +581,7 @@ function resizeChart() {
 
     chart = d3.select("#area1").select("svg");
     // resize the chart container
-    chart
-        .style('height', height + 'px');
+    chart.style('height', height + 'px');
 
     // resize the chart
     var x = d3.time.scale()
@@ -585,11 +600,11 @@ function resizeChart() {
     var maxVal = maxOld > maxNew ? maxOld : maxNew;
     y.domain([-maxVal, maxVal])
 
-    var minDate = $( "#dateSlider" ).slider( "values", 0 );
-    var maxDate = $( "#dateSlider" ).slider( "values", 1 );
+    var prevYear = $( "#dateSlider" ).slider( "values", 0) - 1;
+    var currYear = $( "#dateSlider" ).slider( "values", 0);
 
     // Subtract | Add 6 Months so that line aligns with middle of bars
-    var dateExtent = [parseDate(String(minDate)), parseDate(String(maxDate))];
+    var dateExtent = [parseDate(String(prevYear)), parseDate(String(currYear))];
     var axisMin = addMonths(dateExtent[0], -6);
     var axisMax = addMonths(dateExtent[1], 6);
     x.domain([axisMin, axisMax]);
@@ -601,9 +616,7 @@ function resizeChart() {
         .attr("x", function(d, i) {
             return i * barWidth;
         })
-        .attr("y", function(d) {
-            return y(d);
-        })
+        .attr("y", y)
         .attr('width', barWidth - barPadding)
         .attr("height", function(d) {
             return height/2 - y(d);
@@ -656,20 +669,23 @@ function resizeChart() {
         .attr("transform", "translate(0," + height*.75 + ")")
         .call(xAxis);
 
+    function xLine(d) {
+        return x(parseDate(d.key));
+    }
+    function yLine(d) {
+        return y(d.values.total_new - d.values.total_old);
+    }
+
     // update line
     var line = d3.svg.line()
-        .x(function(d) {
-            return x(parseDate(d.key)); })
-        .y(function(d) {
-            return y(d.values.total_new - d.values.total_old);
-        });
+        .x(xLine)
+        .y(yLine);
 
     chart.selectAll('.line')
-      .attr("d", function(d) { return line(d); });
+      .attr("d", line);
 
     chart.selectAll('.line-backer')
-        .attr("d", function(d) { return line(d); });
-
+        .attr("d", line);
 }
 
 function resizeMap() {
@@ -686,10 +702,10 @@ function resizeMap() {
         .scale(width*100);
 
     map = d3.select("#area2").select("svg");
+
     // resize the map container
-    map
-        .style('width', width + 'px')
-        .style('height', height + 'px');
+    map.style('width', width + 'px')
+       .style('height', height + 'px');
 
     // resize the map
     map.selectAll('.neighborhood').attr('d', path);
@@ -711,19 +727,18 @@ function resize() {
 
 $(function() {
     $( "#dateSlider" ).slider({
-      range: true,
+      range: false,
       min: 2004,
       max: 2015,
-      values: [ 2007, 2015 ],
+      value: 2007,
       change: function( event, ui ) {
           redraw()
       },
       slide: function( event, ui ) {
-        $( "#years" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+        $( "#years" ).val( ui.value );
       }
     });
-    $( "#years" ).val( $( "#dateSlider" ).slider( "values", 0 ) +
-      " - " + $( "#dateSlider" ).slider( "values", 1 ) );
+    $( "#years" ).val( $( "#dateSlider" ).slider( "values", 0 ) )
   });
 
 </script>
