@@ -15,7 +15,7 @@ with fiona.drivers():
     with fiona.open(sys.argv[1]) as source:
         neighborhood_projection = pyproj.Proj(preserve_units=True, **source.crs)
         for thing in source:
-            neighborhood = thing['properties']['SEC_NEIGH']
+            neighborhood = thing['properties']['PRI_NEIGH']
             boundaries[neighborhood] = shape(thing['geometry'])
 
 # add the neighborhood to the row using a brute force search, which could be
