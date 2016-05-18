@@ -25,6 +25,11 @@ class OverQueryLimit(APIError):
     pass
 
 
+def copy_missing_rows(df, column):
+    """Return copy of df missing values in passed column."""
+    return df[pd.isnull(df[column])].copy()
+
+
 def strip_end_noise(str):
     """Remove junk from end of addresses."""
     return str.split("#")[0].split('&')[0].split(',')[0].split('/')[0].strip()
@@ -46,27 +51,25 @@ def end_is_single_char(inputString):
         return bool(len(inputString.split()[-1]) <= 1)
 
 
-def add_clean_street_address(df):
-    """Return df with new column for CLEAN_ADDRESS to be used for API."""
-    df['CLEAN_ADDRESS'] = df['ADDRESS'].apply(lambda x: strip_end_noise(x))
-    df['CLEAN_ADDRESS'] = df['CLEAN_ADDRESS'].apply(lambda x:
-                                                    ' '.join(x.split()[:-1])
-                                                    if end_has_numbers(x)
-                                                    else x)
-    df['CLEAN_ADDRESS'] = df['CLEAN_ADDRESS'].apply(lambda x:
-                                                    ' '.join(x.split()[:-1])
-                                                    if end_is_single_char(x)
-                                                    else x)
-    df['CLEAN_ADDRESS'] = df['CLEAN_ADDRESS'].apply(lambda x:
-                                                    x.replace('PKWY',
-                                                              'PARKWAY'))
-    df['CLEAN_ADDRESS'] = df['CLEAN_ADDRESS'].apply(lambda x:
-                                                    x.replace('AVE RD',
-                                                              'AVE'))
-    df['CLEAN_ADDRESS'] = df['CLEAN_ADDRESS'].apply(lambda x:
-                                                    x.replace('AVE AVE',
-                                                              'AVE'))
-    df = df.drop_duplicates('ADDRESS').copy()
+def clean_addr(address):
+    """Remove trailing noise from address (e.g., apartment numbers, letters).
+
+    Also, replace nonsense in address.
+    """
+    address = strip_end_noise(address)
+    if end_has_numbers(address):
+        address = ' '.join(address.split()[:-1])
+    if end_is_single_char(address):
+        address = ' '.join(address.split()[:-1])
+    address.replace('PKWY', 'PARKWAY').replace('AVE RD', 'AVE').replace(
+                    'AVE AVE', 'AVE')
+    return address
+
+
+def unique_clean_street_addresses(df):
+    """Add CLEAN_ADDRESS to be used for API. Drop duplicates."""
+    df['CLEAN_ADDRESS'] = df['ADDRESS'].apply(lambda x: clean_addr(x))
+    df = df.drop_duplicates('CLEAN_ADDRESS').copy()
     return df
 
 
@@ -90,21 +93,34 @@ def make_address_request(street, city, state, key):
     return get_request(street, city, state, key)
 
 
-# retrieve API key from config file
-key = google_api.google_api_key
-# load in raw business
-df = pd.read_csv(sys.stdin, low_memory=False)
-latlng_df = df[pd.isnull(df['LOCATION'])].copy()
-# Remove trialing noise from addresses (i.e., apparment numbers, letters, etc)
-latlng_df = add_clean_street_address(latlng_df)
+def store_lat_lng(df, address_dict, match_col='CLEAN_ADDRESS'):
+    """Store LATITUDE and LONGITUDE in dataframe."""
+    for k, v in address_dict.iteritems():
+        df.loc[df[match_col] == k, 'LATITUDE'] = v[0]
+        df.loc[df[match_col] == k, 'LONGITUDE'] = v[1]
 
-# Set of a clean addresses to send to API for LAT | LNG
-clean_addr = set(latlng_df.CLEAN_ADDRESS)
+
+def add_missing_latlng(df, source_df):
+    """Assign Lat| Lng from source_df to df where address columns match."""
+    df.loc[df.ADDRESS.isin(source_df.ADDRESS),
+           ['LATITUDE', 'LONGITUDE']] = source_df[['LATITUDE', 'LONGITUDE']]
+
+
+# Retrieve API key from config file
+key = google_api.google_api_key
+# Load in raw business
+df = pd.read_csv(sys.stdin, low_memory=False)
+missing_latlng_df = copy_missing_rows(df, 'LOCATION')
+missing_latlng_df = unique_clean_street_addresses(missing_latlng_df)
+
+# Clean addresses to send to API for LAT | LNG
+# clean_addr_set = set(missing_latlng_df.CLEAN_ADDRESS)
+clean_addr_set = missing_latlng_df.CLEAN_ADDRESS
 
 # Make dictionary to store address to lat|lng mapping
 addr_to_coordinate_dict = {}
 # API call to retrieve lat lng for each clean addr
-for addr in clean_addr:
+for addr in clean_addr_set:
     # skip blank, else api wiil return chicago, il lat|lng
     if addr == '':
         continue
@@ -128,14 +144,9 @@ for addr in clean_addr:
         lat, lng = extract_lat_lng(r)
         addr_to_coordinate_dict[addr] = [lat, lng]
 
-# Store LATITUDE and LONGITUDE in dataframe
-for k, v in addr_to_coordinate_dict.iteritems():
-    latlng_df.loc[latlng_df['CLEAN_ADDRESS'] == k, 'LATITUDE'] = v[0]
-    latlng_df.loc[latlng_df['CLEAN_ADDRESS'] == k, 'LONGITUDE'] = v[1]
-
-# Assign Lat| Lng from new df to original df where address columns match
-df.loc[df.ADDRESS.isin(latlng_df.ADDRESS),
-       ['LATITUDE', 'LONGITUDE']] = latlng_df[['LATITUDE', 'LONGITUDE']]
+store_lat_lng(missing_latlng_df, addr_to_coordinate_dict)
+# Assign Lat| Lng to original df where address columns match
+add_missing_latlng(df, missing_latlng_df)
 
 # SAVE OUTPUT
 df.to_csv(sys.stdout, index=False)
