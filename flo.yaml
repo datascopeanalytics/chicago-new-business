@@ -87,6 +87,16 @@ depends:
   - data/old_businesses.csv
 command: python {{depends[0]}} < {{depends[1]}} > {{creates}}
 
+######################################################## CONTINUED BUSINESSES
+---
+creates: data/continued_businesses.csv
+depends:
+  - src/count_continued_businesses.py
+  - data/new_businesses.csv
+  - data/old_businesses.csv
+  - src/data.py
+command: python {{depends|join(' ')}} > {{creates}}
+
 ######################################################## FIGURE BUSINESSES
 ---
 creates: data/chicago_flow.png
@@ -103,6 +113,7 @@ depends:
   - src/neighborhood_businesses_per_year.py
   - data/new_businesses.csv
   - data/old_businesses.csv
+  - data/continued_businesses.csv
 command: python {{depends|join(' ')}} > {{creates}}
 
 ---
