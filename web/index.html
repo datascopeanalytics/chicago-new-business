@@ -4,8 +4,6 @@
 
 <style>
     svg{
-        /*border: 5px solid red;*/
-        /*height: 100%;*/
         width: 100%;
     }
     #area1 {
@@ -57,17 +55,11 @@
         stroke-dasharray: 2,2;
         stroke-linejoin: round;
     }
-
     .chicago-boundary {
       fill:none;
       stroke: black;
       stroke-width: 4px;
     }
-
-    /*.highlight {
-        fill: grey;
-        opacity: .5;
-    }*/
     .newrect {
         fill: blue;
     }
@@ -148,6 +140,24 @@ var parseDate = d3.time.format("%Y").parse;
 var minDate = 2004;
 var maxDate = 2015;
 
+function range(start, count) {
+    return Array.apply(0, Array(count))
+                .map(function (element, index) {
+                         return index + start;
+                     });
+}
+
+// Subtract & Add 6 months to XAxis
+function addMonths(date, months) {
+  date.setMonth(date.getMonth() + months);
+  return date;
+}
+
+var yearArray = range(minDate, maxDate-minDate)
+// Subtract | Add 6 Months so that line aligns with middle of bars
+var lineMin = addMonths(parseDate(String(minDate)), -6);
+var lineMax = addMonths(parseDate(String(maxDate)), 6);
+
 var colors =['#FF0000',
              '#fc7a7a',
              '#ddd',
@@ -173,7 +183,6 @@ keys.enter().append('li')
     .text( function(d,i) { return legendText[i]; })
     .attr('x', -10);
 
-
 // Persistent array of selected neighborhoods across redraws
 // var activeList = ['AUSTIN', 'HUMBOLDT_PARK'];
 // DEFAULT: all of Chicago
@@ -181,19 +190,6 @@ var activeList = [];
 
 function removeOldSVG() {
     if ($("svg").length > 0) { $("svg").remove() }
-}
-
-function range(start, count) {
-    return Array.apply(0, Array(count))
-                .map(function (element, index) {
-                         return index + start;
-                     });
-}
-
-// Subtract & Add 6 months to XAxis
-function addMonths(date, months) {
-  date.setMonth(date.getMonth() + months);
-  return date;
 }
 
 // Validate
@@ -280,18 +276,14 @@ function drawChart(svg, dataset) {
         }})
         .entries(dataset);
 
-    // Subtract | Add 6 Months so that line aligns with middle of bars
-    var dateExtent = d3.extent(aggByYear,function(d){return parseDate(d.key);});
-    var axisMin = addMonths(dateExtent[0], -6);
-    var axisMax = addMonths(dateExtent[1], 6);
-    x.domain([axisMin, axisMax]);
-
     // Determine height of bars based on filtered data
     var maxNew = d3.max(aggByYear, getTotalNew);
     var maxOld = d3.max(aggByYear, getTotalOld);
     var maxContinued = d3.max(aggByYear, getTotalContinued);
     // Use value that is greater as the max & min values to fix axis position
     var maxVal = maxOld > maxNew ? maxOld : maxNew;
+
+    x.domain([lineMin, lineMax]);
     y.domain([-maxVal, maxVal])
 
     svg.append("g")
@@ -305,7 +297,6 @@ function drawChart(svg, dataset) {
 
     var newArray = aggByYear.map(getTotalNew);
     var oldArray = aggByYear.map(getTotalOld);
-    var yearArray = range(minDate, newArray.length)
     var prevYear = $( "#dateSlider" ).slider( "values", 0) - 1;
     var currYear = $( "#dateSlider" ).slider( "values", 0);
 
@@ -549,9 +540,8 @@ function redraw() {
             return colorScale(d.pct_change);
         }
 
-
+        // if click is not on a neighborhood, reset to all of chicago
         map.on("click", function(d) {
-            // Reset to all of chicago if user clicks outside map
             activeList = [];
             redraw();
         })
@@ -669,15 +659,10 @@ function resizeChart() {
     // Use value that is greater as the max & min values to fix axis position
     var maxVal = maxOld > maxNew ? maxOld : maxNew;
     y.domain([-maxVal, maxVal])
+    x.domain([lineMin, lineMax]);
 
-    var yearArray = range(minDate, newArray.length)
     var prevYear = $( "#dateSlider" ).slider( "values", 0) - 1;
     var currYear = $( "#dateSlider" ).slider( "values", 0);
-
-    // Subtract | Add 6 Months so that line aligns with middle of bars
-    var axisMin = addMonths(parseDate(String(minDate)), -6);
-    var axisMax = addMonths(parseDate(String(maxDate)), 6);
-    x.domain([axisMin, axisMax]);
 
     var barWidth = width / newArray.length;
     var barPadding = 4;
@@ -812,8 +797,8 @@ function resize() {
 $(function() {
     $( "#dateSlider" ).slider({
       range: false,
-      min: 2004,
-      max: 2015,
+      min: minDate+1,
+      max: maxDate,
       value: 2007,
       change: function( event, ui ) {
           redraw()
