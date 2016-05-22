@@ -58,6 +58,12 @@
         stroke-linejoin: round;
     }
 
+    .chicago-boundary {
+      fill:none;
+      stroke: black;
+      stroke-width: 4px;
+    }
+
     #legend {
         padding: 1.5em 0 0 1.5em;
     }
@@ -127,6 +133,10 @@ var path = d3.geo.path()
 // scale for line chart
 var parseDate = d3.time.format("%Y").parse;
 
+// Dates for line bar chart
+var minDate = 2004;
+var maxDate = 2015;
+
 var colors =['#FF0000',
              '#fc7a7a',
              '#ddd',
@@ -188,6 +198,9 @@ function displayId(d) {
 
 // Filter by Date Range selected
 function isInDateRange(value) {
+    return value >= minDate && value <= maxDate;
+}
+function isForSelectedYear(value) {
     var prevYear = $( "#dateSlider" ).slider( "values", 0 ) - 1;
     var currYear = $( "#dateSlider" ).slider( "values", 1 );
     return value >= prevYear && value <= currYear;
@@ -394,19 +407,23 @@ function redraw() {
         var g = map.append( "g" );
 
 
-        // filter by date for coloring all neighborhoods on map
-        filteredStats = csv.filter(function(d) {return isInDateRange(d.year);});
+        // filter by min & max year for line bar cahrt
+        chartStats = csv.filter(function(d) {
+            return isInDateRange(d.year);});
         // FOR LINE BAR CHART: filter by class for selected neighborhoods
-        activeStats = filteredStats.filter(function (d) {
+        activeStats = chartStats.filter(function (d) {
             var name = cleanID(d.neighborhood)
             return activeList.includes(name);
         });
         // if no neighborhoods selected, then barchart is for all of Chicago
         activeStats = makeExistIf(activeStats.length > 0,
                                   activeStats,
-                                  filteredStats)
+                                  chartStats)
         drawChart(chartSvg, activeStats);
 
+        // filter by date for coloring all neighborhoods on map
+        mapStats = csv.filter(function(d) {
+            return isForSelectedYear(d.year);});
         // Aggregate by Neighborhood
         var result = d3.nest()
             .key(function(d) { return d.neighborhood; })
@@ -421,7 +438,7 @@ function redraw() {
                     , "old": +years[years.length - 1].old
                     , "continued": +years[years.length - 1].continued
             }})
-            .entries(filteredStats);
+            .entries(mapStats);
 
         // Create Lookup for Neighborhood Stats
         var lookup = {};
@@ -498,6 +515,23 @@ function redraw() {
             return colorScale(d.pct_change);
         }
 
+
+        map.on("click", function(d) {
+            // Reset to all of chicago if user clicks outside map
+            activeList = [];
+            redraw();
+        })
+
+        map.append("path")
+            .datum(topojson.mesh(json,json.objects.neighborhoods,
+                function(a, b) { return a.id === b.id; }))
+            .attr("d", path)
+            .attr("class", "chicago-boundary")
+            .attr("display", function() {
+                return activeList > [] ? "none":
+                        "block"
+            })
+
         g.selectAll( "path" )
             .data( neighborhoods )
           .enter()
@@ -531,6 +565,8 @@ function redraw() {
                     removeActiveClass(d):
                     addActiveClass(d);
                 redraw();
+                // to allow click on svg background
+                d3.event.stopPropagation();
             });
 
         // Neighborhood Boundaries ONLY between Neighborhoods
