@@ -64,6 +64,17 @@
       stroke-width: 4px;
     }
 
+    /*.highlight {
+        fill: grey;
+        opacity: .5;
+    }*/
+    .newrect {
+        fill: blue;
+    }
+    .oldrect {
+        fill: red;
+    }
+
     #legend {
         padding: 1.5em 0 0 1.5em;
     }
@@ -170,6 +181,13 @@ var activeList = [];
 
 function removeOldSVG() {
     if ($("svg").length > 0) { $("svg").remove() }
+}
+
+function range(start, count) {
+    return Array.apply(0, Array(count))
+                .map(function (element, index) {
+                         return index + start;
+                     });
 }
 
 // Subtract & Add 6 months to XAxis
@@ -287,8 +305,30 @@ function drawChart(svg, dataset) {
 
     var newArray = aggByYear.map(getTotalNew);
     var oldArray = aggByYear.map(getTotalOld);
+    var yearArray = range(minDate, newArray.length)
+    var prevYear = $( "#dateSlider" ).slider( "values", 0) - 1;
+    var currYear = $( "#dateSlider" ).slider( "values", 0);
 
     var barWidth = w / newArray.length;
+    // Rect behind selected year
+    svg.selectAll(".highlight")
+        .data(newArray)
+        .enter()
+        .append("rect")
+        .attr("x", function(d, i) {
+            return i * barWidth;
+        })
+        .attr("y", y(maxVal))
+        .attr("width", barWidth)
+        .attr("height", h/2)
+        .attr("fill", function(d, i) {
+            if (i == yearArray.indexOf(prevYear) || i == yearArray.indexOf(currYear) ) {
+                return "grey"
+            }
+            else { return "none"}
+        })
+        .attr("class", "highlight")
+        .style("opacity", .5);
 
     // Rect above the axis : New Biz
     svg.selectAll(".newrect")
@@ -298,15 +338,12 @@ function drawChart(svg, dataset) {
         .attr("x", function(d, i) {
             return i * barWidth;
         })
-        .attr("y", function(d) {
-            return y(d);
-        })
+        .attr("y", y)
         .attr("width", barWidth - barPadding)
         .attr("height", function(d) {
            return h/2 - y(d);
         })
-        .attr("class", "newrect")
-        .attr("fill", "blue");
+        .attr("class", "newrect");
 
     // Rect below the axis : Old Biz
     svg.selectAll(".oldrect")
@@ -316,15 +353,12 @@ function drawChart(svg, dataset) {
        .attr("x", function(d, i) {
             return i * barWidth;
         })
-       .attr("y", function(d) {
-            return h/2;  //Height
-        })
+       .attr("y",  h/2)
        .attr("width", barWidth - barPadding)
        .attr("height", function(d) {
             return h/2 - y(d);
         })
-        .attr("class", "oldrect")
-        .attr("fill", "red");
+        .attr("class", "oldrect");
 
     // Add labels to bar chart
     svg.selectAll("newtext")
@@ -636,17 +670,32 @@ function resizeChart() {
     var maxVal = maxOld > maxNew ? maxOld : maxNew;
     y.domain([-maxVal, maxVal])
 
+    var yearArray = range(minDate, newArray.length)
     var prevYear = $( "#dateSlider" ).slider( "values", 0) - 1;
     var currYear = $( "#dateSlider" ).slider( "values", 0);
 
     // Subtract | Add 6 Months so that line aligns with middle of bars
-    var dateExtent = [parseDate(String(prevYear)), parseDate(String(currYear))];
-    var axisMin = addMonths(dateExtent[0], -6);
-    var axisMax = addMonths(dateExtent[1], 6);
+    var axisMin = addMonths(parseDate(String(minDate)), -6);
+    var axisMax = addMonths(parseDate(String(maxDate)), 6);
     x.domain([axisMin, axisMax]);
 
     var barWidth = width / newArray.length;
     var barPadding = 4;
+
+    // Rect behind selected year
+    chart.selectAll('.highlight')
+        .attr("x", function(d, i) {
+            return i * barWidth;
+        })
+        .attr("y", y(maxVal))
+        .attr('width', barWidth)
+        .attr("height", height/2)
+        .attr("fill", function(d, i) {
+            if (i == yearArray.indexOf(prevYear) || i == yearArray.indexOf(currYear) ) {
+                return "grey"
+            }
+            else { return "none"}
+        })
 
     chart.selectAll('.newrect')
         .attr("x", function(d, i) {
@@ -662,9 +711,7 @@ function resizeChart() {
         .attr("x", function(d, i) {
             return i * barWidth;
         })
-        .attr("y", function(d) {
-            return height/2;
-        })
+        .attr("y", height/2)
         .attr('width', barWidth - barPadding)
         .attr("height", function(d) {
             return height/2 - y(d);
@@ -744,6 +791,7 @@ function resizeMap() {
        .style('height', height + 'px');
 
     // resize the map
+    map.select(".chicago-boundary").attr('d', path);
     map.selectAll('.neighborhood').attr('d', path);
     map.selectAll('.neighborhood-boundary').attr('d', path);
     map.selectAll('.neighborhood-label').attr('d', path)
