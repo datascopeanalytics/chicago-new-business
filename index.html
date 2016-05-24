@@ -6,14 +6,29 @@
     svg{
         width: 100%;
     }
-    #area1 {
+    #leftArea {
       width: 40%;
       float: left;
+      /*border: 5px solid red;*/
     }
-    #area2 {
+    #rightArea {
       width: 60%;
       float: right;
+      /*border: 5px solid red;*/
     }
+    #pctChange {
+      /*border: 5px solid blue;*/
+      width: 60%;
+      font-size: 50px;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      float: right;
+      text-shadow:
+          .5px  .5px .5px grey,
+          .5px -.5px .5px grey,
+         -.5px  .5px .5px grey,
+         -.5px -.5px .5px grey;
+    }
+
 
     .x.axis path {
 	   display: none;
@@ -63,6 +78,12 @@
     .newrect {
         fill: blue;
     }
+    .newtext ,
+    .oldtext {
+        font-size:12px;
+        fill:white;
+        text-anchor:middle;
+    }
     .oldrect {
         fill: red;
     }
@@ -85,23 +106,25 @@
     }
 
     #years{
-        border:0;
-        font-size: 20px;
+        width: 100%;
+        font-size: 30px;
         color:#f6931f;
         font-weight:bold;
     }
 </style>
 <body>
     <div id="container" style="dispay:inline">
-        <div id="area1">
+        <div id="leftArea">
             <p>
               <!-- <label for="Years">Years:</label> -->
               <input type="text" id="years" readonly>
             </p>
             <div id="dateSlider">
             </div>
+            <div id="pctChange">
+            </div>
         </div>
-        <div id="area2">
+        <div id="rightArea">
             <div id="legend">
                 <ul>
                 </ul>
@@ -116,16 +139,28 @@
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script>
 
+function range(start, count) {
+    return Array.apply(0, Array(count))
+                .map(function (element, index) {
+                         return index + start;
+                     });
+}
+
+// Subtract & Add 6 months to XAxis
+function addMonths(date, months) {
+  date.setMonth(date.getMonth() + months);
+  return date;
+}
+
 var margin = {top: 10, left: 10, bottom: 10, right: 10}
-  , width = parseInt(d3.select('#area2').style('width'))
+  , width = parseInt(d3.select('#rightArea').style('width'))
   , width = width - margin.left - margin.right
-  , mapRatio = 1
+  , mapRatio = .9
   , height = width * mapRatio;
 
 // longitude and latitude of Chicago-ish [-87.915044,41.8333925]
 var projection = d3.geo.mercator()
-    // .scale( 80000 ) // trial and error
-    .scale( width * 100 ) // trial and error
+    .scale( width * 90 ) // trial and error
     .rotate( [87.915044,0] )
     .center( [0, 41.8333925] )
     .translate( [width*.2,height/2] );
@@ -140,20 +175,9 @@ var parseDate = d3.time.format("%Y").parse;
 var minDate = 2004;
 var maxDate = 2015;
 
-function range(start, count) {
-    return Array.apply(0, Array(count))
-                .map(function (element, index) {
-                         return index + start;
-                     });
-}
+var barPadding = 4;
 
-// Subtract & Add 6 months to XAxis
-function addMonths(date, months) {
-  date.setMonth(date.getMonth() + months);
-  return date;
-}
-
-var yearArray = range(minDate, maxDate-minDate)
+var yearArray = range(minDate, maxDate-minDate+1)
 // Subtract | Add 6 Months so that line aligns with middle of bars
 var lineMin = addMonths(parseDate(String(minDate)), -6);
 var lineMax = addMonths(parseDate(String(maxDate)), 6);
@@ -184,9 +208,11 @@ keys.enter().append('li')
     .attr('x', -10);
 
 // Persistent array of selected neighborhoods across redraws
-// var activeList = ['AUSTIN', 'HUMBOLDT_PARK'];
-// DEFAULT: all of Chicago
-var activeList = [];
+var activeList = []; //DEFAULT: all of Chicago
+var activePYChangeList = [];
+var activeChangeList = [];
+
+var lookup = {};
 
 function removeOldSVG() {
     if ($("svg").length > 0) { $("svg").remove() }
@@ -201,13 +227,17 @@ function makeExistIf(condition, value, defaultVal) {
     return condition ? value : defaultVal;
 }
 
+function removeFromArray(arrayName, idx) {
+    if(idx != -1) { arrayName.splice(idx, 1); }
+}
+
 // Clean up neighborhood for id
 function cleanID(id) {
     return id.replace("&", "AND")
                 .split(",").join(" ").replace(/ /g, "_").replace("'","")
 }
 function displayId(d) {
-    return d.id.replace(/_/g, " ");
+    return d.id.replace(/_/g, " ") + ' ' + d.pct_change +'%';
 }
 
 // Filter by Date Range selected
@@ -225,6 +255,49 @@ function getContinued(d) { return +d.continued; }
 function getTotalNew(d) { return +d.values.total_new; }
 function getTotalOld(d) { return +d.values.total_old; }
 function getTotalContinued(d) { return +d.values.continued; }
+
+function calcPercentChange(curr_value, py_value) {
+    // percent change formula: ((y2 - y1) / y1)*100
+    var pct = py_value == curr_value ? 0  :
+                       py_value == 0 ? 100:
+                                           ((curr_value - py_value)
+                                            / py_value) * 100;
+    return pct.toFixed(2)
+}
+
+function updateOverallPCTChange(whereToLook) {
+    lookupStats(whereToLook)
+    var currTotalChange = activeChangeList.length > 0 ?
+                activeChangeList.reduce( (prev, curr) => prev + curr ):
+                0;
+    var pyTotalChange = activePYChangeList.length > 0 ?
+                activePYChangeList.reduce( (prev, curr) => prev + curr ):
+                0;
+    var totalPctChange = calcPercentChange(currTotalChange, pyTotalChange)
+    var symbol = totalPctChange >= 0 ? '+' :
+                                       ''
+    $("#pctChange").text(symbol + totalPctChange.toString() + "%");
+    d3.select("#pctChange").style("color",colorScale(totalPctChange));
+}
+
+function lookupStats(whereToLook){
+    activePYChangeList = []
+    activeChangeList = []
+    if (activeList.length > 0) {
+        for (var i = 0, len = activeList.length; i < len; i++) {
+            activePYChangeList.push(whereToLook[activeList[i]].values["py_change"])
+            activeChangeList.push(whereToLook[activeList[i]].values["change"])
+        }
+    }
+    else {
+        var allChicago = Object.keys(whereToLook)
+        removeFromArray(allChicago, 0) // remove blank
+        for (var i = 0, len = allChicago.length; i < len; i++) {
+            activePYChangeList.push(whereToLook[allChicago[i]].values["py_change"])
+            activeChangeList.push(whereToLook[allChicago[i]].values["change"])
+        }
+    }
+}
 
 function drawChart(svg, dataset) {
     console.log("CHART!!!!", activeList)
@@ -366,10 +439,7 @@ function drawChart(svg, dataset) {
         .attr("y", function(d) {
             return  y(d) + 14;
         })
-        .attr("class", "newtext")
-        .style("font-size", "12px")
-        .style("fill", "white")
-        .attr("text-anchor", "middle");
+        .attr("class", "newtext");
 
     // labels on for Old Biz
     svg.selectAll("oldtext")
@@ -386,10 +456,7 @@ function drawChart(svg, dataset) {
         .attr("y", function(d) {
            return h - y(d) -8;
         })
-        .attr("class", "oldtext")
-        .style("font-size", "12px")
-        .style("fill", "white")
-        .attr("text-anchor", "middle");
+        .attr("class", "oldtext");
 
     //  Line on barchart
     svg.append("path")
@@ -402,7 +469,7 @@ function drawChart(svg, dataset) {
         .attr("class", "line")
         .attr("d", line);
 }
-chart = d3.select("#area1").select("svg");
+chart = d3.select("#leftArea").select("svg");
 
 function redraw() {
     console.log("REDRAW!!!")
@@ -419,13 +486,13 @@ function redraw() {
         removeOldSVG();
 
         // var chartW = parseInt(d3.select('#container').style('width'))*.2
-        var chartSvg = d3.select("#area1").append("svg")
+        var chartSvg = d3.select("#leftArea").append("svg")
             .attr("width", width )
             .attr("height", height)
           .append("g")
             .attr("transform", "translate(" + 80 + ", 0)");
 
-        var map = d3.select("#area2").append("svg")
+        var map = d3.select("#rightArea").append("svg")
             .attr("width", width)
             .attr("height", height);
 
@@ -449,6 +516,7 @@ function redraw() {
         // filter by date for coloring all neighborhoods on map
         mapStats = csv.filter(function(d) {
             return isForSelectedYear(d.year);});
+
         // Aggregate by Neighborhood
         var result = d3.nest()
             .key(function(d) { return d.neighborhood; })
@@ -466,9 +534,9 @@ function redraw() {
             .entries(mapStats);
 
         // Create Lookup for Neighborhood Stats
-        var lookup = {};
+        lookup = {};
         for (var i = 0, len = result.length; i < len; i++) {
-            lookup[result[i].key] = result[i];
+            lookup[cleanID(result[i].key)] = result[i];
         }
 
         var neighborhoods = topojson.feature(json,
@@ -476,11 +544,11 @@ function redraw() {
 
         // Add stats to neighborhoods
         neighborhoods.forEach( function(d) {
+            d.id = cleanID(d.id)
+            // var stats = lookup[d.id] ? lookup[d.id].values: {};
             var stats = makeExistIf(lookup[d.id],
                                     lookup[d.id].values,
                                     {})
-            // var stats = lookup[d.id] ? lookup[d.id].values: {};
-            d.id = cleanID(d.id)
             // Previous Year Numbers
             d.py_new = makeExist(stats.py_new, 0);
             d.py_old = makeExist(stats.py_old, 0);
@@ -492,11 +560,12 @@ function redraw() {
             d.continued = makeExist(stats.continued, 0);
             d.change = d.continued + d.new - d.old;
             // percent change formula: ((y2 - y1) / y1)*100
-            d.pct_change = d.py_change == d.change ? 0  :
-                                  d.py_change == 0 ? 100:
-                                                     ((d.change - d.py_change)
-                                                     / d.py_change) * 100;
+            d.pct_change = calcPercentChange(d.change, d.py_change)
+            // store for later access
+            lookup[d.id].values['py_change'] = d.py_change
+            lookup[d.id].values['change'] = d.change
         })
+        updateOverallPCTChange(lookup);
 
         function inactiveHoverStyle(d,mode) {
             var mode = makeExist(mode, 'over');
@@ -513,19 +582,18 @@ function redraw() {
                     .style("opacity", "1");
             }
         }
-        function removeFromArray(d, arrayName) {
-            var i = arrayName.indexOf(d.id);
-            if(i != -1) { arrayName.splice(i, 1); }
-        }
 
         function addActiveClass(d){
             d3.selectAll(".neighborhood" + d.id).classed("active", true);
             activeList.push(d.id);
+            updateOverallPCTChange(lookup)
         }
 
         function removeActiveClass(d){
             d3.selectAll(".neighborhood" + d.id).classed("active", false);
-            removeFromArray(d, activeList)
+            var removeIndex = activeList.indexOf(d.id);
+            removeFromArray(activeList, removeIndex)
+            updateOverallPCTChange(lookup)
         }
 
         function whichClass(d) {
@@ -543,6 +611,8 @@ function redraw() {
         // if click is not on a neighborhood, reset to all of chicago
         map.on("click", function(d) {
             activeList = [];
+            activePYChangeList = [];
+            activeChangeList = [];
             redraw();
         })
 
@@ -637,9 +707,9 @@ function resizeChart() {
     // adjust things when the window size changes
     width = (parseInt(d3.select('#container').select("svg").style('width')) - 80) *.9;
     // Same height as MAP svg
-    height = parseInt(d3.select('#area2').select("svg").style('height'));
+    height = parseInt(d3.select('#rightArea').select("svg").style('height'));
 
-    chart = d3.select("#area1").select("svg");
+    chart = d3.select("#leftArea").select("svg");
     // resize the chart container
     chart.style('height', height + 'px');
 
@@ -665,7 +735,6 @@ function resizeChart() {
     var currYear = $( "#dateSlider" ).slider( "values", 0);
 
     var barWidth = width / newArray.length;
-    var barPadding = 4;
 
     // Rect behind selected year
     chart.selectAll('.highlight')
@@ -758,18 +827,16 @@ function resizeChart() {
 
 function resizeMap() {
     // adjust things when the window size changes
-    width = parseInt(d3.select('#area2').style('width'));
+    width = parseInt(d3.select('#rightArea').style('width'));
     width = width
-    // - margin.left - margin.right;
-    mapRatio = 1;
     height = width * mapRatio;
 
     // update projection
     projection
         .translate([width *.2, height / 2])
-        .scale(width*100);
+        .scale(width*90);
 
-    map = d3.select("#area2").select("svg");
+    map = d3.select("#rightArea").select("svg");
 
     // resize the map container
     map.style('width', width + 'px')
@@ -801,6 +868,7 @@ $(function() {
       max: maxDate,
       value: 2007,
       change: function( event, ui ) {
+          updateOverallPCTChange(lookup)
           redraw()
       },
       slide: function( event, ui ) {
