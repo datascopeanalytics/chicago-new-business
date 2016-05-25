@@ -7,28 +7,17 @@
         width: 100%;
     }
     #leftArea {
+      /*width: calc(40% - 10px);*/
       width: 40%;
       float: left;
       /*border: 5px solid red;*/
     }
     #rightArea {
+      /*width: calc(60% - 10px);*/
       width: 60%;
       float: right;
       /*border: 5px solid red;*/
     }
-    #pctChange {
-      /*border: 5px solid blue;*/
-      width: 60%;
-      font-size: 50px;
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-      float: right;
-      text-shadow:
-          .5px  .5px .5px grey,
-          .5px -.5px .5px grey,
-         -.5px  .5px .5px grey,
-         -.5px -.5px .5px grey;
-    }
-
 
     .x.axis path {
 	   display: none;
@@ -106,22 +95,39 @@
     }
 
     #years{
-        width: 100%;
+        width: 80px;
         font-size: 30px;
         color:#f6931f;
         font-weight:bold;
+        border: none;
+    }
+
+    #pctChange {
+      /*margin-top: 350px;*/
+      margin-top: 30%;
+      /*margin-bottom: -500px;*/
+      margin-bottom: -80%;
+      width: 60%;
+      font-size: 50px;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      float: right;
+      text-shadow:
+          .5px  .5px .5px grey,
+          .5px -.5px .5px grey,
+         -.5px  .5px .5px grey,
+         -.5px -.5px .5px grey;
     }
 </style>
 <body>
     <div id="container" style="dispay:inline">
+    <div id="pctChange">
+    </div>
         <div id="leftArea">
             <p>
               <!-- <label for="Years">Years:</label> -->
               <input type="text" id="years" readonly>
             </p>
             <div id="dateSlider">
-            </div>
-            <div id="pctChange">
             </div>
         </div>
         <div id="rightArea">
