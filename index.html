@@ -89,7 +89,7 @@
         border-top-width: 10px;
         border-top-style: solid;
         font-size: .75em;
-        width: 17%;
+        width: 10%;
         padding-left: 0;
         padding-right: 0;
     }
@@ -103,19 +103,19 @@
     }
 
     #pctChange {
-      /*margin-top: 350px;*/
       margin-top: 30%;
-      /*margin-bottom: -500px;*/
+      margin-right: 40%;
       margin-bottom: -80%;
-      width: 60%;
       font-size: 50px;
       font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
       float: right;
+      text-align: left;
       text-shadow:
           .5px  .5px .5px grey,
           .5px -.5px .5px grey,
          -.5px  .5px .5px grey,
          -.5px -.5px .5px grey;
+      /*border: 5px solid red;*/
     }
 </style>
 <body>
@@ -190,7 +190,10 @@ var lineMax = addMonths(parseDate(String(maxDate)), 6);
 
 var colors =['#FF0000',
              '#fc7a7a',
+             '#fc7a7a',
              '#ddd',
+             '#ddd',
+             '#8585fc',
              '#8585fc',
              '#0000FF']
 
@@ -204,7 +207,17 @@ var colorScale =
 var legend = d3.select("#legend").select("ul");
 var keys = legend.selectAll('li.key')
                  .data(colors);
-var legendText = [-100,-50,0,50,100]
+
+// var legendText = [-100,-50,0,50,100]
+var legendText = ["-100",
+                    "-75",
+                    "-50",
+                    "-25",
+                    "0",
+                    "25",
+                    "50",
+                    "75",
+                    " 100"]
 
 keys.enter().append('li')
     .attr('class', 'key')
@@ -482,7 +495,8 @@ function redraw() {
     // Asynchronously Load Data Before Drawing Map
     queue()
       .defer(d3.json, "neighborhoods.topojson") // using PRI_NEIGH
-      .defer(d3.csv, "neighborhood_businesses_per_year.csv") // using PRI_NEIGH
+    //   .defer(d3.csv, "neighborhood_businesses_per_year.csv") // using PRI_NEIGH
+      .defer(d3.csv, "neighborhood_businesses_per_year_from_expiry.csv") // using PRI_NEIGH
       .await(drawMap);
 
     // function drawMap(error, json, csv, dots) { // for mapping dots
