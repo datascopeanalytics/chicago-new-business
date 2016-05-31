@@ -12,6 +12,7 @@ import sys
 import csv
 import data
 import collections
+import datetime
 
 
 def load_licenses(filename, property):
@@ -27,7 +28,7 @@ def load_licenses(filename, property):
                 if row.end_date:
                     year = row.end_date.year
                 else:
-                    year = 2016
+                    year = this_year
             account_number = row.account_number
             site_number = row.site_number
             businesses[(account_number, site_number)] = {'neighborhood':
@@ -36,24 +37,40 @@ def load_licenses(filename, property):
                                                          year}
     return businesses
 
+oldest_valid_year = 2003
+this_year = datetime.date.today().year
+
 # read in the data
 new_biz = load_licenses(sys.argv[1], 'start_date')
 old_biz = load_licenses(sys.argv[2], 'end_date')
 
 output = collections.defaultdict(int)
 
+print >> sys.stderr, 'Issued: ', len(new_biz.keys())
+print >> sys.stderr, 'Expiring: ', len(old_biz.keys())
 # Count years of continued existence (excluding issue & expiry year)
-for k, v in new_biz.iteritems():
-    issue_yr = new_biz[k]['year']
-    neighborhood = new_biz[k]['neighborhood']
-    if k in old_biz:
-        expiry_yr = old_biz[k]['year']
+# for k, v in new_biz.iteritems():
+#     issue_yr = new_biz[k]['year']
+#     neighborhood = new_biz[k]['neighborhood']
+#     if k in old_biz:
+#         expiry_yr = old_biz[k]['year']
+#     else:
+#         expiry_yr = this_year
+#     year = issue_yr + 1  # skip issue year to prevent double counting
+#     while year < expiry_yr:
+#         output[(neighborhood, year)] += 1
+#         year += 1
+for k, v in old_biz.iteritems():
+    expiry_yr = old_biz[k]['year']
+    neighborhood = old_biz[k]['neighborhood']
+    if k in new_biz:
+        issue_yr = new_biz[k]['year']
     else:
-        expiry_yr = 2016
-    year = issue_yr + 1  # skip issue year to prevent double counting
-    while year < expiry_yr:
+        issue_yr = oldest_valid_year
+    year = expiry_yr - 1  # skip expiry year to prevent double counting
+    while year > issue_yr:
         output[(neighborhood, year)] += 1
-        year += 1
+        year -= 1
 
 # write it
 writer = csv.writer(sys.stdout)
@@ -63,9 +80,9 @@ neighborhoods = list(set([new_biz[x]['neighborhood'] for x in new_biz]))
 neighborhoods.sort()
 
 for neighborhood in neighborhoods:
-    years = list(set([new_biz[x]['year'] for x in new_biz]))
+    years = list(set([new_biz[x]['year'] for x in new_biz] +
+                     [old_biz[x]['year'] for x in old_biz]))
     years.sort()
-
     for year in years:
         writer.writerow([
             neighborhood,
