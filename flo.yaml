@@ -97,15 +97,7 @@ depends:
   - src/data.py
 command: python {{depends|join(' ')}} > {{creates}}
 
-######################################################## FIGURE BUSINESSES
----
-creates: data/chicago_flow.png
-depends:
-  - src/chicago_flow.py
-  - data/new_businesses_per_year.csv
-  - data/old_businesses_per_year.csv
-  - src/figs.py
-command: python {{depends|join(' ')}} {{creates}}
+######################################################## PER YEAR BUSINESS CNT
 
 ---
 creates: data/neighborhood_businesses_per_year.csv
@@ -115,6 +107,16 @@ depends:
   - data/old_businesses.csv
   - data/continued_businesses.csv
 command: python {{depends|join(' ')}} > {{creates}}
+
+######################################################## FIGURE BUSINESSES
+---
+creates: data/chicago_flow.png
+depends:
+  - src/chicago_flow.py
+  - data/new_businesses_per_year.csv
+  - data/old_businesses_per_year.csv
+  - src/figs.py
+command: python {{depends|join(' ')}} {{creates}}
 
 ---
 creates: data/neighborhood_flow/
