@@ -1,0 +1,1970 @@
+neighborhood,year,new,old,continued
+,2000,0,1,0
+,2001,0,3,0
+,2002,41,6,0
+,2003,26,42,29
+,2004,52,64,312
+,2005,38,36,330
+,2006,47,39,331
+,2007,95,44,345
+,2008,113,50,371
+,2009,68,40,430
+,2010,53,76,422
+,2011,72,39,437
+,2012,57,49,456
+,2013,56,50,462
+,2014,50,75,450
+,2015,33,75,449
+,2016,14,210,319
+,2017,0,193,0
+,2018,0,207,0
+Albany Park,1996,0,2,0
+Albany Park,1997,0,1,0
+Albany Park,1998,0,3,0
+Albany Park,2000,0,2,0
+Albany Park,2001,0,9,0
+Albany Park,2002,255,74,0
+Albany Park,2003,226,231,152
+Albany Park,2004,231,247,780
+Albany Park,2005,220,233,758
+Albany Park,2006,178,216,757
+Albany Park,2007,174,209,721
+Albany Park,2008,151,52,833
+Albany Park,2009,173,274,716
+Albany Park,2010,156,67,809
+Albany Park,2011,145,237,727
+Albany Park,2012,180,68,804
+Albany Park,2013,114,200,786
+Albany Park,2014,136,98,809
+Albany Park,2015,121,197,748
+Albany Park,2016,40,248,616
+Albany Park,2017,0,568,0
+Albany Park,2018,0,85,0
+Andersonville,2002,34,2,0
+Andersonville,2003,27,32,28
+Andersonville,2004,37,27,165
+Andersonville,2005,27,40,162
+Andersonville,2006,31,28,160
+Andersonville,2007,45,56,154
+Andersonville,2008,42,26,177
+Andersonville,2009,53,66,153
+Andersonville,2010,46,28,180
+Andersonville,2011,48,73,152
+Andersonville,2012,59,34,168
+Andersonville,2013,39,60,165
+Andersonville,2014,45,34,168
+Andersonville,2015,37,43,163
+Andersonville,2016,6,41,143
+Andersonville,2017,0,132,0
+Andersonville,2018,0,16,0
+Archer Heights,2001,0,1,0
+Archer Heights,2002,62,17,0
+Archer Heights,2003,53,43,44
+Archer Heights,2004,64,58,271
+Archer Heights,2005,36,72,264
+Archer Heights,2006,60,42,264
+Archer Heights,2007,59,57,272
+Archer Heights,2008,49,9,316
+Archer Heights,2009,45,77,286
+Archer Heights,2010,40,12,319
+Archer Heights,2011,39,76,280
+Archer Heights,2012,60,13,306
+Archer Heights,2013,37,74,292
+Archer Heights,2014,32,24,310
+Archer Heights,2015,44,71,268
+Archer Heights,2016,7,58,254
+Archer Heights,2017,0,231,0
+Archer Heights,2018,0,27,0
+Armour Square,2002,24,6,0
+Armour Square,2003,17,17,13
+Armour Square,2004,29,21,92
+Armour Square,2005,20,21,98
+Armour Square,2006,20,21,99
+Armour Square,2007,16,20,100
+Armour Square,2008,17,15,101
+Armour Square,2009,11,6,110
+Armour Square,2010,22,34,94
+Armour Square,2011,14,5,106
+Armour Square,2012,17,33,87
+Armour Square,2013,15,8,96
+Armour Square,2014,28,36,91
+Armour Square,2015,12,9,93
+Armour Square,2016,3,56,47
+Armour Square,2017,0,30,0
+Armour Square,2018,0,20,0
+Ashburn,1996,0,1,0
+Ashburn,1998,0,3,0
+Ashburn,2001,0,8,0
+Ashburn,2002,103,46,0
+Ashburn,2003,94,113,48
+Ashburn,2004,122,111,376
+Ashburn,2005,109,121,373
+Ashburn,2006,105,105,383
+Ashburn,2007,102,113,362
+Ashburn,2008,77,13,431
+Ashburn,2009,72,129,387
+Ashburn,2010,60,33,418
+Ashburn,2011,65,101,378
+Ashburn,2012,104,37,405
+Ashburn,2013,55,113,398
+Ashburn,2014,53,40,411
+Ashburn,2015,57,88,378
+Ashburn,2016,19,118,317
+Ashburn,2017,0,278,0
+Ashburn,2018,0,56,0
+Auburn Gresham,1996,0,1,0
+Auburn Gresham,1997,0,3,0
+Auburn Gresham,1998,0,1,0
+Auburn Gresham,2000,0,2,0
+Auburn Gresham,2001,0,5,0
+Auburn Gresham,2002,186,62,0
+Auburn Gresham,2003,146,146,94
+Auburn Gresham,2004,137,139,459
+Auburn Gresham,2005,141,137,458
+Auburn Gresham,2006,128,136,456
+Auburn Gresham,2007,119,114,457
+Auburn Gresham,2008,90,116,461
+Auburn Gresham,2009,100,28,519
+Auburn Gresham,2010,87,198,422
+Auburn Gresham,2011,78,25,479
+Auburn Gresham,2012,109,139,421
+Auburn Gresham,2013,60,58,471
+Auburn Gresham,2014,69,116,412
+Auburn Gresham,2015,65,56,424
+Auburn Gresham,2016,26,363,126
+Auburn Gresham,2017,0,114,0
+Auburn Gresham,2018,0,36,0
+Austin,1996,0,2,0
+Austin,1997,0,3,0
+Austin,1999,0,3,0
+Austin,2000,0,3,0
+Austin,2001,0,9,0
+Austin,2002,367,81,0
+Austin,2003,282,308,222
+Austin,2004,343,366,1024
+Austin,2005,292,343,1023
+Austin,2006,265,259,1041
+Austin,2007,270,263,1022
+Austin,2008,218,18,1266
+Austin,2009,225,456,1035
+Austin,2010,173,51,1199
+Austin,2011,191,348,1030
+Austin,2012,249,83,1134
+Austin,2013,151,373,1010
+Austin,2014,151,111,1050
+Austin,2015,167,261,939
+Austin,2016,45,227,876
+Austin,2017,0,815,0
+Austin,2018,0,106,0
+Avalon Park,2002,52,28,0
+Avalon Park,2003,33,39,30
+Avalon Park,2004,40,51,157
+Avalon Park,2005,42,43,145
+Avalon Park,2006,24,36,155
+Avalon Park,2007,27,25,148
+Avalon Park,2008,28,30,149
+Avalon Park,2009,33,4,168
+Avalon Park,2010,32,66,137
+Avalon Park,2011,26,7,159
+Avalon Park,2012,37,56,129
+Avalon Park,2013,25,24,147
+Avalon Park,2014,19,38,129
+Avalon Park,2015,18,18,129
+Avalon Park,2016,5,106,41
+Avalon Park,2017,0,31,0
+Avalon Park,2018,0,15,0
+Avondale,1996,0,2,0
+Avondale,1997,0,4,0
+Avondale,1998,0,2,0
+Avondale,1999,0,2,0
+Avondale,2001,0,6,0
+Avondale,2002,175,13,0
+Avondale,2003,144,162,122
+Avondale,2004,169,165,715
+Avondale,2005,121,180,705
+Avondale,2006,171,155,669
+Avondale,2007,123,166,664
+Avondale,2008,113,152,649
+Avondale,2009,117,87,667
+Avondale,2010,104,176,610
+Avondale,2011,115,61,643
+Avondale,2012,164,153,608
+Avondale,2013,105,95,673
+Avondale,2014,92,134,643
+Avondale,2015,71,89,651
+Avondale,2016,26,394,324
+Avondale,2017,0,273,0
+Avondale,2018,0,74,0
+Belmont Cragin,1996,0,3,0
+Belmont Cragin,1997,0,4,0
+Belmont Cragin,1998,0,2,0
+Belmont Cragin,1999,0,1,0
+Belmont Cragin,2000,0,1,0
+Belmont Cragin,2001,0,8,0
+Belmont Cragin,2002,291,51,0
+Belmont Cragin,2003,284,304,211
+Belmont Cragin,2004,254,237,1225
+Belmont Cragin,2005,269,283,1198
+Belmont Cragin,2006,303,254,1212
+Belmont Cragin,2007,223,285,1221
+Belmont Cragin,2008,188,27,1414
+Belmont Cragin,2009,208,405,1199
+Belmont Cragin,2010,162,51,1350
+Belmont Cragin,2011,208,407,1106
+Belmont Cragin,2012,241,84,1230
+Belmont Cragin,2013,179,349,1126
+Belmont Cragin,2014,139,120,1185
+Belmont Cragin,2015,172,270,1058
+Belmont Cragin,2016,51,222,995
+Belmont Cragin,2017,0,917,0
+Belmont Cragin,2018,0,128,0
+Beverly,1997,0,2,0
+Beverly,1998,0,1,0
+Beverly,2002,97,16,0
+Beverly,2003,89,110,58
+Beverly,2004,65,67,352
+Beverly,2005,59,85,331
+Beverly,2006,70,71,318
+Beverly,2007,60,75,317
+Beverly,2008,46,15,355
+Beverly,2009,61,103,301
+Beverly,2010,51,20,339
+Beverly,2011,56,93,299
+Beverly,2012,92,33,323
+Beverly,2013,48,74,339
+Beverly,2014,49,43,343
+Beverly,2015,47,92,298
+Beverly,2016,25,93,250
+Beverly,2017,0,237,0
+Beverly,2018,0,35,0
+Boystown,2002,16,3,0
+Boystown,2003,14,11,14
+Boystown,2004,14,11,105
+Boystown,2005,15,17,102
+Boystown,2006,20,19,99
+Boystown,2007,22,19,106
+Boystown,2008,10,10,117
+Boystown,2009,11,23,105
+Boystown,2010,7,11,100
+Boystown,2011,36,25,96
+Boystown,2012,20,18,106
+Boystown,2013,18,29,96
+Boystown,2014,23,20,97
+Boystown,2015,24,20,100
+Boystown,2016,5,44,72
+Boystown,2017,0,62,0
+Boystown,2018,0,14,0
+Bridgeport,1997,0,1,0
+Bridgeport,1998,0,2,0
+Bridgeport,1999,0,2,0
+Bridgeport,2000,0,4,0
+Bridgeport,2002,135,8,0
+Bridgeport,2003,113,90,102
+Bridgeport,2004,136,107,642
+Bridgeport,2005,118,181,599
+Bridgeport,2006,113,130,584
+Bridgeport,2007,103,170,540
+Bridgeport,2008,100,34,591
+Bridgeport,2009,70,127,570
+Bridgeport,2010,96,99,533
+Bridgeport,2011,51,126,505
+Bridgeport,2012,111,83,473
+Bridgeport,2013,68,66,518
+Bridgeport,2014,65,98,487
+Bridgeport,2015,67,74,481
+Bridgeport,2016,23,186,361
+Bridgeport,2017,0,250,0
+Bridgeport,2018,0,131,0
+Brighton Park,1996,0,1,0
+Brighton Park,1997,0,1,0
+Brighton Park,1998,0,1,0
+Brighton Park,1999,0,2,0
+Brighton Park,2000,0,3,0
+Brighton Park,2001,0,4,0
+Brighton Park,2002,127,28,0
+Brighton Park,2003,116,117,78
+Brighton Park,2004,123,110,577
+Brighton Park,2005,113,131,567
+Brighton Park,2006,159,134,556
+Brighton Park,2007,130,129,572
+Brighton Park,2008,85,18,680
+Brighton Park,2009,130,186,589
+Brighton Park,2010,96,38,679
+Brighton Park,2011,98,176,589
+Brighton Park,2012,115,50,637
+Brighton Park,2013,66,144,607
+Brighton Park,2014,73,65,608
+Brighton Park,2015,77,113,569
+Brighton Park,2016,25,123,523
+Brighton Park,2017,0,444,0
+Brighton Park,2018,0,101,0
+Brighton Park,2019,0,1,0
+Bucktown,1999,0,2,0
+Bucktown,2000,0,1,0
+Bucktown,2001,0,2,0
+Bucktown,2002,94,22,0
+Bucktown,2003,78,72,62
+Bucktown,2004,78,96,353
+Bucktown,2005,75,66,360
+Bucktown,2006,76,76,365
+Bucktown,2007,84,70,380
+Bucktown,2008,84,32,431
+Bucktown,2009,85,132,389
+Bucktown,2010,72,37,429
+Bucktown,2011,99,127,384
+Bucktown,2012,102,52,425
+Bucktown,2013,95,110,411
+Bucktown,2014,46,47,454
+Bucktown,2015,59,116,382
+Bucktown,2016,22,112,328
+Bucktown,2017,0,300,0
+Bucktown,2018,0,47,0
+Burnside,2001,0,1,0
+Burnside,2002,13,8,0
+Burnside,2003,13,10,5
+Burnside,2004,9,13,27
+Burnside,2005,14,13,25
+Burnside,2006,6,12,24
+Burnside,2007,12,6,22
+Burnside,2008,1,4,30
+Burnside,2009,6,1,30
+Burnside,2010,5,5,32
+Burnside,2011,4,2,34
+Burnside,2012,4,4,34
+Burnside,2013,2,2,36
+Burnside,2014,2,6,32
+Burnside,2015,1,5,29
+Burnside,2016,1,25,5
+Burnside,2017,0,5,0
+Burnside,2018,0,1,0
+Calumet Heights,1996,0,1,0
+Calumet Heights,1998,0,1,0
+Calumet Heights,2000,0,3,0
+Calumet Heights,2001,0,2,0
+Calumet Heights,2002,43,13,0
+Calumet Heights,2003,35,44,18
+Calumet Heights,2004,41,38,143
+Calumet Heights,2005,30,29,151
+Calumet Heights,2006,42,45,137
+Calumet Heights,2007,41,25,146
+Calumet Heights,2008,31,37,153
+Calumet Heights,2009,17,5,176
+Calumet Heights,2010,25,49,144
+Calumet Heights,2011,22,10,159
+Calumet Heights,2012,28,38,146
+Calumet Heights,2013,28,15,156
+Calumet Heights,2014,16,30,154
+Calumet Heights,2015,29,26,146
+Calumet Heights,2016,2,120,53
+Calumet Heights,2017,0,43,0
+Calumet Heights,2018,0,12,0
+Chatham,2000,0,3,0
+Chatham,2001,0,4,0
+Chatham,2002,128,54,0
+Chatham,2003,110,117,79
+Chatham,2004,124,123,415
+Chatham,2005,134,125,424
+Chatham,2006,118,127,436
+Chatham,2007,103,102,417
+Chatham,2008,93,111,421
+Chatham,2009,90,19,481
+Chatham,2010,92,167,408
+Chatham,2011,86,28,469
+Chatham,2012,86,144,413
+Chatham,2013,72,51,444
+Chatham,2014,76,107,411
+Chatham,2015,69,70,417
+Chatham,2016,24,320,165
+Chatham,2017,0,135,0
+Chatham,2018,0,53,0
+Chicago Lawn,1997,0,1,0
+Chicago Lawn,1999,0,3,0
+Chicago Lawn,2000,0,2,0
+Chicago Lawn,2001,0,4,0
+Chicago Lawn,2002,201,97,0
+Chicago Lawn,2003,164,198,95
+Chicago Lawn,2004,203,182,490
+Chicago Lawn,2005,188,200,503
+Chicago Lawn,2006,174,166,504
+Chicago Lawn,2007,119,137,523
+Chicago Lawn,2008,109,4,618
+Chicago Lawn,2009,121,239,499
+Chicago Lawn,2010,108,31,578
+Chicago Lawn,2011,100,181,504
+Chicago Lawn,2012,132,53,552
+Chicago Lawn,2013,102,188,498
+Chicago Lawn,2014,84,64,533
+Chicago Lawn,2015,87,139,481
+Chicago Lawn,2016,27,130,438
+Chicago Lawn,2017,0,408,0
+Chicago Lawn,2018,0,54,0
+Chinatown,1998,0,1,0
+Chinatown,2001,0,2,0
+Chinatown,2002,82,10,0
+Chinatown,2003,51,51,46
+Chinatown,2004,58,53,247
+Chinatown,2005,31,56,247
+Chinatown,2006,50,42,239
+Chinatown,2007,46,46,247
+Chinatown,2008,43,40,254
+Chinatown,2009,51,9,282
+Chinatown,2010,48,77,255
+Chinatown,2011,43,9,297
+Chinatown,2012,53,78,262
+Chinatown,2013,39,20,294
+Chinatown,2014,27,75,254
+Chinatown,2015,37,29,258
+Chinatown,2016,15,198,91
+Chinatown,2017,0,64,0
+Chinatown,2018,0,41,0
+Clearing,1996,0,1,0
+Clearing,2002,42,5,0
+Clearing,2003,40,41,34
+Clearing,2004,46,52,257
+Clearing,2005,53,32,270
+Clearing,2006,30,50,271
+Clearing,2007,38,36,274
+Clearing,2008,38,35,275
+Clearing,2009,35,26,288
+Clearing,2010,39,58,265
+Clearing,2011,31,23,278
+Clearing,2012,69,56,255
+Clearing,2013,35,34,294
+Clearing,2014,31,66,264
+Clearing,2015,37,26,266
+Clearing,2016,4,57,236
+Clearing,2017,0,86,0
+Clearing,2018,0,155,0
+Douglas,1998,0,1,0
+Douglas,2002,69,9,0
+Douglas,2003,63,74,32
+Douglas,2004,52,56,181
+Douglas,2005,57,55,182
+Douglas,2006,42,50,187
+Douglas,2007,51,44,181
+Douglas,2008,35,38,194
+Douglas,2009,41,24,205
+Douglas,2010,40,65,180
+Douglas,2011,38,28,192
+Douglas,2012,51,54,178
+Douglas,2013,34,31,199
+Douglas,2014,36,66,173
+Douglas,2015,39,35,169
+Douglas,2016,11,109,95
+Douglas,2017,0,77,0
+Douglas,2018,0,30,0
+Dunning,1996,0,1,0
+Dunning,2000,0,3,0
+Dunning,2001,0,5,0
+Dunning,2002,130,40,0
+Dunning,2003,100,114,79
+Dunning,2004,128,110,516
+Dunning,2005,91,108,526
+Dunning,2006,101,114,506
+Dunning,2007,88,123,483
+Dunning,2008,71,8,553
+Dunning,2009,71,162,473
+Dunning,2010,56,16,517
+Dunning,2011,67,108,464
+Dunning,2012,116,25,507
+Dunning,2013,50,138,484
+Dunning,2014,53,41,494
+Dunning,2015,52,87,459
+Dunning,2016,13,95,413
+Dunning,2017,0,391,0
+Dunning,2018,0,34,0
+East Side,1998,0,1,0
+East Side,2001,0,1,0
+East Side,2002,44,11,0
+East Side,2003,41,43,26
+East Side,2004,33,41,189
+East Side,2005,35,39,181
+East Side,2006,51,38,180
+East Side,2007,27,27,203
+East Side,2008,30,29,200
+East Side,2009,26,12,217
+East Side,2010,27,63,186
+East Side,2011,34,5,201
+East Side,2012,51,53,187
+East Side,2013,37,15,218
+East Side,2014,26,50,204
+East Side,2015,22,27,203
+East Side,2016,5,158,67
+East Side,2017,0,53,0
+East Side,2018,0,19,0
+East Village,1997,0,2,0
+East Village,2000,0,3,0
+East Village,2001,0,1,0
+East Village,2002,36,19,0
+East Village,2003,26,28,18
+East Village,2004,28,29,115
+East Village,2005,19,21,114
+East Village,2006,35,26,112
+East Village,2007,47,46,108
+East Village,2008,40,39,114
+East Village,2009,39,20,136
+East Village,2010,24,44,119
+East Village,2011,32,16,131
+East Village,2012,57,69,116
+East Village,2013,25,10,136
+East Village,2014,34,41,132
+East Village,2015,30,31,130
+East Village,2016,7,94,57
+East Village,2017,0,43,0
+East Village,2018,0,20,0
+Edgewater,1998,0,1,0
+Edgewater,1999,0,2,0
+Edgewater,2000,0,4,0
+Edgewater,2001,0,5,0
+Edgewater,2002,199,45,0
+Edgewater,2003,151,179,105
+Edgewater,2004,172,155,565
+Edgewater,2005,141,192,548
+Edgewater,2006,129,150,538
+Edgewater,2007,117,124,532
+Edgewater,2008,101,17,637
+Edgewater,2009,98,203,531
+Edgewater,2010,82,21,605
+Edgewater,2011,103,173,519
+Edgewater,2012,158,57,575
+Edgewater,2013,111,198,531
+Edgewater,2014,92,79,568
+Edgewater,2015,82,141,516
+Edgewater,2016,28,134,452
+Edgewater,2017,0,424,0
+Edgewater,2018,0,52,0
+Edison Park,1997,0,1,0
+Edison Park,2002,26,8,0
+Edison Park,2003,28,34,16
+Edison Park,2004,49,30,179
+Edison Park,2005,41,47,181
+Edison Park,2006,23,38,183
+Edison Park,2007,45,51,172
+Edison Park,2008,46,45,171
+Edison Park,2009,38,23,195
+Edison Park,2010,36,69,163
+Edison Park,2011,40,18,181
+Edison Park,2012,44,60,161
+Edison Park,2013,39,26,176
+Edison Park,2014,36,59,157
+Edison Park,2015,28,24,162
+Edison Park,2016,8,140,45
+Edison Park,2017,0,38,0
+Edison Park,2018,0,12,0
+Englewood,1997,0,1,0
+Englewood,1999,0,2,0
+Englewood,2000,0,4,0
+Englewood,2001,0,11,0
+Englewood,2002,173,80,0
+Englewood,2003,164,234,69
+Englewood,2004,158,175,464
+Englewood,2005,168,173,449
+Englewood,2006,195,168,448
+Englewood,2007,127,125,478
+Englewood,2008,134,60,550
+Englewood,2009,136,164,521
+Englewood,2010,105,124,527
+Englewood,2011,117,123,508
+Englewood,2012,123,112,514
+Englewood,2013,86,147,487
+Englewood,2014,69,92,480
+Englewood,2015,83,117,432
+Englewood,2016,19,200,315
+Englewood,2017,0,286,0
+Englewood,2018,0,48,0
+Fuller Park,2001,0,2,0
+Fuller Park,2002,14,1,0
+Fuller Park,2003,15,16,10
+Fuller Park,2004,15,12,60
+Fuller Park,2005,15,17,58
+Fuller Park,2006,12,14,59
+Fuller Park,2007,11,12,59
+Fuller Park,2008,9,7,63
+Fuller Park,2009,8,6,66
+Fuller Park,2010,9,18,56
+Fuller Park,2011,10,3,62
+Fuller Park,2012,13,10,62
+Fuller Park,2013,6,6,69
+Fuller Park,2014,6,10,65
+Fuller Park,2015,5,7,64
+Fuller Park,2016,5,22,47
+Fuller Park,2017,0,16,0
+Fuller Park,2018,0,36,0
+Gage Park,1997,0,1,0
+Gage Park,1998,0,2,0
+Gage Park,1999,0,1,0
+Gage Park,2001,0,3,0
+Gage Park,2002,110,28,0
+Gage Park,2003,78,103,60
+Gage Park,2004,88,72,360
+Gage Park,2005,88,100,350
+Gage Park,2006,106,99,349
+Gage Park,2007,84,88,350
+Gage Park,2008,68,5,422
+Gage Park,2009,96,139,356
+Gage Park,2010,68,32,415
+Gage Park,2011,68,118,366
+Gage Park,2012,94,40,396
+Gage Park,2013,69,103,385
+Gage Park,2014,49,58,398
+Gage Park,2015,71,90,354
+Gage Park,2016,13,84,342
+Gage Park,2017,0,299,0
+Gage Park,2018,0,55,0
+Galewood,2001,0,2,0
+Galewood,2002,23,4,0
+Galewood,2003,41,30,14
+Galewood,2004,58,31,163
+Galewood,2005,50,49,172
+Galewood,2006,27,43,179
+Galewood,2007,33,36,170
+Galewood,2008,27,12,191
+Galewood,2009,27,29,189
+Galewood,2010,28,29,188
+Galewood,2011,26,38,178
+Galewood,2012,33,34,170
+Galewood,2013,25,45,158
+Galewood,2014,23,24,159
+Galewood,2015,29,30,151
+Galewood,2016,9,50,130
+Galewood,2017,0,83,0
+Galewood,2018,0,56,0
+Garfield Park,1997,0,2,0
+Garfield Park,2002,157,52,0
+Garfield Park,2003,139,153,74
+Garfield Park,2004,156,151,416
+Garfield Park,2005,163,163,417
+Garfield Park,2006,137,128,448
+Garfield Park,2007,108,97,458
+Garfield Park,2008,103,119,460
+Garfield Park,2009,92,29,523
+Garfield Park,2010,96,186,433
+Garfield Park,2011,89,30,492
+Garfield Park,2012,117,162,424
+Garfield Park,2013,80,61,477
+Garfield Park,2014,71,127,431
+Garfield Park,2015,89,71,429
+Garfield Park,2016,17,334,185
+Garfield Park,2017,0,149,0
+Garfield Park,2018,0,50,0
+Garfield Park,2019,0,1,0
+Garfield Ridge,2000,0,1,0
+Garfield Ridge,2001,0,2,0
+Garfield Ridge,2002,93,8,0
+Garfield Ridge,2003,89,81,72
+Garfield Ridge,2004,95,88,477
+Garfield Ridge,2005,71,91,482
+Garfield Ridge,2006,61,69,484
+Garfield Ridge,2007,76,73,486
+Garfield Ridge,2008,60,55,501
+Garfield Ridge,2009,70,55,505
+Garfield Ridge,2010,66,103,473
+Garfield Ridge,2011,57,44,497
+Garfield Ridge,2012,95,94,456
+Garfield Ridge,2013,61,57,501
+Garfield Ridge,2014,55,83,478
+Garfield Ridge,2015,70,59,473
+Garfield Ridge,2016,15,110,420
+Garfield Ridge,2017,0,167,0
+Garfield Ridge,2018,0,268,0
+Gold Coast,1996,0,1,0
+Gold Coast,1997,0,1,0
+Gold Coast,2001,0,3,0
+Gold Coast,2002,41,6,0
+Gold Coast,2003,34,44,29
+Gold Coast,2004,41,31,181
+Gold Coast,2005,30,47,176
+Gold Coast,2006,28,26,177
+Gold Coast,2007,22,27,177
+Gold Coast,2008,24,27,179
+Gold Coast,2009,32,31,176
+Gold Coast,2010,33,29,175
+Gold Coast,2011,45,37,177
+Gold Coast,2012,49,37,184
+Gold Coast,2013,37,51,177
+Gold Coast,2014,32,40,179
+Gold Coast,2015,33,52,156
+Gold Coast,2016,10,61,122
+Gold Coast,2017,0,70,0
+Gold Coast,2018,0,60,0
+Grand Boulevard,1997,0,1,0
+Grand Boulevard,1999,0,1,0
+Grand Boulevard,2000,0,2,0
+Grand Boulevard,2001,0,1,0
+Grand Boulevard,2002,101,14,0
+Grand Boulevard,2003,70,103,49
+Grand Boulevard,2004,77,73,245
+Grand Boulevard,2005,84,77,246
+Grand Boulevard,2006,89,88,245
+Grand Boulevard,2007,70,70,257
+Grand Boulevard,2008,53,28,307
+Grand Boulevard,2009,50,105,247
+Grand Boulevard,2010,46,34,266
+Grand Boulevard,2011,56,76,233
+Grand Boulevard,2012,66,54,237
+Grand Boulevard,2013,34,75,225
+Grand Boulevard,2014,42,47,219
+Grand Boulevard,2015,60,63,199
+Grand Boulevard,2016,17,97,154
+Grand Boulevard,2017,0,138,0
+Grand Boulevard,2018,0,32,0
+Grand Crossing,1997,0,1,0
+Grand Crossing,2001,0,6,0
+Grand Crossing,2002,176,76,0
+Grand Crossing,2003,132,134,88
+Grand Crossing,2004,158,144,464
+Grand Crossing,2005,123,145,472
+Grand Crossing,2006,133,145,445
+Grand Crossing,2007,126,129,422
+Grand Crossing,2008,96,121,441
+Grand Crossing,2009,95,57,466
+Grand Crossing,2010,100,171,400
+Grand Crossing,2011,90,33,456
+Grand Crossing,2012,95,126,424
+Grand Crossing,2013,62,74,441
+Grand Crossing,2014,82,115,388
+Grand Crossing,2015,53,56,415
+Grand Crossing,2016,17,328,138
+Grand Crossing,2017,0,113,0
+Grand Crossing,2018,0,42,0
+Grant Park,2001,0,1,0
+Grant Park,2003,3,0,0
+Grant Park,2004,2,0,4
+Grant Park,2006,1,1,5
+Grant Park,2007,35,36,4
+Grant Park,2008,46,46,5
+Grant Park,2009,51,52,5
+Grant Park,2010,55,55,5
+Grant Park,2011,54,51,5
+Grant Park,2012,59,56,8
+Grant Park,2013,53,53,9
+Grant Park,2014,86,87,8
+Grant Park,2015,13,13,9
+Grant Park,2016,1,7,3
+Grant Park,2017,0,2,0
+Grant Park,2018,0,1,0
+Greektown,1998,0,1,0
+Greektown,2002,10,3,0
+Greektown,2003,6,8,7
+Greektown,2004,10,13,64
+Greektown,2005,8,11,64
+Greektown,2006,10,7,64
+Greektown,2007,17,19,66
+Greektown,2008,35,33,62
+Greektown,2009,32,29,63
+Greektown,2010,20,21,68
+Greektown,2011,37,20,69
+Greektown,2012,23,23,85
+Greektown,2013,26,31,75
+Greektown,2014,20,20,78
+Greektown,2015,19,22,76
+Greektown,2016,2,26,58
+Greektown,2017,0,44,0
+Greektown,2018,0,16,0
+Hegewisch,2001,0,1,0
+Hegewisch,2002,25,21,0
+Hegewisch,2003,21,21,14
+Hegewisch,2004,20,16,101
+Hegewisch,2005,15,17,103
+Hegewisch,2006,22,24,96
+Hegewisch,2007,18,20,95
+Hegewisch,2008,19,2,111
+Hegewisch,2009,15,31,100
+Hegewisch,2010,12,2,112
+Hegewisch,2011,18,28,101
+Hegewisch,2012,22,15,107
+Hegewisch,2013,13,24,101
+Hegewisch,2014,10,11,106
+Hegewisch,2015,13,27,84
+Hegewisch,2016,3,23,73
+Hegewisch,2017,0,69,0
+Hegewisch,2018,0,7,0
+Hermosa,2000,0,1,0
+Hermosa,2001,0,3,0
+Hermosa,2002,81,8,0
+Hermosa,2003,71,82,47
+Hermosa,2004,77,72,314
+Hermosa,2005,79,73,318
+Hermosa,2006,70,69,328
+Hermosa,2007,43,66,332
+Hermosa,2008,57,11,365
+Hermosa,2009,75,119,302
+Hermosa,2010,45,9,367
+Hermosa,2011,40,106,306
+Hermosa,2012,76,17,330
+Hermosa,2013,54,93,311
+Hermosa,2014,52,36,331
+Hermosa,2015,51,81,300
+Hermosa,2016,10,69,283
+Hermosa,2017,0,270,0
+Hermosa,2018,0,22,0
+Humboldt Park,1998,0,1,0
+Humboldt Park,2000,0,1,0
+Humboldt Park,2001,0,13,0
+Humboldt Park,2002,442,149,0
+Humboldt Park,2003,245,275,251
+Humboldt Park,2004,286,300,934
+Humboldt Park,2005,250,275,942
+Humboldt Park,2006,242,252,937
+Humboldt Park,2007,260,260,903
+Humboldt Park,2008,189,62,1074
+Humboldt Park,2009,191,304,971
+Humboldt Park,2010,160,117,1030
+Humboldt Park,2011,167,279,910
+Humboldt Park,2012,263,158,955
+Humboldt Park,2013,198,305,908
+Humboldt Park,2014,156,137,934
+Humboldt Park,2015,175,220,876
+Humboldt Park,2016,37,338,703
+Humboldt Park,2017,0,632,0
+Humboldt Park,2018,0,105,0
+Hyde Park,1998,0,1,0
+Hyde Park,2000,0,1,0
+Hyde Park,2001,0,1,0
+Hyde Park,2002,80,16,0
+Hyde Park,2003,93,73,47
+Hyde Park,2004,83,78,382
+Hyde Park,2005,57,94,366
+Hyde Park,2006,72,64,362
+Hyde Park,2007,59,69,368
+Hyde Park,2008,62,63,367
+Hyde Park,2009,52,47,379
+Hyde Park,2010,77,94,360
+Hyde Park,2011,92,87,367
+Hyde Park,2012,111,114,335
+Hyde Park,2013,90,76,358
+Hyde Park,2014,63,90,345
+Hyde Park,2015,66,60,344
+Hyde Park,2016,14,199,197
+Hyde Park,2017,0,176,0
+Hyde Park,2018,0,35,0
+Irving Park,1998,0,2,0
+Irving Park,1999,0,2,0
+Irving Park,2000,0,2,0
+Irving Park,2001,0,1,0
+Irving Park,2002,220,29,0
+Irving Park,2003,256,202,148
+Irving Park,2004,211,196,1011
+Irving Park,2005,177,255,973
+Irving Park,2006,208,201,945
+Irving Park,2007,154,231,927
+Irving Park,2008,130,146,943
+Irving Park,2009,185,184,872
+Irving Park,2010,156,151,916
+Irving Park,2011,175,167,902
+Irving Park,2012,253,174,905
+Irving Park,2013,128,196,955
+Irving Park,2014,138,167,914
+Irving Park,2015,167,185,877
+Irving Park,2016,38,433,592
+Irving Park,2017,0,536,0
+Irving Park,2018,0,93,0
+Jackson Park,2002,4,0,0
+Jackson Park,2003,2,2,4
+Jackson Park,2004,3,1,7
+Jackson Park,2006,0,1,9
+Jackson Park,2008,1,1,8
+Jackson Park,2009,2,0,9
+Jackson Park,2010,1,2,10
+Jackson Park,2011,3,2,10
+Jackson Park,2012,5,6,9
+Jackson Park,2013,1,1,10
+Jackson Park,2014,2,2,10
+Jackson Park,2015,1,1,10
+Jackson Park,2016,0,2,8
+Jackson Park,2017,0,8,0
+Jefferson Park,1997,0,1,0
+Jefferson Park,2000,0,2,0
+Jefferson Park,2001,0,1,0
+Jefferson Park,2002,81,18,0
+Jefferson Park,2003,86,64,59
+Jefferson Park,2004,73,75,426
+Jefferson Park,2005,69,106,387
+Jefferson Park,2006,60,64,393
+Jefferson Park,2007,67,126,346
+Jefferson Park,2008,81,44,374
+Jefferson Park,2009,73,106,351
+Jefferson Park,2010,70,51,370
+Jefferson Park,2011,66,89,343
+Jefferson Park,2012,91,53,357
+Jefferson Park,2013,75,93,356
+Jefferson Park,2014,66,66,372
+Jefferson Park,2015,58,96,339
+Jefferson Park,2016,9,107,265
+Jefferson Park,2017,0,239,0
+Jefferson Park,2018,0,35,0
+Kenwood,2000,0,1,0
+Kenwood,2001,0,1,0
+Kenwood,2002,49,8,0
+Kenwood,2003,34,33,27
+Kenwood,2004,50,33,101
+Kenwood,2005,30,45,103
+Kenwood,2006,37,28,103
+Kenwood,2007,22,33,104
+Kenwood,2008,25,15,111
+Kenwood,2009,27,30,106
+Kenwood,2010,41,24,111
+Kenwood,2011,25,25,126
+Kenwood,2012,26,31,119
+Kenwood,2013,22,30,115
+Kenwood,2014,16,20,117
+Kenwood,2015,20,27,106
+Kenwood,2016,5,52,74
+Kenwood,2017,0,63,0
+Kenwood,2018,0,16,0
+Lake View,1997,0,2,0
+Lake View,1998,0,2,0
+Lake View,1999,0,4,0
+Lake View,2000,0,1,0
+Lake View,2001,0,10,0
+Lake View,2002,396,46,0
+Lake View,2003,378,304,310
+Lake View,2004,358,315,1705
+Lake View,2005,302,417,1634
+Lake View,2006,291,322,1619
+Lake View,2007,365,391,1604
+Lake View,2008,390,248,1785
+Lake View,2009,419,517,1648
+Lake View,2010,365,297,1754
+Lake View,2011,417,477,1639
+Lake View,2012,430,342,1719
+Lake View,2013,392,517,1652
+Lake View,2014,371,352,1683
+Lake View,2015,310,457,1563
+Lake View,2016,71,567,1201
+Lake View,2017,0,1069,0
+Lake View,2018,0,198,0
+Lincoln Park,1996,0,2,0
+Lincoln Park,1998,0,2,0
+Lincoln Park,2001,0,3,0
+Lincoln Park,2002,211,10,0
+Lincoln Park,2003,201,176,175
+Lincoln Park,2004,230,252,973
+Lincoln Park,2005,222,206,995
+Lincoln Park,2006,152,204,1012
+Lincoln Park,2007,186,180,1013
+Lincoln Park,2008,172,66,1142
+Lincoln Park,2009,178,318,990
+Lincoln Park,2010,171,64,1089
+Lincoln Park,2011,228,271,990
+Lincoln Park,2012,201,92,1118
+Lincoln Park,2013,195,283,1054
+Lincoln Park,2014,159,119,1111
+Lincoln Park,2015,143,274,995
+Lincoln Park,2016,40,264,859
+Lincoln Park,2017,0,798,0
+Lincoln Park,2018,0,97,0
+Lincoln Square,1997,0,1,0
+Lincoln Square,1998,0,1,0
+Lincoln Square,1999,0,2,0
+Lincoln Square,2000,0,4,0
+Lincoln Square,2001,0,7,0
+Lincoln Square,2002,190,68,0
+Lincoln Square,2003,168,167,109
+Lincoln Square,2004,204,230,657
+Lincoln Square,2005,162,201,666
+Lincoln Square,2006,146,159,648
+Lincoln Square,2007,154,164,634
+Lincoln Square,2008,154,44,738
+Lincoln Square,2009,144,251,643
+Lincoln Square,2010,136,51,740
+Lincoln Square,2011,117,203,670
+Lincoln Square,2012,177,84,710
+Lincoln Square,2013,123,200,684
+Lincoln Square,2014,129,108,699
+Lincoln Square,2015,123,179,636
+Lincoln Square,2016,31,178,564
+Lincoln Square,2017,0,531,0
+Lincoln Square,2018,0,60,0
+"Little Italy, UIC",1997,0,1,0
+"Little Italy, UIC",1999,0,1,0
+"Little Italy, UIC",2000,0,3,0
+"Little Italy, UIC",2001,0,1,0
+"Little Italy, UIC",2002,100,26,0
+"Little Italy, UIC",2003,89,107,62
+"Little Italy, UIC",2004,72,97,319
+"Little Italy, UIC",2005,74,66,319
+"Little Italy, UIC",2006,76,61,337
+"Little Italy, UIC",2007,75,101,322
+"Little Italy, UIC",2008,70,50,334
+"Little Italy, UIC",2009,61,48,365
+"Little Italy, UIC",2010,73,100,332
+"Little Italy, UIC",2011,93,62,347
+"Little Italy, UIC",2012,99,81,362
+"Little Italy, UIC",2013,78,81,380
+"Little Italy, UIC",2014,87,85,371
+"Little Italy, UIC",2015,89,102,368
+"Little Italy, UIC",2016,7,216,203
+"Little Italy, UIC",2017,0,149,0
+"Little Italy, UIC",2018,0,60,0
+Little Village,1996,0,3,0
+Little Village,1998,0,2,0
+Little Village,1999,0,1,0
+Little Village,2000,0,6,0
+Little Village,2001,0,5,0
+Little Village,2002,286,58,0
+Little Village,2003,286,254,158
+Little Village,2004,241,247,1113
+Little Village,2005,239,247,1105
+Little Village,2006,384,257,1097
+Little Village,2007,368,425,1127
+Little Village,2008,290,289,1217
+Little Village,2009,260,229,1247
+Little Village,2010,286,380,1138
+Little Village,2011,277,159,1240
+Little Village,2012,318,401,1138
+Little Village,2013,280,314,1134
+Little Village,2014,219,311,1105
+Little Village,2015,182,189,1086
+Little Village,2016,35,761,476
+Little Village,2017,0,413,0
+Little Village,2018,0,93,0
+Logan Square,1997,0,1,0
+Logan Square,1999,0,3,0
+Logan Square,2000,0,1,0
+Logan Square,2001,0,7,0
+Logan Square,2002,246,59,0
+Logan Square,2003,244,211,158
+Logan Square,2004,226,309,848
+Logan Square,2005,206,274,810
+Logan Square,2006,279,219,784
+Logan Square,2007,208,264,812
+Logan Square,2008,169,36,943
+Logan Square,2009,213,377,760
+Logan Square,2010,191,63,898
+Logan Square,2011,199,294,799
+Logan Square,2012,238,109,892
+Logan Square,2013,183,312,827
+Logan Square,2014,161,129,884
+Logan Square,2015,139,287,744
+Logan Square,2016,26,202,650
+Logan Square,2017,0,600,0
+Logan Square,2018,0,73,0
+Loop,1996,0,2,0
+Loop,1997,0,8,0
+Loop,1998,0,5,0
+Loop,1999,0,1,0
+Loop,2000,0,14,0
+Loop,2001,0,43,0
+Loop,2002,687,200,0
+Loop,2003,565,669,519
+Loop,2004,565,666,4189
+Loop,2005,801,613,4153
+Loop,2006,625,711,4249
+Loop,2007,832,724,4280
+Loop,2008,1623,824,4362
+Loop,2009,792,300,5619
+Loop,2010,669,1609,4789
+Loop,2011,628,245,5177
+Loop,2012,675,1298,4515
+Loop,2013,612,449,4787
+Loop,2014,710,1232,4171
+Loop,2015,662,485,4394
+Loop,2016,123,2733,2192
+Loop,2017,0,1165,0
+Loop,2018,0,1151,0
+Lower West Side,1996,0,1,0
+Lower West Side,1997,0,3,0
+Lower West Side,1999,0,1,0
+Lower West Side,2000,0,5,0
+Lower West Side,2001,0,5,0
+Lower West Side,2002,296,24,0
+Lower West Side,2003,197,206,224
+Lower West Side,2004,199,160,1022
+Lower West Side,2005,222,224,996
+Lower West Side,2006,221,198,1021
+Lower West Side,2007,204,363,926
+Lower West Side,2008,206,73,1041
+Lower West Side,2009,226,349,927
+Lower West Side,2010,218,106,1023
+Lower West Side,2011,218,306,938
+Lower West Side,2012,230,159,1000
+Lower West Side,2013,221,297,945
+Lower West Side,2014,186,183,974
+Lower West Side,2015,216,348,830
+Lower West Side,2016,39,295,689
+Lower West Side,2017,0,612,0
+Lower West Side,2018,0,106,0
+Magnificent Mile,1996,0,2,0
+Magnificent Mile,1999,0,2,0
+Magnificent Mile,2001,0,8,0
+Magnificent Mile,2002,89,19,0
+Magnificent Mile,2003,81,100,65
+Magnificent Mile,2004,109,71,594
+Magnificent Mile,2005,163,88,620
+Magnificent Mile,2006,107,133,645
+Magnificent Mile,2007,106,97,654
+Magnificent Mile,2008,265,15,746
+Magnificent Mile,2009,84,192,816
+Magnificent Mile,2010,63,18,885
+Magnificent Mile,2011,103,199,745
+Magnificent Mile,2012,74,51,801
+Magnificent Mile,2013,60,182,694
+Magnificent Mile,2014,111,60,708
+Magnificent Mile,2015,72,155,652
+Magnificent Mile,2016,13,139,579
+Magnificent Mile,2017,0,545,0
+Magnificent Mile,2018,0,46,0
+Mckinley Park,1996,0,1,0
+Mckinley Park,1999,0,1,0
+Mckinley Park,2000,0,2,0
+Mckinley Park,2001,0,1,0
+Mckinley Park,2002,39,6,0
+Mckinley Park,2003,56,50,25
+Mckinley Park,2004,53,46,287
+Mckinley Park,2005,40,50,290
+Mckinley Park,2006,29,58,272
+Mckinley Park,2007,35,55,250
+Mckinley Park,2008,22,22,258
+Mckinley Park,2009,34,35,248
+Mckinley Park,2010,38,37,242
+Mckinley Park,2011,36,31,253
+Mckinley Park,2012,59,41,244
+Mckinley Park,2013,28,37,266
+Mckinley Park,2014,35,41,253
+Mckinley Park,2015,33,36,252
+Mckinley Park,2016,7,76,212
+Mckinley Park,2017,0,128,0
+Mckinley Park,2018,0,88,0
+Millenium Park,2003,2,0,0
+Millenium Park,2004,2,0,3
+Millenium Park,2005,3,1,4
+Millenium Park,2006,5,2,5
+Millenium Park,2007,12,10,6
+Millenium Park,2008,8,8,11
+Millenium Park,2009,15,12,12
+Millenium Park,2010,35,35,13
+Millenium Park,2011,31,30,14
+Millenium Park,2012,26,26,14
+Millenium Park,2013,25,25,14
+Millenium Park,2014,9,11,12
+Millenium Park,2015,20,18,13
+Millenium Park,2016,2,8,10
+Millenium Park,2017,0,6,0
+Millenium Park,2018,0,4,0
+Montclare,1901,0,1,0
+Montclare,1997,0,1,0
+Montclare,1999,0,1,0
+Montclare,2001,0,2,0
+Montclare,2002,38,7,0
+Montclare,2003,30,40,27
+Montclare,2004,48,26,185
+Montclare,2005,35,51,180
+Montclare,2006,47,45,173
+Montclare,2007,29,54,165
+Montclare,2008,25,23,171
+Montclare,2009,24,20,175
+Montclare,2010,32,45,156
+Montclare,2011,24,17,169
+Montclare,2012,48,38,155
+Montclare,2013,23,28,174
+Montclare,2014,27,36,161
+Montclare,2015,14,27,160
+Montclare,2016,11,52,122
+Montclare,2017,0,61,0
+Montclare,2018,0,72,0
+Morgan Park,2001,0,3,0
+Morgan Park,2002,87,30,0
+Morgan Park,2003,72,77,41
+Morgan Park,2004,67,70,269
+Morgan Park,2005,75,85,258
+Morgan Park,2006,63,69,263
+Morgan Park,2007,57,72,245
+Morgan Park,2008,55,5,294
+Morgan Park,2009,57,114,240
+Morgan Park,2010,45,9,284
+Morgan Park,2011,36,76,255
+Morgan Park,2012,49,24,265
+Morgan Park,2013,42,75,240
+Morgan Park,2014,34,21,259
+Morgan Park,2015,39,67,227
+Morgan Park,2016,14,58,207
+Morgan Park,2017,0,193,0
+Morgan Park,2018,0,28,0
+Mount Greenwood,2001,0,1,0
+Mount Greenwood,2002,29,2,0
+Mount Greenwood,2003,25,22,26
+Mount Greenwood,2004,28,33,165
+Mount Greenwood,2005,28,46,148
+Mount Greenwood,2006,25,21,154
+Mount Greenwood,2007,31,31,149
+Mount Greenwood,2008,17,3,176
+Mount Greenwood,2009,21,46,148
+Mount Greenwood,2010,20,1,167
+Mount Greenwood,2011,19,33,154
+Mount Greenwood,2012,34,6,167
+Mount Greenwood,2013,13,30,171
+Mount Greenwood,2014,23,21,168
+Mount Greenwood,2015,14,28,159
+Mount Greenwood,2016,3,32,141
+Mount Greenwood,2017,0,121,0
+Mount Greenwood,2018,0,22,0
+Museum Campus,2002,7,3,0
+Museum Campus,2003,3,3,5
+Museum Campus,2004,5,0,23
+Museum Campus,2005,5,7,23
+Museum Campus,2006,7,1,25
+Museum Campus,2007,7,6,29
+Museum Campus,2008,12,10,32
+Museum Campus,2009,7,6,33
+Museum Campus,2010,11,11,31
+Museum Campus,2011,12,9,36
+Museum Campus,2012,8,10,36
+Museum Campus,2013,9,5,37
+Museum Campus,2014,5,8,37
+Museum Campus,2015,12,10,37
+Museum Campus,2016,2,25,17
+Museum Campus,2017,0,16,0
+Museum Campus,2018,0,1,0
+Near South Side,1997,0,3,0
+Near South Side,2000,0,1,0
+Near South Side,2001,0,6,0
+Near South Side,2002,99,31,0
+Near South Side,2003,83,72,55
+Near South Side,2004,79,78,295
+Near South Side,2005,72,79,291
+Near South Side,2006,68,72,283
+Near South Side,2007,84,73,282
+Near South Side,2008,73,76,301
+Near South Side,2009,65,35,329
+Near South Side,2010,70,106,295
+Near South Side,2011,90,20,338
+Near South Side,2012,112,111,316
+Near South Side,2013,89,53,379
+Near South Side,2014,73,101,365
+Near South Side,2015,54,75,360
+Near South Side,2016,19,262,150
+Near South Side,2017,0,123,0
+Near South Side,2018,0,41,0
+New City,1997,0,1,0
+New City,1998,0,2,0
+New City,2001,0,2,0
+New City,2002,226,15,0
+New City,2003,162,190,150
+New City,2004,250,178,809
+New City,2005,310,228,834
+New City,2006,457,193,953
+New City,2007,267,312,1103
+New City,2008,263,251,1119
+New City,2009,225,81,1302
+New City,2010,247,474,1055
+New City,2011,136,76,1221
+New City,2012,195,416,946
+New City,2013,140,118,1027
+New City,2014,142,280,883
+New City,2015,139,137,889
+New City,2016,36,344,667
+New City,2017,0,272,0
+New City,2018,0,430,0
+North Center,1996,0,1,0
+North Center,1997,0,2,0
+North Center,1998,0,2,0
+North Center,1999,0,1,0
+North Center,2000,0,2,0
+North Center,2001,0,2,0
+North Center,2002,161,13,0
+North Center,2003,146,133,119
+North Center,2004,148,116,725
+North Center,2005,113,158,714
+North Center,2006,134,123,702
+North Center,2007,203,213,697
+North Center,2008,179,233,672
+North Center,2009,204,158,715
+North Center,2010,191,253,642
+North Center,2011,206,116,720
+North Center,2012,249,256,685
+North Center,2013,180,149,776
+North Center,2014,178,248,710
+North Center,2015,162,135,724
+North Center,2016,22,497,326
+North Center,2017,0,274,0
+North Center,2018,0,74,0
+North Lawndale,1998,0,2,0
+North Lawndale,2001,0,4,0
+North Lawndale,2002,118,41,0
+North Lawndale,2003,119,112,66
+North Lawndale,2004,106,104,374
+North Lawndale,2005,128,97,375
+North Lawndale,2006,95,112,390
+North Lawndale,2007,82,77,396
+North Lawndale,2008,84,111,381
+North Lawndale,2009,80,39,418
+North Lawndale,2010,85,145,361
+North Lawndale,2011,72,39,400
+North Lawndale,2012,108,130,346
+North Lawndale,2013,68,46,403
+North Lawndale,2014,78,139,349
+North Lawndale,2015,60,60,352
+North Lawndale,2016,14,263,142
+North Lawndale,2017,0,118,0
+North Lawndale,2018,0,38,0
+North Park,1997,0,1,0
+North Park,1999,0,1,0
+North Park,2001,0,3,0
+North Park,2002,85,18,0
+North Park,2003,72,70,59
+North Park,2004,76,74,328
+North Park,2005,71,80,325
+North Park,2006,78,82,311
+North Park,2007,77,88,305
+North Park,2008,62,13,364
+North Park,2009,73,103,326
+North Park,2010,46,29,370
+North Park,2011,39,106,309
+North Park,2012,82,33,313
+North Park,2013,53,84,314
+North Park,2014,42,36,329
+North Park,2015,46,71,298
+North Park,2016,10,84,253
+North Park,2017,0,228,0
+North Park,2018,0,35,0
+Norwood Park,1996,0,2,0
+Norwood Park,1998,0,1,0
+Norwood Park,1999,0,1,0
+Norwood Park,2000,0,2,0
+Norwood Park,2001,0,3,0
+Norwood Park,2002,88,26,0
+Norwood Park,2003,73,84,64
+Norwood Park,2004,75,70,438
+Norwood Park,2005,69,106,406
+Norwood Park,2006,81,82,396
+Norwood Park,2007,53,59,408
+Norwood Park,2008,59,41,426
+Norwood Park,2009,67,59,420
+Norwood Park,2010,46,71,415
+Norwood Park,2011,58,41,420
+Norwood Park,2012,87,58,422
+Norwood Park,2013,48,53,452
+Norwood Park,2014,43,62,441
+Norwood Park,2015,43,63,424
+Norwood Park,2016,14,241,220
+Norwood Park,2017,0,195,0
+Norwood Park,2018,0,37,0
+O'Hare,2001,0,2,0
+O'Hare,2002,39,18,0
+O'Hare,2003,43,55,27
+O'Hare,2004,53,49,255
+O'Hare,2005,45,45,263
+O'Hare,2006,45,49,263
+O'Hare,2007,46,69,241
+O'Hare,2008,41,34,260
+O'Hare,2009,50,46,250
+O'Hare,2010,34,66,237
+O'Hare,2011,33,31,238
+O'Hare,2012,51,56,218
+O'Hare,2013,29,48,217
+O'Hare,2014,22,51,198
+O'Hare,2015,20,28,192
+O'Hare,2016,7,115,98
+O'Hare,2017,0,82,0
+O'Hare,2018,0,28,0
+Oakland,2002,2,0,0
+Oakland,2003,12,5,1
+Oakland,2004,8,3,23
+Oakland,2005,7,12,19
+Oakland,2006,3,10,16
+Oakland,2007,2,5,14
+Oakland,2008,7,2,14
+Oakland,2009,12,10,12
+Oakland,2010,4,7,18
+Oakland,2011,4,8,12
+Oakland,2012,6,1,15
+Oakland,2013,9,6,16
+Oakland,2014,13,12,20
+Oakland,2015,11,12,15
+Oakland,2016,3,7,16
+Oakland,2017,0,14,0
+Oakland,2018,0,5,0
+Old Town,1998,0,1,0
+Old Town,1999,0,1,0
+Old Town,2000,0,1,0
+Old Town,2001,0,1,0
+Old Town,2002,76,8,0
+Old Town,2003,82,59,61
+Old Town,2004,107,77,377
+Old Town,2005,64,91,393
+Old Town,2006,79,77,380
+Old Town,2007,112,132,377
+Old Town,2008,118,103,401
+Old Town,2009,116,104,407
+Old Town,2010,104,117,403
+Old Town,2011,122,108,401
+Old Town,2012,125,116,402
+Old Town,2013,104,90,433
+Old Town,2014,107,133,410
+Old Town,2015,84,77,413
+Old Town,2016,8,133,338
+Old Town,2017,0,223,0
+Old Town,2018,0,122,0
+Portage Park,1996,0,2,0
+Portage Park,1997,0,1,0
+Portage Park,1998,0,2,0
+Portage Park,1999,0,3,0
+Portage Park,2000,0,1,0
+Portage Park,2001,0,3,0
+Portage Park,2002,233,65,0
+Portage Park,2003,202,207,143
+Portage Park,2004,248,228,907
+Portage Park,2005,195,240,909
+Portage Park,2006,177,187,916
+Portage Park,2007,156,238,854
+Portage Park,2008,123,20,973
+Portage Park,2009,124,305,795
+Portage Park,2010,117,32,882
+Portage Park,2011,112,236,771
+Portage Park,2012,228,68,817
+Portage Park,2013,128,223,823
+Portage Park,2014,167,96,859
+Portage Park,2015,116,182,838
+Portage Park,2016,27,198,744
+Portage Park,2017,0,687,0
+Portage Park,2018,0,80,0
+Printers Row,2001,0,5,0
+Printers Row,2002,21,8,0
+Printers Row,2003,13,14,14
+Printers Row,2004,14,17,57
+Printers Row,2005,16,13,61
+Printers Row,2006,6,16,59
+Printers Row,2007,12,11,52
+Printers Row,2008,23,8,59
+Printers Row,2009,13,4,74
+Printers Row,2010,8,25,65
+Printers Row,2011,13,2,70
+Printers Row,2012,19,19,63
+Printers Row,2013,10,8,77
+Printers Row,2014,9,15,68
+Printers Row,2015,11,7,72
+Printers Row,2016,4,56,25
+Printers Row,2017,0,22,0
+Printers Row,2018,0,7,0
+Pullman,2001,0,1,0
+Pullman,2002,27,15,0
+Pullman,2003,38,22,14
+Pullman,2004,26,22,99
+Pullman,2005,24,32,92
+Pullman,2006,19,13,99
+Pullman,2007,18,13,103
+Pullman,2008,11,2,118
+Pullman,2009,21,28,101
+Pullman,2010,17,8,116
+Pullman,2011,28,53,81
+Pullman,2012,17,6,100
+Pullman,2013,11,27,90
+Pullman,2014,21,9,91
+Pullman,2015,13,15,97
+Pullman,2016,1,34,77
+Pullman,2017,0,72,0
+Pullman,2018,0,5,0
+River North,1996,0,1,0
+River North,1997,0,4,0
+River North,1998,0,8,0
+River North,2000,0,5,0
+River North,2001,0,5,0
+River North,2002,249,40,0
+River North,2003,383,324,214
+River North,2004,415,289,2167
+River North,2005,361,357,2222
+River North,2006,294,348,2242
+River North,2007,321,379,2179
+River North,2008,556,336,2163
+River North,2009,262,135,2590
+River North,2010,288,664,2193
+River North,2011,420,141,2336
+River North,2012,446,658,2116
+River North,2013,350,305,2258
+River North,2014,350,569,2046
+River North,2015,352,370,2020
+River North,2016,60,1049,1276
+River North,2017,0,644,0
+River North,2018,0,678,0
+Riverdale,2002,13,2,0
+Riverdale,2003,9,9,7
+Riverdale,2004,11,12,36
+Riverdale,2005,2,12,35
+Riverdale,2006,4,8,30
+Riverdale,2007,4,6,30
+Riverdale,2008,4,3,30
+Riverdale,2009,2,4,30
+Riverdale,2010,3,5,28
+Riverdale,2011,7,6,25
+Riverdale,2012,14,4,26
+Riverdale,2013,1,3,37
+Riverdale,2014,4,2,36
+Riverdale,2015,2,5,35
+Riverdale,2016,1,25,13
+Riverdale,2017,0,6,0
+Riverdale,2018,0,7,0
+Rogers Park,1998,0,2,0
+Rogers Park,2000,0,2,0
+Rogers Park,2001,0,9,0
+Rogers Park,2002,187,87,0
+Rogers Park,2003,178,177,91
+Rogers Park,2004,218,205,525
+Rogers Park,2005,150,169,552
+Rogers Park,2006,177,189,515
+Rogers Park,2007,148,172,517
+Rogers Park,2008,144,122,541
+Rogers Park,2009,165,85,596
+Rogers Park,2010,133,204,567
+Rogers Park,2011,131,104,584
+Rogers Park,2012,181,191,522
+Rogers Park,2013,137,114,594
+Rogers Park,2014,154,183,563
+Rogers Park,2015,141,118,584
+Rogers Park,2016,29,407,286
+Rogers Park,2017,0,257,0
+Rogers Park,2018,0,57,0
+Roseland,1997,0,1,0
+Roseland,1998,0,3,0
+Roseland,1999,0,1,0
+Roseland,2001,0,5,0
+Roseland,2002,172,100,0
+Roseland,2003,141,154,77
+Roseland,2004,123,131,412
+Roseland,2005,111,125,406
+Roseland,2006,98,123,393
+Roseland,2007,90,91,382
+Roseland,2008,87,17,446
+Roseland,2009,79,149,396
+Roseland,2010,99,37,429
+Roseland,2011,57,133,395
+Roseland,2012,102,58,397
+Roseland,2013,76,129,376
+Roseland,2014,74,72,381
+Roseland,2015,64,114,340
+Roseland,2016,16,130,274
+Roseland,2017,0,253,0
+Roseland,2018,0,39,0
+Rush & Division,2000,0,1,0
+Rush & Division,2001,0,3,0
+Rush & Division,2002,58,8,0
+Rush & Division,2003,53,59,45
+Rush & Division,2004,44,46,267
+Rush & Division,2005,54,60,251
+Rush & Division,2006,50,51,258
+Rush & Division,2007,56,66,252
+Rush & Division,2008,37,41,261
+Rush & Division,2009,38,44,252
+Rush & Division,2010,33,44,244
+Rush & Division,2011,53,21,255
+Rush & Division,2012,42,52,255
+Rush & Division,2013,46,40,259
+Rush & Division,2014,33,40,263
+Rush & Division,2015,41,47,250
+Rush & Division,2016,14,93,198
+Rush & Division,2017,0,134,0
+Rush & Division,2018,0,74,0
+"Sauganash,Forest Glen",1997,0,1,0
+"Sauganash,Forest Glen",1998,0,1,0
+"Sauganash,Forest Glen",2000,0,1,0
+"Sauganash,Forest Glen",2001,0,2,0
+"Sauganash,Forest Glen",2002,56,19,0
+"Sauganash,Forest Glen",2003,46,52,39
+"Sauganash,Forest Glen",2004,62,47,290
+"Sauganash,Forest Glen",2005,57,73,286
+"Sauganash,Forest Glen",2006,58,43,294
+"Sauganash,Forest Glen",2007,49,50,297
+"Sauganash,Forest Glen",2008,62,70,286
+"Sauganash,Forest Glen",2009,34,28,311
+"Sauganash,Forest Glen",2010,45,68,279
+"Sauganash,Forest Glen",2011,43,35,286
+"Sauganash,Forest Glen",2012,70,61,267
+"Sauganash,Forest Glen",2013,26,35,301
+"Sauganash,Forest Glen",2014,36,67,263
+"Sauganash,Forest Glen",2015,31,28,268
+"Sauganash,Forest Glen",2016,12,192,106
+"Sauganash,Forest Glen",2017,0,93,0
+"Sauganash,Forest Glen",2018,0,25,0
+Sheffield & DePaul,1997,0,1,0
+Sheffield & DePaul,1999,0,2,0
+Sheffield & DePaul,2001,0,2,0
+Sheffield & DePaul,2002,40,1,0
+Sheffield & DePaul,2003,46,35,33
+Sheffield & DePaul,2004,51,40,192
+Sheffield & DePaul,2005,43,46,196
+Sheffield & DePaul,2006,34,59,180
+Sheffield & DePaul,2007,56,57,184
+Sheffield & DePaul,2008,74,53,210
+Sheffield & DePaul,2009,79,113,164
+Sheffield & DePaul,2010,61,44,193
+Sheffield & DePaul,2011,73,94,164
+Sheffield & DePaul,2012,68,46,187
+Sheffield & DePaul,2013,59,73,178
+Sheffield & DePaul,2014,56,55,183
+Sheffield & DePaul,2015,49,62,162
+Sheffield & DePaul,2016,2,28,163
+Sheffield & DePaul,2017,0,149,0
+Sheffield & DePaul,2018,0,17,0
+South Chicago,1998,0,1,0
+South Chicago,2000,0,1,0
+South Chicago,2001,0,3,0
+South Chicago,2002,122,23,0
+South Chicago,2003,102,117,71
+South Chicago,2004,102,84,336
+South Chicago,2005,91,105,340
+South Chicago,2006,81,84,345
+South Chicago,2007,73,77,334
+South Chicago,2008,60,90,320
+South Chicago,2009,65,23,356
+South Chicago,2010,45,130,294
+South Chicago,2011,80,32,321
+South Chicago,2012,77,120,268
+South Chicago,2013,51,44,297
+South Chicago,2014,50,99,252
+South Chicago,2015,40,54,248
+South Chicago,2016,12,199,88
+South Chicago,2017,0,73,0
+South Chicago,2018,0,24,0
+South Deering,1998,0,1,0
+South Deering,2000,0,2,0
+South Deering,2001,0,3,0
+South Deering,2002,33,9,0
+South Deering,2003,45,47,25
+South Deering,2004,31,33,187
+South Deering,2005,38,35,185
+South Deering,2006,50,41,185
+South Deering,2007,49,44,186
+South Deering,2008,28,29,204
+South Deering,2009,37,19,211
+South Deering,2010,29,55,196
+South Deering,2011,42,23,203
+South Deering,2012,44,50,197
+South Deering,2013,26,26,213
+South Deering,2014,31,40,199
+South Deering,2015,22,32,198
+South Deering,2016,5,131,85
+South Deering,2017,0,70,0
+South Deering,2018,0,20,0
+South Shore,1996,0,1,0
+South Shore,1998,0,1,0
+South Shore,1999,0,1,0
+South Shore,2000,0,2,0
+South Shore,2001,0,5,0
+South Shore,2002,186,19,0
+South Shore,2003,197,207,90
+South Shore,2004,179,161,557
+South Shore,2005,179,213,525
+South Shore,2006,165,192,514
+South Shore,2007,134,161,507
+South Shore,2008,102,178,483
+South Shore,2009,106,56,511
+South Shore,2010,99,185,446
+South Shore,2011,91,52,489
+South Shore,2012,133,175,401
+South Shore,2013,94,75,452
+South Shore,2014,76,127,425
+South Shore,2015,82,82,413
+South Shore,2016,23,303,190
+South Shore,2017,0,159,0
+South Shore,2018,0,54,0
+Streeterville,1996,0,1,0
+Streeterville,1997,0,1,0
+Streeterville,1998,0,1,0
+Streeterville,1999,0,1,0
+Streeterville,2000,0,2,0
+Streeterville,2001,0,4,0
+Streeterville,2002,104,24,0
+Streeterville,2003,101,97,74
+Streeterville,2004,123,68,551
+Streeterville,2005,102,82,589
+Streeterville,2006,75,96,593
+Streeterville,2007,90,117,560
+Streeterville,2008,132,20,627
+Streeterville,2009,89,151,609
+Streeterville,2010,102,39,670
+Streeterville,2011,220,210,586
+Streeterville,2012,140,83,701
+Streeterville,2013,102,198,640
+Streeterville,2014,113,99,652
+Streeterville,2015,107,160,598
+Streeterville,2016,31,230,473
+Streeterville,2017,0,432,0
+Streeterville,2018,0,59,0
+Ukrainian Village,1999,0,1,0
+Ukrainian Village,2000,0,2,0
+Ukrainian Village,2001,0,3,0
+Ukrainian Village,2002,49,17,0
+Ukrainian Village,2003,39,43,27
+Ukrainian Village,2004,38,35,154
+Ukrainian Village,2005,35,47,147
+Ukrainian Village,2006,62,40,142
+Ukrainian Village,2007,43,58,137
+Ukrainian Village,2008,25,40,141
+Ukrainian Village,2009,30,11,154
+Ukrainian Village,2010,52,72,123
+Ukrainian Village,2011,51,18,158
+Ukrainian Village,2012,50,55,157
+Ukrainian Village,2013,36,26,168
+Ukrainian Village,2014,37,47,161
+Ukrainian Village,2015,24,29,165
+Ukrainian Village,2016,9,131,59
+Ukrainian Village,2017,0,52,0
+Ukrainian Village,2018,0,12,0
+United Center,1999,0,1,0
+United Center,2000,0,1,0
+United Center,2001,0,2,0
+United Center,2002,53,21,0
+United Center,2003,52,46,36
+United Center,2004,63,47,288
+United Center,2005,58,56,295
+United Center,2006,54,48,304
+United Center,2007,42,43,304
+United Center,2008,60,54,312
+United Center,2009,67,16,340
+United Center,2010,84,101,310
+United Center,2011,118,24,374
+United Center,2012,70,110,371
+United Center,2013,89,73,373
+United Center,2014,90,119,364
+United Center,2015,92,101,351
+United Center,2016,21,248,178
+United Center,2017,0,149,0
+United Center,2018,0,42,0
+Uptown,1996,0,1,0
+Uptown,1997,0,1,0
+Uptown,1998,0,1,0
+Uptown,1999,0,1,0
+Uptown,2001,0,4,0
+Uptown,2002,246,57,0
+Uptown,2003,214,207,149
+Uptown,2004,194,214,838
+Uptown,2005,228,265,764
+Uptown,2006,170,194,795
+Uptown,2007,139,180,772
+Uptown,2008,138,48,872
+Uptown,2009,144,204,796
+Uptown,2010,127,77,873
+Uptown,2011,163,229,779
+Uptown,2012,219,133,827
+Uptown,2013,165,232,819
+Uptown,2014,152,125,846
+Uptown,2015,127,232,766
+Uptown,2016,26,265,606
+Uptown,2017,0,555,0
+Uptown,2018,0,73,0
+Washington Heights,1997,0,1,0
+Washington Heights,1999,0,1,0
+Washington Heights,2001,0,2,0
+Washington Heights,2002,72,35,0
+Washington Heights,2003,61,69,30
+Washington Heights,2004,76,60,217
+Washington Heights,2005,75,68,228
+Washington Heights,2006,60,63,235
+Washington Heights,2007,57,59,225
+Washington Heights,2008,40,25,259
+Washington Heights,2009,42,73,227
+Washington Heights,2010,39,35,231
+Washington Heights,2011,45,57,213
+Washington Heights,2012,60,41,218
+Washington Heights,2013,30,62,214
+Washington Heights,2014,40,38,208
+Washington Heights,2015,39,45,201
+Washington Heights,2016,19,94,146
+Washington Heights,2017,0,138,0
+Washington Heights,2018,0,27,0
+Washington Park,2002,33,11,0
+Washington Park,2003,19,24,17
+Washington Park,2004,19,27,106
+Washington Park,2005,23,17,107
+Washington Park,2006,33,40,95
+Washington Park,2007,35,36,89
+Washington Park,2008,19,27,96
+Washington Park,2009,26,24,90
+Washington Park,2010,26,29,86
+Washington Park,2011,22,19,92
+Washington Park,2012,23,32,82
+Washington Park,2013,22,14,91
+Washington Park,2014,22,25,88
+Washington Park,2015,17,32,80
+Washington Park,2016,6,54,39
+Washington Park,2017,0,36,0
+Washington Park,2018,0,9,0
+West Elsdon,1999,0,1,0
+West Elsdon,2000,0,1,0
+West Elsdon,2002,62,14,0
+West Elsdon,2003,49,49,46
+West Elsdon,2004,59,49,225
+West Elsdon,2005,50,52,233
+West Elsdon,2006,62,57,229
+West Elsdon,2007,55,53,237
+West Elsdon,2008,33,6,283
+West Elsdon,2009,39,84,232
+West Elsdon,2010,39,12,257
+West Elsdon,2011,35,58,237
+West Elsdon,2012,49,19,253
+West Elsdon,2013,31,68,234
+West Elsdon,2014,39,31,235
+West Elsdon,2015,37,56,218
+West Elsdon,2016,7,53,201
+West Elsdon,2017,0,180,0
+West Elsdon,2018,0,28,0
+West Lawn,1996,0,1,0
+West Lawn,1997,0,1,0
+West Lawn,1998,0,1,0
+West Lawn,1999,0,1,0
+West Lawn,2000,0,2,0
+West Lawn,2001,0,4,0
+West Lawn,2002,134,49,0
+West Lawn,2003,124,122,71
+West Lawn,2004,116,119,441
+West Lawn,2005,117,120,442
+West Lawn,2006,119,124,436
+West Lawn,2007,114,117,423
+West Lawn,2008,97,14,506
+West Lawn,2009,115,196,415
+West Lawn,2010,85,14,505
+West Lawn,2011,81,158,435
+West Lawn,2012,108,40,474
+West Lawn,2013,72,134,449
+West Lawn,2014,70,68,454
+West Lawn,2015,78,120,404
+West Lawn,2016,11,122,358
+West Lawn,2017,0,328,0
+West Lawn,2018,0,40,0
+West Loop,1996,0,2,0
+West Loop,1997,0,2,0
+West Loop,1998,0,4,0
+West Loop,1999,0,4,0
+West Loop,2000,0,7,0
+West Loop,2001,0,13,0
+West Loop,2002,271,48,0
+West Loop,2003,212,234,217
+West Loop,2004,275,218,1409
+West Loop,2005,203,217,1467
+West Loop,2006,228,223,1442
+West Loop,2007,360,290,1439
+West Loop,2008,308,255,1546
+West Loop,2009,290,230,1645
+West Loop,2010,311,358,1573
+West Loop,2011,335,228,1668
+West Loop,2012,375,451,1588
+West Loop,2013,347,301,1670
+West Loop,2014,369,454,1559
+West Loop,2015,310,277,1593
+West Loop,2016,74,892,962
+West Loop,2017,0,657,0
+West Loop,2018,0,360,0
+West Pullman,1997,0,1,0
+West Pullman,1998,0,1,0
+West Pullman,1999,0,1,0
+West Pullman,2001,0,4,0
+West Pullman,2002,79,40,0
+West Pullman,2003,66,72,41
+West Pullman,2004,69,81,181
+West Pullman,2005,69,67,176
+West Pullman,2006,64,68,181
+West Pullman,2007,50,55,173
+West Pullman,2008,53,4,213
+West Pullman,2009,39,95,177
+West Pullman,2010,52,14,197
+West Pullman,2011,42,78,172
+West Pullman,2012,62,22,192
+West Pullman,2013,25,66,186
+West Pullman,2014,24,27,184
+West Pullman,2015,30,50,158
+West Pullman,2016,10,43,146
+West Pullman,2017,0,139,0
+West Pullman,2018,0,16,0
+West Ridge,1996,0,1,0
+West Ridge,1998,0,1,0
+West Ridge,1999,0,3,0
+West Ridge,2000,0,1,0
+West Ridge,2001,0,11,0
+West Ridge,2002,257,61,0
+West Ridge,2003,246,226,177
+West Ridge,2004,266,255,1068
+West Ridge,2005,221,286,1040
+West Ridge,2006,204,253,1003
+West Ridge,2007,207,244,954
+West Ridge,2008,162,14,1137
+West Ridge,2009,213,370,934
+West Ridge,2010,162,35,1113
+West Ridge,2011,168,355,913
+West Ridge,2012,216,53,1028
+West Ridge,2013,159,291,956
+West Ridge,2014,111,95,1017
+West Ridge,2015,141,244,885
+West Ridge,2016,28,192,832
+West Ridge,2017,0,769,0
+West Ridge,2018,0,91,0
+West Town,1997,0,2,0
+West Town,1998,0,3,0
+West Town,2000,0,1,0
+West Town,2001,0,6,0
+West Town,2002,170,62,0
+West Town,2003,178,176,98
+West Town,2004,206,180,847
+West Town,2005,210,172,863
+West Town,2006,195,187,895
+West Town,2007,206,182,899
+West Town,2008,160,209,909
+West Town,2009,187,37,1010
+West Town,2010,189,325,920
+West Town,2011,180,90,997
+West Town,2012,208,266,908
+West Town,2013,197,144,981
+West Town,2014,168,274,908
+West Town,2015,170,139,908
+West Town,2016,27,696,369
+West Town,2017,0,284,0
+West Town,2018,0,105,0
+Wicker Park,1996,0,2,0
+Wicker Park,1997,0,2,0
+Wicker Park,1998,0,1,0
+Wicker Park,1999,0,1,0
+Wicker Park,2000,0,2,0
+Wicker Park,2001,0,5,0
+Wicker Park,2002,158,49,0
+Wicker Park,2003,169,125,103
+Wicker Park,2004,127,175,537
+Wicker Park,2005,136,147,517
+Wicker Park,2006,137,137,511
+Wicker Park,2007,142,136,510
+Wicker Park,2008,155,117,551
+Wicker Park,2009,150,135,583
+Wicker Park,2010,137,153,572
+Wicker Park,2011,163,115,593
+Wicker Park,2012,177,179,593
+Wicker Park,2013,198,166,630
+Wicker Park,2014,167,175,630
+Wicker Park,2015,143,163,618
+Wicker Park,2016,35,377,342
+Wicker Park,2017,0,294,0
+Wicker Park,2018,0,79,0
+Woodlawn,1997,0,1,0
+Woodlawn,2000,0,1,0
+Woodlawn,2001,0,1,0
+Woodlawn,2002,63,16,0
+Woodlawn,2003,79,67,36
+Woodlawn,2004,78,97,180
+Woodlawn,2005,55,64,181
+Woodlawn,2006,68,65,170
+Woodlawn,2007,63,56,175
+Woodlawn,2008,58,7,230
+Woodlawn,2009,47,99,190
+Woodlawn,2010,49,19,217
+Woodlawn,2011,28,70,195
+Woodlawn,2012,38,30,194
+Woodlawn,2013,38,58,174
+Woodlawn,2014,24,23,188
+Woodlawn,2015,48,60,153
+Woodlawn,2016,9,43,157
+Woodlawn,2017,0,153,0
+Woodlawn,2018,0,13,0
+Wrigleyville,2002,25,5,0
+Wrigleyville,2003,24,22,13
+Wrigleyville,2004,34,25,137
+Wrigleyville,2005,21,34,136
+Wrigleyville,2006,22,15,142
+Wrigleyville,2007,28,29,137
+Wrigleyville,2008,36,19,153
+Wrigleyville,2009,27,24,167
+Wrigleyville,2010,29,50,141
+Wrigleyville,2011,35,24,152
+Wrigleyville,2012,33,44,146
+Wrigleyville,2013,26,22,152
+Wrigleyville,2014,14,17,151
+Wrigleyville,2015,14,15,149
+Wrigleyville,2016,10,111,54
+Wrigleyville,2017,0,50,0
+Wrigleyville,2018,0,11,0
