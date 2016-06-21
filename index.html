@@ -66,6 +66,7 @@
     }
     .newrect {
         fill: blue;
+        opacity: .5;
     }
     .newtext ,
     .oldtext {
@@ -75,6 +76,7 @@
     }
     .oldrect {
         fill: red;
+        opacity: .5;
     }
 
     #legend {
@@ -889,12 +891,14 @@ $(function() {
       min: minDate+1,
       max: maxDate,
       value: 2007,
-      change: function( event, ui ) {
-          updateOverallPCTChange(lookup)
-          redraw()
-      },
+    //   change: function( event, ui ) {
+    //       updateOverallPCTChange(lookup)
+    //       redraw()
+    //   },
       slide: function( event, ui ) {
         $( "#years" ).val( ui.value );
+        updateOverallPCTChange(lookup)
+        redraw()
       }
     });
     $( "#years" ).val( $( "#dateSlider" ).slider( "values", 0 ) )
