@@ -182,10 +182,11 @@ var parseDate = d3.time.format("%Y").parse;
 // Dates for line bar chart
 var minDate = 2004;
 var maxDate = 2015;
+var compareYear = 2006;
 
 var barPadding = 4;
 
-var yearArray = range(minDate, maxDate-minDate+1)
+var yearsForChart = range(minDate, maxDate-minDate+1)
 // Subtract | Add 6 Months so that line aligns with middle of bars
 var lineMin = addMonths(parseDate(String(minDate)), -6);
 var lineMax = addMonths(parseDate(String(maxDate)), 6);
@@ -268,9 +269,10 @@ function isInDateRange(value) {
     return value >= minDate && value <= maxDate;
 }
 function isForSelectedYear(value) {
-    var prevYear = $( "#dateSlider" ).slider( "values", 0 ) - 1;
+    // var prevYear = $( "#dateSlider" ).slider( "values", 0 ) - 1;
     var currYear = $( "#dateSlider" ).slider( "values", 1 );
-    return value >= prevYear && value <= currYear;
+    // return value >= prevYear && value <= currYear;
+    return value == compareYear || value == currYear;
 }
 function getNew(d) { return +d.new; }
 function getOld(d) { return +d.old; }
@@ -279,12 +281,12 @@ function getTotalNew(d) { return +d.values.total_new; }
 function getTotalOld(d) { return +d.values.total_old; }
 function getTotalContinued(d) { return +d.values.continued; }
 
-function calcPercentChange(curr_value, py_value) {
+function calcPercentChange(curr_value, old_value) {
     // percent change formula: ((y2 - y1) / y1)*100
-    var pct = py_value == curr_value ? 0  :
-                       py_value == 0 ? 100:
-                                           ((curr_value - py_value)
-                                            / py_value) * 100;
+    var pct = old_value == curr_value ? 0  :
+                       old_value == 0 ? 100:
+                                           ((curr_value - old_value)
+                                            / old_value) * 100;
     return pct.toFixed(2)
 }
 
@@ -394,7 +396,14 @@ function drawChart(svg, dataset) {
     var newArray = aggByYear.map(getTotalNew);
     var oldArray = aggByYear.map(getTotalOld);
     var prevYear = $( "#dateSlider" ).slider( "values", 0) - 1;
-    var currYear = $( "#dateSlider" ).slider( "values", 0);
+    var sliderYear = $( "#dateSlider" ).slider( "values", 0);
+
+    var currYear = sliderYear < compareYear ? compareYear:
+                                              sliderYear;
+    prevYear = compareYear == prevYear ? prevYear:
+                compareYear < currYear ? compareYear:
+                                         currYear;
+
 
     var barWidth = w / newArray.length;
     // Rect behind selected year
@@ -409,7 +418,7 @@ function drawChart(svg, dataset) {
         .attr("width", barWidth)
         .attr("height", h/2)
         .attr("fill", function(d, i) {
-            if (i == yearArray.indexOf(prevYear) || i == yearArray.indexOf(currYear) ) {
+            if (i == yearsForChart.indexOf(prevYear) || i == yearsForChart.indexOf(currYear) ) {
                 return "grey"
             }
             else { return "none"}
@@ -546,7 +555,7 @@ function redraw() {
             .key(function(d) { return d.neighborhood; })
             .rollup(function(years) {
                 return {
-                    // Previous Year
+                    // Comparison | Previous Year
                     "py_new": +years[0].new
                     , "py_old": +years[0].old
                     , "py_continued": +years[0].continued
@@ -556,7 +565,7 @@ function redraw() {
                     , "continued": +years[years.length - 1].continued
             }})
             .entries(mapStats);
-
+        console.log('result', result)
         // Create Lookup for Neighborhood Stats
         lookup = {};
         for (var i = 0, len = result.length; i < len; i++) {
@@ -755,8 +764,9 @@ function resizeChart() {
     y.domain([-maxVal, maxVal])
     x.domain([lineMin, lineMax]);
 
-    var prevYear = $( "#dateSlider" ).slider( "values", 0) - 1;
-    var currYear = $( "#dateSlider" ).slider( "values", 0);
+    // var prevYear = $( "#dateSlider" ).slider( "values", 0) - 1;
+    // var currYear = $( "#dateSlider" ).slider( "values", 0);
+    var currYear = $( "#dateSlider" ).slider( "values", 1 );
 
     var barWidth = width / newArray.length;
 
@@ -769,8 +779,9 @@ function resizeChart() {
         .attr('width', barWidth)
         .attr("height", height/2)
         .attr("fill", function(d, i) {
-            if (i == yearArray.indexOf(prevYear) || i == yearArray.indexOf(currYear) ) {
-                return "grey"
+            if (i == yearsForChart.indexOf(compareYear) ||
+                i == yearsForChart.indexOf(currYear) ) {
+                    return "grey"
             }
             else { return "none"}
         })
