@@ -32,6 +32,7 @@
     }
     path{ fill: #ccc; }
 
+    h2,
     text{
         font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     }
@@ -122,6 +123,7 @@
 </style>
 <body>
     <div id="container" style="dispay:inline">
+    <h2>How's Business Compared to When Recession Began?</h2>
     <div id="pctChange">
     </div>
         <div id="leftArea">
@@ -270,9 +272,9 @@ function isInDateRange(value) {
 }
 function isForSelectedYear(value) {
     // var prevYear = $( "#dateSlider" ).slider( "values", 0 ) - 1;
-    var currYear = $( "#dateSlider" ).slider( "values", 1 );
-    // return value >= prevYear && value <= currYear;
-    return value == compareYear || value == currYear;
+    var sliderYear = $( "#dateSlider" ).slider( "values", 1 );
+    // return value >= prevYear && value <= sliderYear;
+    return value == compareYear || value == sliderYear;
 }
 function getNew(d) { return +d.new; }
 function getOld(d) { return +d.old; }
@@ -281,12 +283,12 @@ function getTotalNew(d) { return +d.values.total_new; }
 function getTotalOld(d) { return +d.values.total_old; }
 function getTotalContinued(d) { return +d.values.continued; }
 
-function calcPercentChange(curr_value, old_value) {
+function calcPercentChange(later_value, older_value) {
     // percent change formula: ((y2 - y1) / y1)*100
-    var pct = old_value == curr_value ? 0  :
-                       old_value == 0 ? 100:
-                                           ((curr_value - old_value)
-                                            / old_value) * 100;
+    var pct = older_value == later_value ? 0  :
+                       older_value == 0 ? 100:
+                                           ((later_value - older_value)
+                                            / older_value) * 100;
     return pct.toFixed(2)
 }
 
@@ -395,16 +397,8 @@ function drawChart(svg, dataset) {
 
     var newArray = aggByYear.map(getTotalNew);
     var oldArray = aggByYear.map(getTotalOld);
-    var prevYear = $( "#dateSlider" ).slider( "values", 0) - 1;
+    // var prevYear = $( "#dateSlider" ).slider( "values", 0) - 1;
     var sliderYear = $( "#dateSlider" ).slider( "values", 0);
-
-    var currYear = sliderYear < compareYear ? compareYear:
-                                              sliderYear;
-    prevYear = compareYear == prevYear ? prevYear:
-                compareYear < currYear ? compareYear:
-                                         currYear;
-
-
     var barWidth = w / newArray.length;
     // Rect behind selected year
     svg.selectAll(".highlight")
@@ -418,7 +412,8 @@ function drawChart(svg, dataset) {
         .attr("width", barWidth)
         .attr("height", h/2)
         .attr("fill", function(d, i) {
-            if (i == yearsForChart.indexOf(prevYear) || i == yearsForChart.indexOf(currYear) ) {
+            if (i == yearsForChart.indexOf(compareYear) ||
+                i == yearsForChart.indexOf(sliderYear) ) {
                 return "grey"
             }
             else { return "none"}
@@ -565,7 +560,6 @@ function redraw() {
                     , "continued": +years[years.length - 1].continued
             }})
             .entries(mapStats);
-        console.log('result', result)
         // Create Lookup for Neighborhood Stats
         lookup = {};
         for (var i = 0, len = result.length; i < len; i++) {
@@ -764,9 +758,7 @@ function resizeChart() {
     y.domain([-maxVal, maxVal])
     x.domain([lineMin, lineMax]);
 
-    // var prevYear = $( "#dateSlider" ).slider( "values", 0) - 1;
-    // var currYear = $( "#dateSlider" ).slider( "values", 0);
-    var currYear = $( "#dateSlider" ).slider( "values", 1 );
+    var sliderYear = $( "#dateSlider" ).slider( "values", 0);
 
     var barWidth = width / newArray.length;
 
@@ -780,7 +772,7 @@ function resizeChart() {
         .attr("height", height/2)
         .attr("fill", function(d, i) {
             if (i == yearsForChart.indexOf(compareYear) ||
-                i == yearsForChart.indexOf(currYear) ) {
+                i == yearsForChart.indexOf(sliderYear) ) {
                     return "grey"
             }
             else { return "none"}
@@ -899,7 +891,8 @@ function resize() {
 $(function() {
     $( "#dateSlider" ).slider({
       range: false,
-      min: minDate+1,
+    //   min: minDate+1,
+      min: minDate,
       max: maxDate,
       value: 2007,
     //   change: function( event, ui ) {
